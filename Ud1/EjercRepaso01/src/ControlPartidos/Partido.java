@@ -6,14 +6,15 @@ import java.util.Objects;
  *
  * @author Guile
  */
-enum Division {primera,segunda,tercera}
+
 public class Partido {
     private String equipoLocal;
     private String equipoVisitante;
     private Division division;
     private String resultado;
     private String fecha;
-
+    enum Division {primera,segunda,tercera}
+    
     public Partido(String equipoLocal, String equipoVisitante, Division division, String resultado, String fecha) {
         this.equipoLocal = equipoLocal;
         this.equipoVisitante = equipoVisitante;
@@ -100,6 +101,7 @@ public class Partido {
         }
         return true;
     }
+    
     
     
 }

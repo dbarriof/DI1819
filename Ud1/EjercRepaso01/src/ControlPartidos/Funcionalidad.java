@@ -13,7 +13,8 @@ import java.util.Scanner;
 public class Funcionalidad {
     Scanner sc = new Scanner(System.in);
     private List<Partido> partidos;
-
+    
+    
     public Funcionalidad() {
         this.partidos = new ArrayList();
     } 
@@ -28,13 +29,25 @@ public class Funcionalidad {
         System.out.println("Equipo Visitante:");
         String equipoVisitante = sc.next();
         System.out.println("Division:");
-        Division div = (Division)sc.nextInt();
+        Partido.Division division = null;
+        int div = Integer.parseInt(sc.next());
+        switch(div){
+            case 1 : 
+                division = Partido.Division.primera ;
+                break;
+            case 2 : 
+                division = Partido.Division.segunda ;
+                break;
+            case 3 : 
+                division = Partido.Division.tercera ;
+                break;
+        }
         System.out.println("Resultado:");
         String resultado = sc.next();
         System.out.println("Fecha:");
         String fecha = sc.next();
         
-        Partido p = new Partido(equipoLocal, equipoVisitante, div, resultado, fecha);
+        Partido p = new Partido(equipoLocal, equipoVisitante, division, resultado, fecha);
         
         //Alta del partido en la coleccion        
         partidos.add(p);
