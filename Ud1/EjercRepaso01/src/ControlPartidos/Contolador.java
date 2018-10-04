@@ -37,7 +37,6 @@ public class Contolador {
                     break;
                 case 2:
                     partidos.verPartidos();
-                    System.out.println("Hola mundo");
                     break;
                 case 3:
                     partidos.borrarPartido();
