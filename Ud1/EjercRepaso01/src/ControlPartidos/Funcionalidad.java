@@ -85,6 +85,7 @@ public class Funcionalidad {
 
     public void borrarPartido() {
         if (!partidos.isEmpty()) {
+            int tamañoInicial = partidos.size();
             //Borrado del partido si existe en la coleccion
             
             //Datos del partido a borrar
@@ -96,14 +97,25 @@ public class Funcionalidad {
             String equipoVisitante = sc.next();
 
             Partido p1 = new Partido(equipoLocal, equipoVisitante);
-        
-            for (Partido p : partidos) {
-                if (p.equals(p1)) {
-                    partidos.remove(p);
-                } else {
-                    System.out.println("No existe el partido entre estos dos equipos");
+            
+            Iterator<Partido> it = partidos.iterator();
+            
+            while (it.hasNext()){
+
+                if (it.next().equals(p1)) {
+                    try{
+                        it.remove();
+                    } finally {
+                        System.out.println("Se ha eliminado el partido de forma correcta");
+                    }               
+                
                 }
             }
+            
+            if (tamañoInicial==partidos.size()){
+                System.out.println("No existe el partido indicado.");
+            }
+            
         } else {
             System.out.println("No hay partidos en la colección actual");
         }
