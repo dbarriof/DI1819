@@ -16,6 +16,7 @@ public class Contolador {
         Scanner sc = new Scanner(System.in);
         boolean salir=false;
         Funcionalidad partidos = new Funcionalidad();
+        partidos.cargaPartidos();
         
         while(!salir){
             System.out.println("       MENU PARTIDOS       ");
@@ -52,6 +53,10 @@ public class Contolador {
                     break;
                 case 7:
                     salir = true;
+                    partidos.guardaPartidos();
+                    break;
+                default:
+                    System.out.println("Opcion incorrecta");
                     break;
             }
         }

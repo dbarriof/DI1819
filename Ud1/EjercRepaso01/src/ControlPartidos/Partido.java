@@ -1,21 +1,24 @@
 package ControlPartidos;
 
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 /**
  *
  * @author Guile
  */
-
-public class Partido {
+enum Division {primera,segunda,tercera}
+public class Partido implements Serializable,Comparable<Partido>{
     private String equipoLocal;
     private String equipoVisitante;
     private Division division;
     private String resultado;
-    private String fecha;
-    enum Division {primera,segunda,tercera}
+    private Date fecha;
     
-    public Partido(String equipoLocal, String equipoVisitante, Division division, String resultado, String fecha) {
+    
+    public Partido(String equipoLocal, String equipoVisitante, Division division, String resultado, Date fecha) {
         this.equipoLocal = equipoLocal;
         this.equipoVisitante = equipoVisitante;
         this.division = division;
@@ -60,17 +63,17 @@ public class Partido {
         this.resultado = resultado;
     }
 
-    public String getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
     @Override
     public String toString() {
-        return "Partido{" + "equipoLocal=" + equipoLocal + ", equipoVisitante=" + equipoVisitante + ", division=" + division + ", resultado=" + resultado + ", fecha=" + fecha + '}';
+        return "Partido{" + "equipoLocal=" + equipoLocal + ", equipoVisitante=" + equipoVisitante + ", division=" + division + ", resultado=" + resultado + ", fecha=" + new SimpleDateFormat("dd-MM-yyyy").format(fecha) + '}';
     }
 
     @Override
@@ -100,6 +103,11 @@ public class Partido {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public int compareTo(Partido p) {
+        return getFecha().compareTo(p.getFecha());        
     }
     
     
