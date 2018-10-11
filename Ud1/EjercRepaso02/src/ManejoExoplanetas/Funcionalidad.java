@@ -147,8 +147,37 @@ public class Funcionalidad {
                 return equal;
             }
         });
-        for(Exoplaneta p : planetas){
-            System.out.println(p.toString());
-        }    
+        
+    }
+    
+    public void escribirOrdenados(){
+        File f = new File ("planetasOrdenados.csv");
+        FileWriter fw = null;
+        
+        try {
+            
+            fw = new FileWriter(f);
+                     
+            for (Exoplaneta e : planetas){
+                StringBuffer sb = new StringBuffer();
+                sb.append(e.getNombre());
+                sb.append(",");
+                sb.append(e.getEjeMayor());
+                sb.append(",");
+                sb.append(e.getPeriodoDias());
+                sb.append(",");
+                if(e.getExcentricidad()!=-1){
+                    sb.append(e.getExcentricidad());
+                } else {
+                    sb.append("");
+                }
+                sb.append('\n');
+                fw.write(sb.toString());
+            }
+                    
+        } catch (IOException ex) {
+            Logger.getLogger(Funcionalidad.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
     }
 }

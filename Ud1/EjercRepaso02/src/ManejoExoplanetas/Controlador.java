@@ -21,7 +21,7 @@ public class Controlador {
         System.out.println("El número de planetas con orbita superior a 30 días es: "+planetario.planetaOrbitaMas30());
         System.out.println("El número de planetas descubiertos por la sonda Kepler son: "+planetario.planetaKepler());
         planetario.ordenaPlanetas();
-        
+        planetario.escribirOrdenados();
     }
     
 }
