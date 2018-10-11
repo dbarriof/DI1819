@@ -128,7 +128,27 @@ public class Funcionalidad {
         return total;
     }
     
-    public void ordenaPlanetas()´{
-        planetas.sort(cmprtr);
+    public void ordenaPlanetas(){
+        
+        planetas.sort( new Comparator<Exoplaneta>() {
+            
+            @Override
+            public int compare(Exoplaneta t, Exoplaneta t1) {
+                int equal = 0;
+                if(t.getEjeMayor()>t1.getEjeMayor()){
+                    equal = -1;
+                }
+                if(Objects.equals(t.getEjeMayor(), t1.getEjeMayor())){
+                    equal = 0;
+                }
+                if(t.getEjeMayor()<t1.getEjeMayor()){
+                    equal = 1;
+                }
+                return equal;
+            }
+        });
+        for(Exoplaneta p : planetas){
+            System.out.println(p.toString());
+        }    
     }
 }

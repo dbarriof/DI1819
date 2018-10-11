@@ -9,7 +9,7 @@ package ManejoExoplanetas;
  *
  * @author dbarriof
  */
-public class Exoplaneta {
+public class Exoplaneta{
     private String nombre;
     private double ejeMayor;
     private double periodoDias;
@@ -64,6 +64,6 @@ public class Exoplaneta {
     public String toString() {
         return "Exoplaneta{" + "nombre=" + nombre + ", ejeMayor=" + ejeMayor + ", periodoDias=" + periodoDias + ", excentricidad=" + excentricidad + '}';
     }
-    
+
     
 }
