@@ -181,24 +181,31 @@ public class Funcionalidad {
 
                 Partido p = (Partido) ois.readObject();
                 partidos.add(p);
-
-                while( p != null){
-                    p = (Partido) ois.readObject();
-                    partidos.add(p);
-                }
                 
-                bis.close();
-                fis.close();
+                    while( p != null){
+                            p = (Partido) ois.readObject();
+                            partidos.add(p);
+                        }
 
-            } catch (FileNotFoundException ex) {
-                System.out.println("No hay datos previos que cargar.");        
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Funcionalidad.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (EOFException ex) {
-                System.out.println("Cargado listado de partidos existentes.");
-            } catch (IOException ex) {
-                Logger.getLogger(Funcionalidad.class.getName()).log(Level.SEVERE, null, ex);
-            }
+                        bis.close();
+                        fis.close();
+                        System.out.println("Cargado listado de partidos existentes.");
+                                                                
+                
+                    } catch (FileNotFoundException ex) {
+                        System.out.println("No hay datos previos que cargar.");        
+                    } catch (ClassNotFoundException ex) {
+                        Logger.getLogger(Funcionalidad.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (EOFException ex) {
+                        if(partidos.size()>0){
+                            System.out.println("Finalizada lectura de datos.");
+                        } else {
+                            System.out.println("No se han cargado datos de partidos almacenados previamente");
+                        }
+                    } catch (IOException ex) {
+                        Logger.getLogger(Funcionalidad.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+            
     }
 
     public void guardaPartidos() {
