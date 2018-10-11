@@ -10,5 +10,6 @@ package ManejoExoplanetas;
  * @author dbarriof
  */
 public class Exoplaneta {
+    private String nombre;
     
 }
