@@ -5,6 +5,20 @@
  */
 package Gui;
 
+import Bean.Cuenta;
+import Bean.MovimientoEconomico;
+import Funcionalidad.Logica;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author dbarriof
@@ -64,13 +78,28 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         );
 
         jButtonSalir.setText("Salir");
+        jButtonSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSalirActionPerformed(evt);
+            }
+        });
 
         jMenuNuevo.setText("Nuevo");
 
         jMenuItemGasto.setText("Gasto...");
+        jMenuItemGasto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemGastoActionPerformed(evt);
+            }
+        });
         jMenuNuevo.add(jMenuItemGasto);
 
         jMenuItemIngreso.setText("Ingreso...");
+        jMenuItemIngreso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemIngresoActionPerformed(evt);
+            }
+        });
         jMenuNuevo.add(jMenuItemIngreso);
 
         jMenuBarMenuPrincipal.add(jMenuNuevo);
@@ -78,6 +107,11 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jMenuVer.setText("Ver");
 
         jMenuItemMovimientos.setText("Movimientos...");
+        jMenuItemMovimientos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemMovimientosActionPerformed(evt);
+            }
+        });
         jMenuVer.add(jMenuItemMovimientos);
 
         jMenuBarMenuPrincipal.add(jMenuVer);
@@ -95,20 +129,40 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButtonSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(148, 148, 148))
+                .addGap(149, 149, 149))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
+                .addGap(33, 33, 33)
                 .addComponent(jButtonSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalirActionPerformed
+        
+        this.dispose();
+    }//GEN-LAST:event_jButtonSalirActionPerformed
+
+    private void jMenuItemGastoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemGastoActionPerformed
+        PantallaGasto pg = new PantallaGasto(this, true);
+        pg.setVisible(true);
+    }//GEN-LAST:event_jMenuItemGastoActionPerformed
+
+    private void jMenuItemIngresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemIngresoActionPerformed
+        PantallaIngreso pi = new PantallaIngreso(this, true);
+        pi.setVisible(true);
+    }//GEN-LAST:event_jMenuItemIngresoActionPerformed
+
+    private void jMenuItemMovimientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMovimientosActionPerformed
+        PantallaMovimientos pm = new PantallaMovimientos(this, true);
+        pm.setVisible(true);
+    }//GEN-LAST:event_jMenuItemMovimientosActionPerformed
 
         
     /**
@@ -137,7 +191,11 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(PantallaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
+        //Instanciamos una nueva cuenta donde se cargaran los movimientos previos almacenados en el fichero correspondiente si este existiese mediante el constructor logico.
+        Logica cuenta = new Logica();
+        
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

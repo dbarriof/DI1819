@@ -5,6 +5,9 @@
  */
 package Gui;
 
+import Bean.MovimientoEconomico;
+import java.util.Date;
+
 /**
  *
  * @author dbarriof
@@ -50,8 +53,18 @@ public class PantallaIngreso extends javax.swing.JDialog {
         jLabelImporte.setText("Importe:");
 
         jButtonAceptar.setText("Aceptar");
+        jButtonAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAceptarActionPerformed(evt);
+            }
+        });
 
         jButtonCancelar.setText("Cancelar");
+        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelContenedorLayout = new javax.swing.GroupLayout(jPanelContenedor);
         jPanelContenedor.setLayout(jPanelContenedorLayout);
@@ -126,13 +139,28 @@ public class PantallaIngreso extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    public void jButtonCancelarActionPerformed(java.awt.event.MouseEvent evt){
-        
-    }
+    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
+        setVisible(false);
+    }//GEN-LAST:event_jButtonCancelarActionPerformed
+
+    private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
+        //setVisible(false);
+        concepto = jTextFieldConcepto.getText();
+        //fecha = (Date) jTextFieldFecha.getText();
+        fecha = null;
+        importe = Double.parseDouble(jTextFieldImporte.getText());
+        MovimientoEconomico me = new MovimientoEconomico(fecha, concepto, importe);
+        setVisible(false);
+    }//GEN-LAST:event_jButtonAceptarActionPerformed
+
+    
     /**
      * @param args the command line arguments
      */
     
+    private String concepto;
+    private Date fecha;
+    private double importe;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAceptar;
