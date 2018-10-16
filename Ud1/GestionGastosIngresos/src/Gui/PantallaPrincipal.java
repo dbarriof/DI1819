@@ -5,8 +5,7 @@
  */
 package Gui;
 
-import Bean.Cuenta;
-import Bean.MovimientoEconomico;
+import Bean.*;
 import Funcionalidad.Logica;
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -24,13 +23,13 @@ import java.util.logging.Logger;
  * @author dbarriof
  */
 public class PantallaPrincipal extends javax.swing.JFrame {
-    Logica cuenta;
+    Logica logica;
     /**
      * Creates new form PantallaPrincipal
      */
     public PantallaPrincipal() {
         initComponents();
-        cuenta = new Logica();
+        logica = new Logica();
     }
 
     /**
@@ -137,7 +136,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalirActionPerformed
-        cuenta.guardarMovimientos();
+        logica.guardarMovimientos();
         dispose();
     }//GEN-LAST:event_jButtonSalirActionPerformed
 
@@ -148,7 +147,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItemMovimientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMovimientosActionPerformed
         PantallaMovimientos pm = new PantallaMovimientos(this, true);
-        cuenta.mostrarMovimientos();
+        logica.mostrarMovimientos();
         pm.setVisible(true);
     }//GEN-LAST:event_jMenuItemMovimientosActionPerformed
 
@@ -179,10 +178,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(PantallaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
-        //Instanciamos una nueva cuenta donde se cargaran los movimientos previos almacenados en el fichero correspondiente si este existiese mediante el constructor logico.
-        
-        
+           
         
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {

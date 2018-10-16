@@ -161,8 +161,10 @@ public class PantallaIngreso extends javax.swing.JDialog {
         //Si el tipo de movimiento es un gasto convertimos el importe a un valor negativo
         if (tipo.equalsIgnoreCase("gasto")){importe = importe*-1;}
         
-        MovimientoEconomico me = new MovimientoEconomico(fecha, concepto, importe);
-        pp.cuenta.aniadirMovimiento(me);
+        //Añadimos nuevo movimiento al conjunto
+        MovimientoEconomico me = new MovimientoEconomico(fecha, concepto, importe);       
+        pp.logica.aniadirMovimiento(me);
+        
         dispose();
     }//GEN-LAST:event_jButtonAceptarActionPerformed
 
