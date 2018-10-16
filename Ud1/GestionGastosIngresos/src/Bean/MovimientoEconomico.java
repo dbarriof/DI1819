@@ -5,13 +5,14 @@
  */
 package Bean;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  *
  * @author dbarriof
  */
-public class MovimientoEconomico {
+public class MovimientoEconomico implements Serializable{
     private Date fecha;
     private String concepto;
     private double importe;
@@ -44,6 +45,11 @@ public class MovimientoEconomico {
 
     public void setImporte(double importe) {
         this.importe = importe;
+    }
+
+    @Override
+    public String toString() {
+        return "MovimientoEconomico{" + "fecha=" + fecha + ", concepto=" + concepto + ", importe=" + importe + '}';
     }
     
     

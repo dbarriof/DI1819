@@ -24,12 +24,13 @@ import java.util.logging.Logger;
  * @author dbarriof
  */
 public class PantallaPrincipal extends javax.swing.JFrame {
-
+    Logica cuenta;
     /**
      * Creates new form PantallaPrincipal
      */
     public PantallaPrincipal() {
         initComponents();
+        cuenta = new Logica();
     }
 
     /**
@@ -47,7 +48,6 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jButtonSalir = new javax.swing.JButton();
         jMenuBarMenuPrincipal = new javax.swing.JMenuBar();
         jMenuNuevo = new javax.swing.JMenu();
-        jMenuItemGasto = new javax.swing.JMenuItem();
         jMenuItemIngreso = new javax.swing.JMenuItem();
         jMenuVer = new javax.swing.JMenu();
         jMenuItemMovimientos = new javax.swing.JMenuItem();
@@ -85,14 +85,6 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         });
 
         jMenuNuevo.setText("Nuevo");
-
-        jMenuItemGasto.setText("Gasto...");
-        jMenuItemGasto.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemGastoActionPerformed(evt);
-            }
-        });
-        jMenuNuevo.add(jMenuItemGasto);
 
         jMenuItemIngreso.setText("Ingreso...");
         jMenuItemIngreso.addActionListener(new java.awt.event.ActionListener() {
@@ -145,14 +137,9 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalirActionPerformed
-        
-        this.dispose();
+        cuenta.guardarMovimientos();
+        dispose();
     }//GEN-LAST:event_jButtonSalirActionPerformed
-
-    private void jMenuItemGastoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemGastoActionPerformed
-        PantallaGasto pg = new PantallaGasto(this, true);
-        pg.setVisible(true);
-    }//GEN-LAST:event_jMenuItemGastoActionPerformed
 
     private void jMenuItemIngresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemIngresoActionPerformed
         PantallaIngreso pi = new PantallaIngreso(this, true);
@@ -161,10 +148,11 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItemMovimientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMovimientosActionPerformed
         PantallaMovimientos pm = new PantallaMovimientos(this, true);
+        cuenta.mostrarMovimientos();
         pm.setVisible(true);
     }//GEN-LAST:event_jMenuItemMovimientosActionPerformed
 
-        
+    
     /**
      * @param args the command line arguments
      */
@@ -193,7 +181,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         //</editor-fold>
         
         //Instanciamos una nueva cuenta donde se cargaran los movimientos previos almacenados en el fichero correspondiente si este existiese mediante el constructor logico.
-        Logica cuenta = new Logica();
+        
         
         
         /* Create and display the form */
@@ -208,7 +196,6 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButtonSalir;
     private javax.swing.JLabel jLabelBalance;
     private javax.swing.JMenuBar jMenuBarMenuPrincipal;
-    private javax.swing.JMenuItem jMenuItemGasto;
     private javax.swing.JMenuItem jMenuItemIngreso;
     private javax.swing.JMenuItem jMenuItemMovimientos;
     private javax.swing.JMenu jMenuNuevo;
