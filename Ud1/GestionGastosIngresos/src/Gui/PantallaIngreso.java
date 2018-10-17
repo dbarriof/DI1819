@@ -43,7 +43,7 @@ public class PantallaIngreso extends javax.swing.JDialog {
         jButtonCancelar = new javax.swing.JButton();
         jSpinnerFecha = new javax.swing.JSpinner();
         jLabelTipo = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBoxTipo = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -73,7 +73,7 @@ public class PantallaIngreso extends javax.swing.JDialog {
 
         jLabelTipo.setText("Tipo :");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ingreso", "Gasto" }));
+        jComboBoxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ingreso", "Gasto" }));
 
         javax.swing.GroupLayout jPanelContenedorLayout = new javax.swing.GroupLayout(jPanelContenedor);
         jPanelContenedor.setLayout(jPanelContenedorLayout);
@@ -98,7 +98,7 @@ public class PantallaIngreso extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelTitulo)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSpinnerFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldConcepto, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldImporte, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -110,7 +110,7 @@ public class PantallaIngreso extends javax.swing.JDialog {
                 .addComponent(jLabelTitulo)
                 .addGap(37, 37, 37)
                 .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelTipo))
                 .addGap(9, 9, 9)
                 .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -153,10 +153,10 @@ public class PantallaIngreso extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
-        String tipo = jLabelTipo.getText();
-        concepto = jTextFieldConcepto.getText();
-        fecha = (Date) jSpinnerFecha.getValue();
-        importe = Double.parseDouble(jTextFieldImporte.getText());
+        String tipo = (String) jComboBoxTipo.getSelectedItem();
+        String concepto = jTextFieldConcepto.getText();
+        Date fecha = (Date) jSpinnerFecha.getValue();
+        double importe = Double.parseDouble(jTextFieldImporte.getText());
         
         //Si el tipo de movimiento es un gasto convertimos el importe a un valor negativo
         if (tipo.equalsIgnoreCase("gasto")){importe = importe*-1;}
@@ -180,7 +180,7 @@ public class PantallaIngreso extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAceptar;
     private javax.swing.JButton jButtonCancelar;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBoxTipo;
     private javax.swing.JLabel jLabelConcepto;
     private javax.swing.JLabel jLabelFecha;
     private javax.swing.JLabel jLabelImporte;

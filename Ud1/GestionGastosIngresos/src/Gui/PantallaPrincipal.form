@@ -9,12 +9,12 @@
             <Property name="text" type="java.lang.String" value="Nuevo"/>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemIngreso">
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemMovimiento">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Ingreso..."/>
+                <Property name="text" type="java.lang.String" value="Movimiento..."/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemIngresoActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemMovimientoActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
@@ -90,12 +90,10 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace pref="162" max="32767" attributes="0"/>
                   <Component id="jLabelBalance" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jTextFieldSaldoActual" min="-2" pref="264" max="-2" attributes="0"/>
-                  <EmptySpace pref="27" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="159" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -103,10 +101,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <EmptySpace min="-2" pref="57" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabelBalance" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                      <Component id="jTextFieldSaldoActual" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
+                  <Component id="jLabelBalance" min="-2" pref="30" max="-2" attributes="0"/>
                   <EmptySpace pref="59" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -117,8 +112,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Balance:"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="jTextFieldSaldoActual">
         </Component>
       </SubComponents>
     </Container>

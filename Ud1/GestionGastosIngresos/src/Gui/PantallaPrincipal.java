@@ -5,19 +5,7 @@
  */
 package Gui;
 
-import Bean.*;
 import Funcionalidad.Logica;
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author dbarriof
@@ -43,11 +31,10 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabelBalance = new javax.swing.JLabel();
-        jTextFieldSaldoActual = new javax.swing.JTextField();
         jButtonSalir = new javax.swing.JButton();
         jMenuBarMenuPrincipal = new javax.swing.JMenuBar();
         jMenuNuevo = new javax.swing.JMenu();
-        jMenuItemIngreso = new javax.swing.JMenuItem();
+        jMenuItemMovimiento = new javax.swing.JMenuItem();
         jMenuVer = new javax.swing.JMenu();
         jMenuItemMovimientos = new javax.swing.JMenuItem();
 
@@ -59,20 +46,16 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(162, Short.MAX_VALUE)
                 .addComponent(jLabelBalance)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextFieldSaldoActual, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addGap(159, 159, 159))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(57, 57, 57)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelBalance, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldSaldoActual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabelBalance, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(59, Short.MAX_VALUE))
         );
 
@@ -85,13 +68,13 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
         jMenuNuevo.setText("Nuevo");
 
-        jMenuItemIngreso.setText("Ingreso...");
-        jMenuItemIngreso.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemMovimiento.setText("Movimiento...");
+        jMenuItemMovimiento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemIngresoActionPerformed(evt);
+                jMenuItemMovimientoActionPerformed(evt);
             }
         });
-        jMenuNuevo.add(jMenuItemIngreso);
+        jMenuNuevo.add(jMenuItemMovimiento);
 
         jMenuBarMenuPrincipal.add(jMenuNuevo);
 
@@ -140,10 +123,10 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_jButtonSalirActionPerformed
 
-    private void jMenuItemIngresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemIngresoActionPerformed
+    private void jMenuItemMovimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMovimientoActionPerformed
         PantallaIngreso pi = new PantallaIngreso(this, true);
         pi.setVisible(true);
-    }//GEN-LAST:event_jMenuItemIngresoActionPerformed
+    }//GEN-LAST:event_jMenuItemMovimientoActionPerformed
 
     private void jMenuItemMovimientosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMovimientosActionPerformed
         PantallaMovimientos pm = new PantallaMovimientos(this, true);
@@ -192,11 +175,10 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButtonSalir;
     private javax.swing.JLabel jLabelBalance;
     private javax.swing.JMenuBar jMenuBarMenuPrincipal;
-    private javax.swing.JMenuItem jMenuItemIngreso;
+    private javax.swing.JMenuItem jMenuItemMovimiento;
     private javax.swing.JMenuItem jMenuItemMovimientos;
     private javax.swing.JMenu jMenuNuevo;
     private javax.swing.JMenu jMenuVer;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextFieldSaldoActual;
     // End of variables declaration//GEN-END:variables
 }

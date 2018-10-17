@@ -29,9 +29,6 @@ public class Logica {
             for (MovimientoEconomico me : movimientos){
                 saldo = me.getImporte()+saldo;
             }   
-        //Salida por consola
-        System.out.println(saldo);
-        
         return saldo;
     }
     
@@ -41,12 +38,8 @@ public class Logica {
     }
     
     //Metodo que lista los movimientos almacenados
-    public void mostrarMovimientos(){
-        for(MovimientoEconomico me : this.cuenta.getMovimientos()){
-            System.out.println(me.getConcepto());
-            System.out.println(me.getFecha());
-            System.out.println(me.getImporte());
-        }
+    public ArrayList<MovimientoEconomico> mostrarMovimientos(){        
+        return  (ArrayList<MovimientoEconomico>) this.cuenta.getMovimientos();
     }
           
     //Metodo que guarda todos los movimientos almacenados en el fichero indicado.  
@@ -62,14 +55,14 @@ public class Logica {
                 oos.writeObject(me);                
             }
             
-            System.out.println("Datos guardados");            
+            System.out.println("Datos guardados.");            
             oos.flush();
             fos.close();
             
         } catch (FileNotFoundException ex) {
-            System.out.println("No existe el fichero");
+            System.out.println("No se ha podido crear el fichero.");
         } catch (IOException ex) {
-            System.out.println("Se ha producido un error de tipo IO");
+            System.out.println("Se ha producido un error de tipo IO.");
         }            
                     
     }

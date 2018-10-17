@@ -65,7 +65,7 @@
                   <EmptySpace pref="10" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabelTitulo" min="-2" max="-2" attributes="0"/>
-                      <Component id="jComboBox1" min="-2" max="-2" attributes="0"/>
+                      <Component id="jComboBoxTipo" min="-2" max="-2" attributes="0"/>
                       <Component id="jSpinnerFecha" min="-2" pref="196" max="-2" attributes="0"/>
                       <Component id="jTextFieldConcepto" min="-2" pref="199" max="-2" attributes="0"/>
                       <Component id="jTextFieldImporte" min="-2" pref="199" max="-2" attributes="0"/>
@@ -80,7 +80,7 @@
                   <Component id="jLabelTitulo" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jComboBox1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jComboBoxTipo" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabelTipo" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
@@ -161,7 +161,7 @@
             <Property name="text" type="java.lang.String" value="Tipo :"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBox1">
+        <Component class="javax.swing.JComboBox" name="jComboBoxTipo">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="2">

@@ -12,12 +12,12 @@ import java.util.*;
  *
  * @author dbarriof
  */
-public class MovimientoEconomico implements Serializable{
+public class MovimientoEconomico implements Serializable{   
     private Date fecha;
     private String concepto;
     private double importe;
 
-    public MovimientoEconomico(Date fecha, String concepto, double importe) {
+    public MovimientoEconomico(Date fecha, String concepto, double importe) {        
         this.fecha = fecha;
         this.concepto = concepto;
         this.importe = importe;
@@ -47,6 +47,15 @@ public class MovimientoEconomico implements Serializable{
         this.importe = importe;
     }
 
+    public String[] arrayToStrings(){
+        String [] datos = new String [4];
+        datos[0] = getConcepto();
+        datos[1] = String.valueOf(getFecha());
+        datos[2] = Double.toString(getImporte());
+        
+        return datos;
+    }
+            
     @Override
     public String toString() {
         return "MovimientoEconomico{" + "fecha=" + fecha + ", concepto=" + concepto + ", importe=" + importe + '}';

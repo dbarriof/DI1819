@@ -5,20 +5,42 @@
  */
 package Gui;
 
+import Bean.MovimientoEconomico;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author dbarriof
  */
 public class PantallaMovimientos extends javax.swing.JDialog {
-
+    private PantallaPrincipal pp;
     /**
      * Creates new form PantallaMovimientos
      */
+    
     public PantallaMovimientos(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        pp = (PantallaPrincipal) parent;
+        modeloTabla();
+        cargarMovimientos();
+        
     }
-
+    
+    private void modeloTabla(){
+        DefaultTableModel dtm = new DefaultTableModel();
+        dtm.setColumnIdentifiers(new String [] {"Concepto","Fecha","Importe"});
+        jTableMovimientos.setModel(dtm);
+    }
+    
+    public void cargarMovimientos(){
+        ArrayList<MovimientoEconomico> movimientos = pp.logica.mostrarMovimientos();
+        DefaultTableModel dtm = (DefaultTableModel) jTableMovimientos.getModel();
+        for(MovimientoEconomico me : movimientos){
+            dtm.addRow(me.arrayToStrings());
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,14 +53,14 @@ public class PantallaMovimientos extends javax.swing.JDialog {
         jPanelContenedor = new javax.swing.JPanel();
         jLabelTitulo = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableMovimientos = new javax.swing.JTable();
         jButtonVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabelTitulo.setText("Resumen de movimientos realizados:");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableMovimientos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -49,7 +71,7 @@ public class PantallaMovimientos extends javax.swing.JDialog {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTableMovimientos);
 
         javax.swing.GroupLayout jPanelContenedorLayout = new javax.swing.GroupLayout(jPanelContenedor);
         jPanelContenedor.setLayout(jPanelContenedorLayout);
@@ -114,6 +136,6 @@ public class PantallaMovimientos extends javax.swing.JDialog {
     private javax.swing.JLabel jLabelTitulo;
     private javax.swing.JPanel jPanelContenedor;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableMovimientos;
     // End of variables declaration//GEN-END:variables
 }
