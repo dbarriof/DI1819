@@ -14,30 +14,27 @@ import java.util.logging.Logger;
  * @author dbarriof
  */
 public class NewHilo implements Runnable{
-    private Thread hilo;
+    Thread hilo;
     private String nombre;
 
     public NewHilo(String nombre) {
         this.nombre = nombre;
-        this.start();
-    }
-       
-    public void start() {
         hilo = new Thread(this);
         hilo.start();
     }
+    
 
     @Override
     public void run() {
         int i;
         for(i=1;i<=5;i++){
-            System.out.println("Hilo "+i+" "+nombre+" iniciado.");
+            System.out.println("Hilo "+i+" del "+nombre+" iniciado.");
             try {
                 sleep(1000);
             } catch (InterruptedException ex) {
                 Logger.getLogger(NewHilo.class.getName()).log(Level.SEVERE, null, ex);
             }
-            System.out.println("Saliendo el hilo: "+nombre);
+            System.out.println("Saliendo el hilo: "+i+" del "+nombre);
         }
     }    
     
