@@ -25,18 +25,10 @@ public class Consumidor extends Thread{
     @Override
     public void run(){
         int i;
-        for (i = 1; i <= 5; i++) {
-            //while (compartido.getCadena() != null) {           
-                compartido.setCadena(nombre + String.valueOf(i));
-                System.out.println("Consumidor: " + nombre + " Iteración: " + i);
-                /*notify();
-            } 
-            try {
-                wait();
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Productor.class.getName()).log(Level.SEVERE, null, ex);
-            }*/
-        }
+        for (i = 1; i <= 5; i++) {         
+            compartido.setCadena(nombre + String.valueOf(i));
+            System.out.println("Consumidor: " + nombre + " Iteración: " + i);
+        } 
     }
 }
 

@@ -26,18 +26,12 @@ public class Productor extends Thread {
     @Override
     public void run() {
         int i;
-        for (i = 1; i <= 5; i++) {
-            //while (compartido.getCadena() == null) {           
+        for (i = 1; i <= 5; i++) {               
                 compartido.setCadena(nombre + String.valueOf(i));
-                System.out.println("Productor: " + nombre + " Iteración: " + i);
-                
-            } 
-            /*try {
-                this.wait();
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Productor.class.getName()).log(Level.SEVERE, null, ex);
-            */}
-        }
+                System.out.println("Productor: " + nombre + " Iteración: " + i);               
+        } 
+    }
+}
     
 
 

@@ -26,8 +26,7 @@ public class ProductorConsumidorMain {
         Productor c = new Productor(compartido, "C1");
         
         p.start();
-        c.start();
-        
+        c.start();        
     }
     
 }
