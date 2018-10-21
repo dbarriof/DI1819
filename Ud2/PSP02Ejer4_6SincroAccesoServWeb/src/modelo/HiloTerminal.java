@@ -21,10 +21,12 @@ public class HiloTerminal extends Thread{
 
     @Override
     public void run() {
-        //synchronized (serv){
-        serv.nuevoAcceso();
-        //}
-    }
-    
-    
+        int i;       
+            for(i=1;i<=10;i++){
+                serv.nuevoAcceso();
+                System.out.println(this.getName()+" acceso num: "+i);
+                System.out.println("Accesos totales al servidor: "+serv.getAccesos());
+                this.yield();
+            }
+    }   
 }

@@ -18,16 +18,14 @@ public class AccesoWebMain {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-       int i;
-        
+       int i = 1;       
        Servidor servidor = new Servidor();
        
-       for(i=0;i<=20;i++){
+       for(i =1;i<=4;i++){
            HiloTerminal t = new HiloTerminal("terminal"+String.valueOf(i), servidor);
            t.start();
-           //System.out.println("El numero de accesos al servidor ha aumentado a: "+servidor.getAccesos());
-       }            
-        System.out.println("El numero de accesos al servidor ha sido: "+servidor.getAccesos());
+       }
+        
     }
     
 }
