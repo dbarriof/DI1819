@@ -20,7 +20,7 @@ public class HiloColor extends Thread{
         int i;
         for(i=1;i<=5;i++){
             System.out.println(nomColor+""+i);
-            //yield();
+            yield();
         }
         
     }

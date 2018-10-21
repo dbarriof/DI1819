@@ -15,16 +15,16 @@ public class HiloNoEgoistaMain {
      */
     public static void main(String[] args) {
         HiloColor hrojo = new HiloColor("rojo");
-        //HiloColor hazul = new HiloColor("azul");
+        HiloColor hazul = new HiloColor("azul");
         HiloColor hverde = new HiloColor("verde");
         
         hrojo.setPriority(Thread.MIN_PRIORITY);
-        //hazul.setPriority(Thread.MIN_PRIORITY);
+        hazul.setPriority(Thread.MIN_PRIORITY);
         hverde.setPriority(Thread.MIN_PRIORITY);
         
         
         hrojo.start();
-        //hazul.start();
+        hazul.start();
         hverde.start();
         
     }
