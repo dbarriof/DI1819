@@ -7,6 +7,7 @@ package controlador;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import modelo.Consumidor;
 import modelo.DatosCompartidos;
 import modelo.Productor;
 
@@ -23,7 +24,7 @@ public class ProductorConsumidorMain {
         DatosCompartidos compartido = new DatosCompartidos();
         
         Productor p = new Productor(compartido, "P1");
-        Productor c = new Productor(compartido, "C1");
+        Consumidor c = new Consumidor(compartido, "C1");
         
         p.start();
         c.start();        

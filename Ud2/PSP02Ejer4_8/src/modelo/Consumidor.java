@@ -25,9 +25,8 @@ public class Consumidor extends Thread{
     @Override
     public void run(){
         int i;
-        for (i = 1; i <= 5; i++) {         
-            compartido.setCadena(nombre + String.valueOf(i));
-            System.out.println("Consumidor: " + nombre + " Iteración: " + i);
+        for (i = 1; i <= 5; i++) {                     
+            System.out.println("Consumidor: " + nombre + " Iteración: " + compartido.getCadena());
         } 
     }
 }
