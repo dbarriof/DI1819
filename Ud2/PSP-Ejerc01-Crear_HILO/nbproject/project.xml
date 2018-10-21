@@ -3,7 +3,7 @@
     <type>org.netbeans.modules.java.j2seproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/j2se-project/3">
-            <name>PSP-Ejerc01-Crear_Hilo_De_Varias_Formas</name>
+            <name>PSP02Ejer1_CrearHiloDeVariasFormas</name>
             <source-roots>
                 <root id="src.dir"/>
             </source-roots>
