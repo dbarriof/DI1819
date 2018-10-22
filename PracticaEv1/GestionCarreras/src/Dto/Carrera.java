@@ -18,6 +18,7 @@ public class Carrera {
     private int numMaxParticipantes;
     private Map corredores;
 
+    //Constructor
     public Carrera(String nombre, Date fecha, String lugar, int numMaxParticipantes, Map corredores) {
         this.nombre = nombre;
         this.fecha = fecha;
