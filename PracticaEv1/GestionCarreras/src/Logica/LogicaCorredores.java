@@ -6,10 +6,10 @@
 package Logica;
 
 import Dto.Corredor;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import Dto.FormatoFecha;
+import java.io.*;
+import java.util.*;
+import java.util.StringTokenizer;
 
 /**
  *
@@ -22,37 +22,64 @@ public class LogicaCorredores {
     public LogicaCorredores() {
         this.corredores = new ArrayList();
     }
-    
-    public void altaCorredor(Corredor c){
+
+    public void altaCorredor(Corredor c) {
         corredores.add(c);
     }
-    
-    public void bajaCorredor(Corredor c){
-        for(Corredor cor : corredores){
-            if(cor.equals(c)){
+
+    public void bajaCorredor(Corredor c) {
+        for (Corredor cor : corredores) {
+            if (cor.equals(c)) {
                 corredores.remove(cor);
             }
         }
-        
     }
-    
-    public void ordenarCorredores(){
+
+    public void ordenarCorredores() {
         Collections.sort(corredores);
     }
-    
-    public void modifCorredor(Corredor c){
-        
+
+    public void modifCorredor(Corredor c) {
+
     }
-    
-    public void verCorredor(Corredor c){
-        
+
+    public void verCorredor(Corredor c) {
+
     }
-    
-    public void importarCorredores(){
-        
+
+    public void importarCorredores(String fichero) {
+        File f = new File(fichero);
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(f));
+            String linea = br.readLine();
+
+            while (linea != null) {
+
+                StringTokenizer st = new StringTokenizer(linea, ",");
+                String nombre = st.nextToken();
+                String dni = st.nextToken();
+                Date fecha = FormatoFecha.parseFecha(st.nextToken());
+                String direccion = st.nextToken();
+                int telefono = Integer.parseInt(st.nextToken());
+
+                Corredor c = new Corredor(nombre, dni, fecha, direccion, telefono);
+                corredores.add(c);
+
+                linea = br.readLine();
+
+            }
+
+            br.close();
+
+        } catch (FileNotFoundException ex) {
+            System.out.println("No existe el fichero indicado.");
+        } catch (IOException ex) {
+            System.out.println("Se ha producido un error al leer el fichero");
+        }
     }
-    
-    public void exportarCorredores(){
-        
+
+    public void exportarCorredores(File f) {
+
     }
 }

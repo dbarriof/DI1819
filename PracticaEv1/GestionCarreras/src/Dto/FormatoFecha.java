@@ -5,8 +5,11 @@
  */
 package Dto;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
+import org.openide.util.Exceptions;
 
 /**
  *
@@ -16,5 +19,16 @@ public class FormatoFecha {
     public static String formatFecha(Date d){
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         return sdf.format(d);
+    }
+
+    public static Date parseFecha(String s){
+        Date fecha = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            fecha = sdf.parse(s);
+        } catch (ParseException ex) {
+            System.out.println("Error al convertir fecha.");
+        }
+        return fecha;
     }
 }
