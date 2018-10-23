@@ -6,12 +6,13 @@
 package Dto;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  *
  * @author dbarriof
  */
-public class Corredor {
+public class Corredor implements Comparable<Corredor>{
     private String nombre;
     private String dni;
     private Date fechaNac;
@@ -70,7 +71,36 @@ public class Corredor {
     public String toString() {
         return "Corredor{" + "nombre=" + nombre + ", dni=" + dni + ", fechaNac=" + fechaNac + ", direccion=" + direccion + ", telefono=" + telefono + '}';
     }
-    
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 23 * hash + Objects.hashCode(this.dni);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Corredor other = (Corredor) obj;
+        if (!Objects.equals(this.dni, other.dni)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int compareTo(Corredor c) {
+        return getFechaNac().compareTo(c.getFechaNac());
+    }
     
     
     
