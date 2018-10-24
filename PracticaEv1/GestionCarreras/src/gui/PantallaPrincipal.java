@@ -8,6 +8,7 @@ package gui;
 import Logica.LogicaCorredores;
 import java.io.File;
 import javax.swing.JFileChooser;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 /**
@@ -16,16 +17,33 @@ import javax.swing.JOptionPane;
  */
 public class PantallaPrincipal extends javax.swing.JFrame {
 
-    LogicaCorredores logicacorredores;
+    LogicaCorredores listaCorredores;
 
     /**
      * Creates new form PantallaPrincipal
      */
     public PantallaPrincipal() {
-        logicacorredores = new LogicaCorredores();
+        listaCorredores = new LogicaCorredores();
         initComponents();
     }
 
+    public String getjMenuItemConsultar() {
+        return jMenuItemConsultar.getText();
+    }
+
+    public JMenuItem getjMenuItemEliminar() {
+        return jMenuItemEliminar;
+    }
+
+    public String getjMenuItemImportar() {
+        return jMenuItemImportar.getText();
+    }
+
+    public JMenuItem getjMenuItemModificar() {
+        return jMenuItemModificar;
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -90,10 +108,20 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         });
         jMenuCorredores.add(jMenuItemModificar);
 
-        jMenuItemConsultar.setText("Ver corredor...");
+        jMenuItemConsultar.setText("Ver...");
+        jMenuItemConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemConsultarActionPerformed(evt);
+            }
+        });
         jMenuCorredores.add(jMenuItemConsultar);
 
         jMenuItemOrdenar.setText("Ordenar...");
+        jMenuItemOrdenar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemOrdenarActionPerformed(evt);
+            }
+        });
         jMenuCorredores.add(jMenuItemOrdenar);
 
         jMenuItemEliminar.setText("Eliminar...");
@@ -141,7 +169,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItemAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAltaActionPerformed
-        PantallaAltaCorredor pac = new PantallaAltaCorredor(this, true, logicacorredores);
+        PantallaAltaCorredor pac = new PantallaAltaCorredor(this, true, listaCorredores);
         pac.setVisible(true);
     }//GEN-LAST:event_jMenuItemAltaActionPerformed
 
@@ -176,7 +204,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             //En caso de confirmar se muestran los corredores que se van a importar
             if (confirmar == JOptionPane.YES_OPTION) {
                 selectFich = false;
-                PantallaCorredoresImportados pci = new PantallaCorredoresImportados(this, true, logicacorredores.importarCorredores(archivo));
+                PantallaCorredoresImportados pci = new PantallaCorredoresImportados(this, true, listaCorredores.importarCorredores(archivo));
                 pci.setVisible(true);
 
             } else if (confirmar == JOptionPane.NO_OPTION) {
@@ -191,6 +219,17 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItemImportarActionPerformed
 
+    private void jMenuItemConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemConsultarActionPerformed
+        PantallaListaCorredores plc = new PantallaListaCorredores(this, true, listaCorredores.verCorredores());       
+        plc.setVisible(true);
+    }//GEN-LAST:event_jMenuItemConsultarActionPerformed
+
+    private void jMenuItemOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemOrdenarActionPerformed
+        listaCorredores.ordenarCorredores();
+        PantallaListaCorredores plc = new PantallaListaCorredores(this, true, listaCorredores.verCorredores());       
+        plc.setVisible(true);
+    }//GEN-LAST:event_jMenuItemOrdenarActionPerformed
+        
     /**
      * @param args the command line arguments
      */

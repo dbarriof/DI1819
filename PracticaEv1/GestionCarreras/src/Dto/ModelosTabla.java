@@ -6,6 +6,8 @@
 package Dto;
 
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+import javax.swing.text.TableView;
 
 /**
  *
@@ -16,6 +18,7 @@ public class ModelosTabla {
     //Modelo de tabla para corredores
     public static DefaultTableModel tablaCorredor(){
         DefaultTableModel dtm = new DefaultTableModel();
+        TableRowSorter ordenaTabla = new TableRowSorter(dtm);
         dtm.setColumnIdentifiers(new String [] {"Nombre","Dni","Fecha Nac.","Dirección","Teléfono"});
         return dtm;
     }

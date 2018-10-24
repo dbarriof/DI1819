@@ -17,7 +17,7 @@ import java.util.StringTokenizer;
  */
 public class LogicaCorredores {
 
-    private List<Corredor> corredores;
+    private ArrayList<Corredor> corredores;
 
     public LogicaCorredores() {
         this.corredores = new ArrayList();
@@ -40,12 +40,11 @@ public class LogicaCorredores {
     }
 
     public void modifCorredor(Corredor c) {
-
+        
     }
 
-    public void verCorredor(Corredor c) {
-        
-
+    public ArrayList<Corredor> verCorredores() {
+        return corredores;
     }
     
     //Devuelve un listado de jugadores para mostrarlos antes de confirmar la importación
@@ -67,7 +66,8 @@ public class LogicaCorredores {
 
                 Corredor c = new Corredor(nombre, dni, fecha, direccion, telefono);
                 listaCorrImport.add(c);
-
+                corredores.add(c);
+                
                 linea = br.readLine();
 
             }
@@ -84,6 +84,6 @@ public class LogicaCorredores {
     }
 
     public void exportarCorredores(File f) {
-
+        
     }
 }

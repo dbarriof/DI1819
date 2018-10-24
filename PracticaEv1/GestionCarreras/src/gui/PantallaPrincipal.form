@@ -29,13 +29,19 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemConsultar">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Ver corredor..."/>
+                <Property name="text" type="java.lang.String" value="Ver..."/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemConsultarActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemOrdenar">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Ordenar..."/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemOrdenarActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemEliminar">
               <Properties>
