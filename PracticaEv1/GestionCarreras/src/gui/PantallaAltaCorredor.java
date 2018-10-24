@@ -5,18 +5,42 @@
  */
 package gui;
 
+import Dto.Corredor;
+import Logica.LogicaCorredores;
+import java.text.Format;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
+import org.netbeans.validation.api.ui.ValidationGroup;
+import org.netbeans.validation.api.ui.ValidationGroupProvider;
+
 /**
  *
  * @author dbarriof
  */
-public class AltaCorredor extends javax.swing.JDialog {
+public class PantallaAltaCorredor extends javax.swing.JDialog {
+
+    private LogicaCorredores logicaCorredores;
+    private ValidationGroup group;
 
     /**
-     * Creates new form AltaCorredor
+     * Creates new form NewJDialog
      */
-    public AltaCorredor(java.awt.Frame parent, boolean modal) {
+    public PantallaAltaCorredor(java.awt.Frame parent, boolean modal, LogicaCorredores logicacorredores) {
         super(parent, modal);
+        this.logicaCorredores = logicacorredores;
         initComponents();
+
+        //Validación de campos de entrada
+        group = validationPanelValidacionDatos.getValidationGroup();
+        group.add(jTextFieldNombre, StringValidators.REQUIRE_NON_EMPTY_STRING);
+        group.add(jTextFieldDni, StringValidators.REQUIRE_NON_EMPTY_STRING);
+        group.add(jTextFieldDni, StringValidators.maxLength(9));
+        group.add(jTextFieldDni, StringValidators.minLength(9));
+        //group.add(jSpinnerFechaNac, StringValidators.REQUIRE_NON_EMPTY_STRING);
+        group.add(jTextAreaDireccion, StringValidators.REQUIRE_NON_EMPTY_STRING);
+        group.add(jTextFieldTelefono, StringValidators.REQUIRE_VALID_INTEGER);
+        group.add(jTextFieldTelefono, StringValidators.minLength(9));
     }
 
     /**
@@ -28,8 +52,6 @@ public class AltaCorredor extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabelAltaCorredor = new javax.swing.JLabel();
         jLabelNombre = new javax.swing.JLabel();
@@ -44,37 +66,28 @@ public class AltaCorredor extends javax.swing.JDialog {
         jTextFieldTelefono = new javax.swing.JTextField();
         jSpinnerFechaNac = new javax.swing.JSpinner();
         validationPanelValidacionDatos = new org.netbeans.validation.api.ui.swing.ValidationPanel();
-        jButtonCancelar = new javax.swing.JButton();
         jButtonAceptar = new javax.swing.JButton();
-
-        jLabel1.setText("jLabel1");
-
-        jButton1.setText("jButton1");
+        jButtonCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Nueva Alta de corredor");
 
         jLabelAltaCorredor.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jLabelAltaCorredor.setText("Nuevo corredor:");
+        jLabelAltaCorredor.setText("Datos del corredor:");
 
         jLabelNombre.setText("Nombre:");
 
-        jLabelDni.setText("DNI:");
+        jLabelDni.setText("Dni:");
 
-        jLabelFechaNac.setText("Fecha de nacimiento:");
+        jLabelFechaNac.setText("Fecha de Nacimiento:");
 
-        jLabelDireccion.setText("Direccion:");
+        jLabelDireccion.setText("Dirección");
 
-        jLabelTelefono.setText("Telefono:");
+        jLabelTelefono.setText("Teléfono:");
 
         jTextAreaDireccion.setColumns(20);
         jTextAreaDireccion.setRows(5);
         jScrollPane1.setViewportView(jTextAreaDireccion);
-
-        jTextFieldTelefono.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldTelefonoActionPerformed(evt);
-            }
-        });
 
         jSpinnerFechaNac.setModel(new javax.swing.SpinnerDateModel());
 
@@ -98,9 +111,7 @@ public class AltaCorredor extends javax.swing.JDialog {
                     .addComponent(jTextFieldTelefono)
                     .addComponent(jSpinnerFechaNac)
                     .addComponent(validationPanelValidacionDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 363, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -136,11 +147,20 @@ public class AltaCorredor extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jButtonAceptar.setText("Aceptar");
+        jButtonAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAceptarActionPerformed(evt);
+            }
+        });
+
         jButtonCancelar.setText("Cancelar");
         jButtonCancelar.setMaximumSize(new java.awt.Dimension(71, 23));
-        jButtonCancelar.setMinimumSize(new java.awt.Dimension(75, 23));
-
-        jButtonAceptar.setText("Aceptar");
+        jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -149,7 +169,7 @@ public class AltaCorredor extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jButtonAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -162,7 +182,7 @@ public class AltaCorredor extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonAceptar))
@@ -172,57 +192,47 @@ public class AltaCorredor extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextFieldTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldTelefonoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldTelefonoActionPerformed
+    private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
+        if (group.performValidation() == null) {
+            //Mostrar dialogo de confirmacion
+            int aceptar = JOptionPane.showConfirmDialog(this, "¿Confirmar nueva alta?", "Confirmar", JOptionPane.YES_NO_OPTION);
+
+            if (aceptar == JOptionPane.YES_OPTION) {
+
+                String nombre = jTextFieldNombre.getText();
+                String dni = jTextFieldDni.getText();
+                Date fecNac = (Date) jSpinnerFechaNac.getValue();
+                String Direccion = jTextAreaDireccion.getText();
+                int telefono = Integer.parseInt(jTextFieldTelefono.getText());
+
+                Corredor c = new Corredor(nombre, dni, fecNac, Direccion, telefono);
+                logicaCorredores.altaCorredor(c);
+
+                JOptionPane.showConfirmDialog(this, "Alta realizada con éxito.", "Confirmación", JOptionPane.CLOSED_OPTION);
+
+                dispose();
+            } else if (aceptar == JOptionPane.NO_OPTION) {
+                JOptionPane.showMessageDialog(this, "Se ha cancelado la nueva alta", "Confirmación", JOptionPane.WARNING_MESSAGE);
+
+            }
+   
+        } else {
+            JOptionPane.showMessageDialog(this, "No se ha rellenado el formulario correctamente", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jButtonAceptarActionPerformed
+
+    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
+
+        dispose();
+    }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AltaCorredor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AltaCorredor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AltaCorredor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AltaCorredor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                AltaCorredor dialog = new AltaCorredor(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonAceptar;
     private javax.swing.JButton jButtonCancelar;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelAltaCorredor;
     private javax.swing.JLabel jLabelDireccion;
     private javax.swing.JLabel jLabelDni;

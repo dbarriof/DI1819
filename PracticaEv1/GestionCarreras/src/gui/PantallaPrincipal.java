@@ -5,16 +5,24 @@
  */
 package gui;
 
+import Logica.LogicaCorredores;
+import java.io.File;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author dbarriof
  */
 public class PantallaPrincipal extends javax.swing.JFrame {
 
+    LogicaCorredores logicacorredores;
+
     /**
      * Creates new form PantallaPrincipal
      */
     public PantallaPrincipal() {
+        logicacorredores = new LogicaCorredores();
         initComponents();
     }
 
@@ -27,59 +35,161 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFileChooserFichImport = new javax.swing.JFileChooser();
         jPanelPantallaPrincipal = new javax.swing.JPanel();
-        jButtonGestCorredores = new javax.swing.JButton();
-        jButtonGestCarreras = new javax.swing.JButton();
+        jButtonCerrar = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenuCorredores = new javax.swing.JMenu();
+        jMenuItemAlta = new javax.swing.JMenuItem();
+        jMenuItemModificar = new javax.swing.JMenuItem();
+        jMenuItemConsultar = new javax.swing.JMenuItem();
+        jMenuItemOrdenar = new javax.swing.JMenuItem();
+        jMenuItemEliminar = new javax.swing.JMenuItem();
+        jMenuItemImportar = new javax.swing.JMenuItem();
+        jMenuCarreras = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Gestión de Carreras");
 
         jPanelPantallaPrincipal.setForeground(new java.awt.Color(255, 0, 204));
         jPanelPantallaPrincipal.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-
-        jButtonGestCorredores.setText("Gestión de corredores");
-
-        jButtonGestCarreras.setText("Gestión de carreras");
 
         javax.swing.GroupLayout jPanelPantallaPrincipalLayout = new javax.swing.GroupLayout(jPanelPantallaPrincipal);
         jPanelPantallaPrincipal.setLayout(jPanelPantallaPrincipalLayout);
         jPanelPantallaPrincipalLayout.setHorizontalGroup(
             jPanelPantallaPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelPantallaPrincipalLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButtonGestCorredores, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
-                .addComponent(jButtonGestCarreras, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGap(0, 380, Short.MAX_VALUE)
         );
         jPanelPantallaPrincipalLayout.setVerticalGroup(
             jPanelPantallaPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelPantallaPrincipalLayout.createSequentialGroup()
-                .addGap(86, 86, 86)
-                .addGroup(jPanelPantallaPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButtonGestCarreras, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
-                    .addComponent(jButtonGestCorredores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(91, Short.MAX_VALUE))
+            .addGap(0, 223, Short.MAX_VALUE)
         );
+
+        jButtonCerrar.setText("Salir");
+        jButtonCerrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCerrarActionPerformed(evt);
+            }
+        });
+
+        jMenuCorredores.setText("Corredores");
+
+        jMenuItemAlta.setText("Nuevo...");
+        jMenuItemAlta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemAltaActionPerformed(evt);
+            }
+        });
+        jMenuCorredores.add(jMenuItemAlta);
+
+        jMenuItemModificar.setText("Modificar...");
+        jMenuItemModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemModificarActionPerformed(evt);
+            }
+        });
+        jMenuCorredores.add(jMenuItemModificar);
+
+        jMenuItemConsultar.setText("Ver corredor...");
+        jMenuCorredores.add(jMenuItemConsultar);
+
+        jMenuItemOrdenar.setText("Ordenar...");
+        jMenuCorredores.add(jMenuItemOrdenar);
+
+        jMenuItemEliminar.setText("Eliminar...");
+        jMenuCorredores.add(jMenuItemEliminar);
+
+        jMenuItemImportar.setText("Importar...");
+        jMenuItemImportar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemImportarActionPerformed(evt);
+            }
+        });
+        jMenuCorredores.add(jMenuItemImportar);
+
+        jMenuBar1.add(jMenuCorredores);
+
+        jMenuCarreras.setText("Carreras");
+        jMenuBar1.add(jMenuCarreras);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanelPantallaPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanelPantallaPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonCerrar)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanelPantallaPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanelPantallaPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButtonCerrar)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenuItemAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAltaActionPerformed
+        PantallaAltaCorredor pac = new PantallaAltaCorredor(this, true, logicacorredores);
+        pac.setVisible(true);
+    }//GEN-LAST:event_jMenuItemAltaActionPerformed
+
+    private void jButtonCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarActionPerformed
+        int salir = JOptionPane.showConfirmDialog(this, "¿Confirma que quiere salir de la aplicación?", "Cerrar aplicación", JOptionPane.YES_NO_OPTION);
+        if (salir == JOptionPane.YES_OPTION) {
+            dispose();
+        } else if (salir == JOptionPane.NO_OPTION) {
+
+        }
+    }//GEN-LAST:event_jButtonCerrarActionPerformed
+
+    private void jMenuItemModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemModificarActionPerformed
+        String modifCorredor = JOptionPane.showInputDialog(this, "Indique el DNI del corredor", "");
+    }//GEN-LAST:event_jMenuItemModificarActionPerformed
+
+    private void jMenuItemImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemImportarActionPerformed
+        boolean selectFich = true;
+
+        while (selectFich) {
+            //Seleccionamos el fichero desde el que importar
+            
+            JFileChooser importarArchivo = new JFileChooser();
+            importarArchivo.showOpenDialog(this);
+            //File archivo = importarArchivo.getSelectedFile();
+            //JFileChooserFichImport jfc = new jFileChooserFichImport();
+            File archivo = importarArchivo.getSelectedFile();
+
+            //Solicitamos confirmacion para el fichero seleccionado
+            int confirmar = JOptionPane.showConfirmDialog(this, "¿Confirmar el archivo?\n" + archivo.getName(), "Confirmar", JOptionPane.YES_NO_OPTION);
+
+            //En caso de confirmar se muestran los corredores que se van a importar
+            if (confirmar == JOptionPane.YES_OPTION) {
+                selectFich = false;
+                PantallaCorredoresImportados pci = new PantallaCorredoresImportados(this, true, logicacorredores.importarCorredores(archivo));
+                pci.setVisible(true);
+
+            } else if (confirmar == JOptionPane.NO_OPTION) {
+
+                //Seleccionar un nuevo archivo si cancela el anterior o salir en caso contrario
+                int nuevaEleccion = JOptionPane.showConfirmDialog(this, "¿Seleccionar otro fichero?", "Confirmar", JOptionPane.YES_NO_OPTION);
+                
+                if (nuevaEleccion == JOptionPane.NO_OPTION) {
+                    selectFich = false;
+                }
+            }
+        }
+    }//GEN-LAST:event_jMenuItemImportarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -117,8 +227,17 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonGestCarreras;
-    private javax.swing.JButton jButtonGestCorredores;
+    private javax.swing.JButton jButtonCerrar;
+    private javax.swing.JFileChooser jFileChooserFichImport;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu jMenuCarreras;
+    private javax.swing.JMenu jMenuCorredores;
+    private javax.swing.JMenuItem jMenuItemAlta;
+    private javax.swing.JMenuItem jMenuItemConsultar;
+    private javax.swing.JMenuItem jMenuItemEliminar;
+    private javax.swing.JMenuItem jMenuItemImportar;
+    private javax.swing.JMenuItem jMenuItemModificar;
+    private javax.swing.JMenuItem jMenuItemOrdenar;
     private javax.swing.JPanel jPanelPantallaPrincipal;
     // End of variables declaration//GEN-END:variables
 }

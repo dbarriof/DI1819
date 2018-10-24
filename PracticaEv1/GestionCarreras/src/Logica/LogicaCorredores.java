@@ -44,14 +44,16 @@ public class LogicaCorredores {
     }
 
     public void verCorredor(Corredor c) {
+        
 
     }
-
-    public void importarCorredores(String fichero) {
-        File f = new File(fichero);
-
+    
+    //Devuelve un listado de jugadores para mostrarlos antes de confirmar la importación
+    public ArrayList<Corredor> importarCorredores(File fichero) {
+        ArrayList<Corredor> listaCorrImport = new ArrayList<>();
+        
         try {
-            BufferedReader br = new BufferedReader(new FileReader(f));
+            BufferedReader br = new BufferedReader(new FileReader(fichero));
             String linea = br.readLine();
 
             while (linea != null) {
@@ -64,7 +66,7 @@ public class LogicaCorredores {
                 int telefono = Integer.parseInt(st.nextToken());
 
                 Corredor c = new Corredor(nombre, dni, fecha, direccion, telefono);
-                corredores.add(c);
+                listaCorrImport.add(c);
 
                 linea = br.readLine();
 
@@ -77,6 +79,8 @@ public class LogicaCorredores {
         } catch (IOException ex) {
             System.out.println("Se ha producido un error al leer el fichero");
         }
+        
+        return listaCorrImport;
     }
 
     public void exportarCorredores(File f) {

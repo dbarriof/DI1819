@@ -66,6 +66,17 @@ public class Corredor implements Comparable<Corredor>{
     public void setTelefono(int telefono) {
         this.telefono = telefono;
     }
+    
+    public String[] arrayToStrings(){
+        String [] datos = new String [5];
+        datos[0] = getNombre();
+        datos[1] = getDni();
+        datos[2] = FormatoFecha.formatFecha(getFechaNac());
+        datos[3] = getDireccion();
+        datos[4] = String.valueOf(getTelefono());
+        
+        return datos;
+    }
 
     @Override
     public String toString() {
