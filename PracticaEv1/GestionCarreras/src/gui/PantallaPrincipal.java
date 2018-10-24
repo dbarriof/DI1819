@@ -5,6 +5,7 @@
  */
 package gui;
 
+import Dto.Corredor;
 import Logica.LogicaCorredores;
 import java.io.File;
 import javax.swing.JFileChooser;
@@ -16,9 +17,14 @@ import javax.swing.JOptionPane;
  * @author dbarriof
  */
 public class PantallaPrincipal extends javax.swing.JFrame {
-
+    //Definicion de variables utilizadas
     LogicaCorredores listaCorredores;
-
+    
+    //Definicion de variables de pantallas
+    private PantallaAltaCorredor pac;
+    private PantallaListaCorredores plc;
+    private PantallaCorredoresImportados pci;
+    
     /**
      * Creates new form PantallaPrincipal
      */
@@ -27,23 +33,6 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         initComponents();
     }
 
-    public String getjMenuItemConsultar() {
-        return jMenuItemConsultar.getText();
-    }
-
-    public JMenuItem getjMenuItemEliminar() {
-        return jMenuItemEliminar;
-    }
-
-    public String getjMenuItemImportar() {
-        return jMenuItemImportar.getText();
-    }
-
-    public JMenuItem getjMenuItemModificar() {
-        return jMenuItemModificar;
-    }
-    
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -169,7 +158,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItemAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAltaActionPerformed
-        PantallaAltaCorredor pac = new PantallaAltaCorredor(this, true, listaCorredores);
+        pac = new PantallaAltaCorredor(this, true, listaCorredores);
         pac.setVisible(true);
     }//GEN-LAST:event_jMenuItemAltaActionPerformed
 
@@ -184,6 +173,10 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItemModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemModificarActionPerformed
         String modifCorredor = JOptionPane.showInputDialog(this, "Indique el DNI del corredor", "");
+        if(listaCorredores.buscaCorredor(modifCorredor)!=null){
+            pac = new PantallaAltaCorredor(this, true, listaCorredores, listaCorredores.buscaCorredor(modifCorredor));
+            pac.setVisible(true);
+        }
     }//GEN-LAST:event_jMenuItemModificarActionPerformed
 
     private void jMenuItemImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemImportarActionPerformed
@@ -204,7 +197,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             //En caso de confirmar se muestran los corredores que se van a importar
             if (confirmar == JOptionPane.YES_OPTION) {
                 selectFich = false;
-                PantallaCorredoresImportados pci = new PantallaCorredoresImportados(this, true, listaCorredores.importarCorredores(archivo));
+                pci = new PantallaCorredoresImportados(this, true, listaCorredores.importarCorredores(archivo));
                 pci.setVisible(true);
 
             } else if (confirmar == JOptionPane.NO_OPTION) {
@@ -220,13 +213,13 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemImportarActionPerformed
 
     private void jMenuItemConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemConsultarActionPerformed
-        PantallaListaCorredores plc = new PantallaListaCorredores(this, true, listaCorredores.verCorredores());       
+        plc = new PantallaListaCorredores(this, true, listaCorredores.verCorredores());       
         plc.setVisible(true);
     }//GEN-LAST:event_jMenuItemConsultarActionPerformed
 
     private void jMenuItemOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemOrdenarActionPerformed
         listaCorredores.ordenarCorredores();
-        PantallaListaCorredores plc = new PantallaListaCorredores(this, true, listaCorredores.verCorredores());       
+        plc = new PantallaListaCorredores(this, true, listaCorredores.verCorredores());       
         plc.setVisible(true);
     }//GEN-LAST:event_jMenuItemOrdenarActionPerformed
         

@@ -31,6 +31,7 @@ public class LogicaCorredores {
         for (Corredor cor : corredores) {
             if (cor.equals(c)) {
                 corredores.remove(cor);
+                break;
             }
         }
     }
@@ -38,9 +39,34 @@ public class LogicaCorredores {
     public void ordenarCorredores() {
         Collections.sort(corredores);
     }
-
-    public void modifCorredor(Corredor c) {
+    
+    public void modificaCorredor(Corredor corredor){
+        for (Corredor c : corredores){
+            if(c.equals(corredor)){
+                c.setNombre(corredor.getNombre());
+                c.setFechaNac(corredor.getFechaNac());
+                c.setDireccion(corredor.getDireccion());
+                c.setTelefono(corredor.getTelefono());
+                
+                break;
+            }
+        }    
+    }
+    
+    public Corredor buscaCorredor(String dni) {
+        Corredor corrBuscado = null;
         
+        for (Corredor c : corredores){
+            if(c.getDni().equalsIgnoreCase(dni)){
+                //Prueba de busqueda
+                System.out.println(c.toString());
+                return c;
+
+            } else {
+                return corrBuscado;
+            }
+        }
+        return null;
     }
 
     public ArrayList<Corredor> verCorredores() {

@@ -7,8 +7,10 @@ package gui;
 
 import Dto.Corredor;
 import Logica.LogicaCorredores;
+import java.awt.Color;
 import java.text.Format;
 import java.util.Date;
+import javax.swing.Action;
 import javax.swing.JOptionPane;
 import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
 import org.netbeans.validation.api.ui.ValidationGroup;
@@ -26,23 +28,50 @@ public class PantallaAltaCorredor extends javax.swing.JDialog {
     /**
      * Creates new form NewJDialog
      */
+    
+    //Constructor para dar de alta un corredor
     public PantallaAltaCorredor(java.awt.Frame parent, boolean modal, LogicaCorredores logicacorredores) {
         super(parent, modal);
         this.logicaCorredores = logicacorredores;
         initComponents();
-
+        validador();        
+    }
+    
+    //Constructor para modificar un corredor
+    public PantallaAltaCorredor(java.awt.Frame parent, boolean modal, LogicaCorredores logicacorredores, Corredor c) {
+        super(parent, modal);
+        this.logicaCorredores = logicacorredores;
+        initComponents();
+        validador();
+        
+        //Detalles de pantalla
+        jLabelAltaCorredor.setText("Modifica los campos necesarios:");
+        
+        jTextFieldNombre.setText(c.getNombre());
+        jTextFieldDni.setText(c.getDni());
+        jTextFieldDni.setEditable(false);
+        jTextFieldDni.setToolTipText("No es posible modificar el Dni");
+        jTextFieldDni.setForeground(Color.GRAY);
+        jSpinnerFechaNac.setValue(c.getFechaNac());
+        jTextAreaDireccion.setText(c.getDireccion());
+        jTextFieldTelefono.setText(String.valueOf(c.getTelefono()));
+        
+        
+    }
+    
+    public void validador(){
         //Validación de campos de entrada
         group = validationPanelValidacionDatos.getValidationGroup();
         group.add(jTextFieldNombre, StringValidators.REQUIRE_NON_EMPTY_STRING);
         group.add(jTextFieldDni, StringValidators.REQUIRE_NON_EMPTY_STRING);
         group.add(jTextFieldDni, StringValidators.maxLength(9));
         group.add(jTextFieldDni, StringValidators.minLength(9));
-        //group.add(jSpinnerFechaNac, StringValidators.REQUIRE_NON_EMPTY_STRING);
         group.add(jTextAreaDireccion, StringValidators.REQUIRE_NON_EMPTY_STRING);
         group.add(jTextFieldTelefono, StringValidators.REQUIRE_VALID_INTEGER);
         group.add(jTextFieldTelefono, StringValidators.minLength(9));
     }
-
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -66,8 +95,9 @@ public class PantallaAltaCorredor extends javax.swing.JDialog {
         jTextFieldTelefono = new javax.swing.JTextField();
         jSpinnerFechaNac = new javax.swing.JSpinner();
         validationPanelValidacionDatos = new org.netbeans.validation.api.ui.swing.ValidationPanel();
-        jButtonAceptar = new javax.swing.JButton();
+        jButtonAceptarAlta = new javax.swing.JButton();
         jButtonCancelar = new javax.swing.JButton();
+        jButtonAceptarMoficacion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Nueva Alta de corredor");
@@ -85,11 +115,19 @@ public class PantallaAltaCorredor extends javax.swing.JDialog {
 
         jLabelTelefono.setText("Teléfono:");
 
+        jTextFieldNombre.setToolTipText("Espacio para insertar nombre del corredor");
+
+        jTextFieldDni.setToolTipText("Espacio para insertar el dni del corredor");
+
         jTextAreaDireccion.setColumns(20);
         jTextAreaDireccion.setRows(5);
+        jTextAreaDireccion.setToolTipText("Espacio para insertar la dirección del corredor");
         jScrollPane1.setViewportView(jTextAreaDireccion);
 
+        jTextFieldTelefono.setToolTipText("Espacio para insertar el teléfono del corredor");
+
         jSpinnerFechaNac.setModel(new javax.swing.SpinnerDateModel());
+        jSpinnerFechaNac.setToolTipText("Selecciona la fecha de nacimiento del corredor");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -147,10 +185,11 @@ public class PantallaAltaCorredor extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jButtonAceptar.setText("Aceptar");
-        jButtonAceptar.addActionListener(new java.awt.event.ActionListener() {
+        jButtonAceptarAlta.setText("Aceptar");
+        jButtonAceptarAlta.setToolTipText("");
+        jButtonAceptarAlta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAceptarActionPerformed(evt);
+                jButtonAceptarAltaActionPerformed(evt);
             }
         });
 
@@ -159,6 +198,14 @@ public class PantallaAltaCorredor extends javax.swing.JDialog {
         jButtonCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCancelarActionPerformed(evt);
+            }
+        });
+
+        jButtonAceptarMoficacion.setText("Aceptar");
+        jButtonAceptarMoficacion.setToolTipText("");
+        jButtonAceptarMoficacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAceptarMoficacionActionPerformed(evt);
             }
         });
 
@@ -172,7 +219,9 @@ public class PantallaAltaCorredor extends javax.swing.JDialog {
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButtonAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonAceptarMoficacion, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonAceptarAlta, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -185,17 +234,27 @@ public class PantallaAltaCorredor extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonAceptar))
+                    .addComponent(jButtonAceptarAlta)
+                    .addComponent(jButtonAceptarMoficacion))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
+    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
+
+        dispose();
+    }//GEN-LAST:event_jButtonCancelarActionPerformed
+
+    private void jButtonAceptarMoficacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarMoficacionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonAceptarMoficacionActionPerformed
+
+    private void jButtonAceptarAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarAltaActionPerformed
         if (group.performValidation() == null) {
             //Mostrar dialogo de confirmacion
-            int aceptar = JOptionPane.showConfirmDialog(this, "¿Confirmar nueva alta?", "Confirmar", JOptionPane.YES_NO_OPTION);
+            int aceptar = JOptionPane.showConfirmDialog(this, "¿Confirmar cambios?", "Confirmar", JOptionPane.YES_NO_OPTION);
 
             if (aceptar == JOptionPane.YES_OPTION) {
 
@@ -208,30 +267,26 @@ public class PantallaAltaCorredor extends javax.swing.JDialog {
                 Corredor c = new Corredor(nombre, dni, fecNac, Direccion, telefono);
                 logicaCorredores.altaCorredor(c);
 
-                JOptionPane.showConfirmDialog(this, "Alta realizada con éxito.", "Confirmación", JOptionPane.CLOSED_OPTION);
+                JOptionPane.showConfirmDialog(this, "Cambios realizados con éxito.", "Confirmación", JOptionPane.CLOSED_OPTION);
 
                 dispose();
             } else if (aceptar == JOptionPane.NO_OPTION) {
-                JOptionPane.showMessageDialog(this, "Se ha cancelado la nueva alta", "Confirmación", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Se han cancelado los cambios", "Confirmación", JOptionPane.WARNING_MESSAGE);
 
             }
-   
+
         } else {
             JOptionPane.showMessageDialog(this, "No se ha rellenado el formulario correctamente", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_jButtonAceptarActionPerformed
-
-    private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
-
-        dispose();
-    }//GEN-LAST:event_jButtonCancelarActionPerformed
+    }//GEN-LAST:event_jButtonAceptarAltaActionPerformed
 
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonAceptar;
+    private javax.swing.JButton jButtonAceptarAlta;
+    private javax.swing.JButton jButtonAceptarMoficacion;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JLabel jLabelAltaCorredor;
     private javax.swing.JLabel jLabelDireccion;
