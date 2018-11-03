@@ -3,26 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Vista;
+package Controlador;
 
 
-import Controlador.SincronizaMensajes;
+import SincroMens.SincronizaMensajes;
 import static java.lang.Thread.sleep;
 import java.util.*;
 import modelo.Persona;
-import modelo.Wc;
+import LogicaAplicacion.WcUnicoUnisex;
 
 /**
  *
  * @author dbarriof
  */
-public class MainAplicacion {
+public class MainUnaCabinaUnisex {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Wc banio = new Wc();
+        WcUnicoUnisex banio = new WcUnicoUnisex();
 
         //Generamos los 10 (Hilos)usuarios que entraran al baño y los iniciamos
         for (int i = 1; i <= 10; i++) {
@@ -36,9 +36,7 @@ public class MainAplicacion {
                 SincronizaMensajes.mostrarMensajes("Se ha producido un error al dormir el hilo: " + ex.getMessage());
             }
         }
-        
-        //Comprobamos la secuencia de Hombres y Mujeres que asistieron al baño
-        banio.secuenciaUsuarios();
+
     }
 
 }

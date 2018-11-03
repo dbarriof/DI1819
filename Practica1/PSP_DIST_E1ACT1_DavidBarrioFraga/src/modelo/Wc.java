@@ -5,9 +5,12 @@
  */
 package modelo;
 
-import Controlador.SincronizaMensajes;
+import SincroMens.SincronizaMensajes;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import modelo.Persona;
 
 /**
  *
@@ -59,48 +62,8 @@ public class Wc {
         this.usuarios = usuarios;
     }
 
-    /**
-     * Metodo que simula la entrada al baño de la persona recibida como
-     * parametro
-     *
-     * @param persona
-     */
-    public synchronized void entrarBanio(Persona persona) {
-        //Asignamos al baño la situacion de ocupado
-        ocupado = true;
-
-        //Añadimos el usuario a listado de personas que vinieron a este baño
+    public void aniadeUsuario(Persona persona){
         usuarios.add(persona);
-
-        //Mostramos mensaje informativo de la accion realizada
-        SincronizaMensajes.mostrarMensajes("++++ La persona " + persona.getNombre() + " " + persona.getSexo() + " entra en el baño - Baño ocupado");
-
-        //Contabilizamos si se trata de un hombre o de una mujer
-        cuentaUsuarios(persona);
-
-        //Simulación del tiempo de uso del baño
-        try {
-            persona.sleep((int) (Math.random() * 2000) + 500);
-        } catch (InterruptedException ex) {
-            SincronizaMensajes.mostrarMensajes("Se ha producido un error al dormir el hilo: " + ex.getMessage());
-        }
-    }
-
-    /**
-     * Metodo que simula la salida del baño de la persona recibida como
-     * parametro
-     *
-     * @param persona
-     */
-    public synchronized void salirBanio(Persona persona) {
-        //Mostramos mensaje informativo de la accion realizada
-        SincronizaMensajes.mostrarMensajes("---- La persona " + persona.getNombre() + " " + persona.getSexo() + " sale del Baño - Baño libre");
-
-        //Asignamos al baño la situacion de libre
-        ocupado = false;
-
-        //Notificamos a los hilos bloqueados que pasen a ejecución de nuevo
-        notifyAll();
     }
 
     /**
@@ -117,7 +80,7 @@ public class Wc {
         }
 
         //Mostramos mensaje informativo de la accion realizada
-        SincronizaMensajes.mostrarMensajes("Han entrado " + usuariosMujeres + " mujeres y " + usuariosHombres + " hombres.");
+        SincronizaMensajes.mostrarMensajes("Han entrado " + usuariosMujeres + " mujeres y " + usuariosHombres + " hombres.\n");
     }
 
     /**
@@ -125,9 +88,12 @@ public class Wc {
      * funcion de la inicial de su sexo.
      */
     public void secuenciaUsuarios() {
-        System.out.print("Secuencia de personas: ");
+        SincronizaMensajes.mostrarMensajes("Secuencia de personas: ");
         for (Persona u : usuarios) {
-            System.out.print(" " + u.getSexo());
+            SincronizaMensajes.mostrarMensajes(" " + u.getSexo());
         }
+        SincronizaMensajes.mostrarMensajes("\n");
+        
     }
+    
 }

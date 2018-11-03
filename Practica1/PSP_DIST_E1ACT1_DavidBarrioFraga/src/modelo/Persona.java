@@ -5,6 +5,11 @@
  */
 package modelo;
 
+import LogicaAplicacion.WcUnicoUnisex;
+import SincroMens.SincronizaMensajes;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author dbarriof
@@ -13,9 +18,9 @@ public class Persona extends Thread {
 
     private String nombre;
     private char sexo;
-    private Wc banio;
+    private WcUnicoUnisex banio;
 
-    public Persona(String nombre, Wc banio) {
+    public Persona(String nombre, WcUnicoUnisex banio) {
         this.nombre = nombre;
 
         //Se genera el sexo de la persona de forma aleatoria
@@ -28,12 +33,23 @@ public class Persona extends Thread {
 
         this.banio = banio;
     }
+    
 
     @Override
     public void run() {
-        System.out.println("La persona " + nombre + " va al baño.");
-        banio.entrarBanio(this);
-        banio.salirBanio(this);
+        SincronizaMensajes.mostrarMensajes("La persona " + nombre + " va al baño.\n");
+            banio.entrarBanio(this);
+        
+            //Simulación del tiempo de uso del baño
+            try {
+                sleep((int) (Math.random() * 2000) + 500);
+            } catch (InterruptedException ex) {
+                SincronizaMensajes.mostrarMensajes("Se ha producido un error al dormir el hilo: " + ex.getMessage()+".\n");
+            }
+        
+            banio.salirBanio(this); 
+
+        
     }
 
     public String getNombre() {
@@ -52,11 +68,11 @@ public class Persona extends Thread {
         this.sexo = sexo;
     }
 
-    public Wc getBanio() {
+    public WcUnicoUnisex getBanio() {
         return banio;
     }
 
-    public void setBanio(Wc banio) {
+    public void setBanio(WcUnicoUnisex banio) {
         this.banio = banio;
     }
 

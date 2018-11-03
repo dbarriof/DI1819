@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Controlador;
+package SincroMens;
 
 /**
  *
@@ -11,6 +11,6 @@ package Controlador;
  */
 public class SincronizaMensajes {
     public static synchronized void mostrarMensajes(String mensaje) {
-        System.out.println(mensaje);
+        System.out.print(mensaje);
     }
 }
