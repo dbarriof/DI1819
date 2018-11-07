@@ -20,7 +20,7 @@ import org.netbeans.validation.api.ui.ValidationGroupProvider;
  *
  * @author dbarriof
  */
-public class PantallaAltaCorredor extends javax.swing.JDialog {
+public class PantallaDatosCorredor extends javax.swing.JDialog {
 
     private LogicaCorredores logicaCorredores;
     private ValidationGroup group;
@@ -30,7 +30,7 @@ public class PantallaAltaCorredor extends javax.swing.JDialog {
      */
     
     //Constructor para dar de alta un corredor
-    public PantallaAltaCorredor(java.awt.Frame parent, boolean modal, LogicaCorredores logicacorredores) {
+    public PantallaDatosCorredor(java.awt.Frame parent, boolean modal, LogicaCorredores logicacorredores) {
         super(parent, modal);
         this.logicaCorredores = logicacorredores;
         initComponents();
@@ -38,7 +38,7 @@ public class PantallaAltaCorredor extends javax.swing.JDialog {
     }
     
     //Constructor para modificar un corredor
-    public PantallaAltaCorredor(java.awt.Frame parent, boolean modal, LogicaCorredores logicacorredores, Corredor c) {
+    public PantallaDatosCorredor(java.awt.Frame parent, boolean modal, LogicaCorredores logicacorredores, Corredor c) {
         super(parent, modal);
         this.logicaCorredores = logicacorredores;
         initComponents();

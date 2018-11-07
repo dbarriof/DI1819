@@ -7,9 +7,12 @@ package Logica;
 
 import Dto.Corredor;
 import Dto.FormatoFecha;
+import gui.PantallaListaCorredores;
 import java.io.*;
 import java.util.*;
 import java.util.StringTokenizer;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -108,6 +111,39 @@ public class LogicaCorredores {
         
         return listaCorrImport;
     }
+    
+    /*public void selectImportFile(){
+        boolean selectFich = true;
+
+        while (selectFich) {
+            //Seleccionamos el fichero desde el que importar
+            
+            JFileChooser importarArchivo = new JFileChooser();
+            importarArchivo.showOpenDialog(this);
+            //File archivo = importarArchivo.getSelectedFile();
+            //JFileChooserFichImport jfc = new jFileChooserFichImport();
+            File archivo = importarArchivo.getSelectedFile();
+
+            //Solicitamos confirmacion para el fichero seleccionado
+            int confirmar = JOptionPane.showConfirmDialog(this, "¿Confirmar el archivo?\n" + archivo.getName(), "Confirmar", JOptionPane.YES_NO_OPTION);
+
+            //En caso de confirmar se muestran los corredores que se van a importar
+            if (confirmar == JOptionPane.YES_OPTION) {
+                selectFich = false;
+                plc = new PantallaListaCorredores(this, true, listaCorredores.importarCorredores(archivo));
+                plc.setVisible(true);
+
+            } else if (confirmar == JOptionPane.NO_OPTION) {
+
+                //Seleccionar un nuevo archivo si cancela el anterior o salir en caso contrario
+                int nuevaEleccion = JOptionPane.showConfirmDialog(this, "¿Seleccionar otro fichero?", "Confirmar", JOptionPane.YES_NO_OPTION);
+                
+                if (nuevaEleccion == JOptionPane.NO_OPTION) {
+                    selectFich = false;
+                }
+            }
+        }
+    }*/
 
     public void exportarCorredores(File f) {
         

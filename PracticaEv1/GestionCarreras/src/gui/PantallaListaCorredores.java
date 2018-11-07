@@ -24,16 +24,20 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
         super(parent, modal);
         this.listaCorredores = listaCorredores;
         initComponents();
-        cargarTabla(listaCorredores);
+        cargarTabla();
     }
     
-    public void cargarTabla(ArrayList<Corredor> listaCorrImport){
+    public void cargarTabla(){
         jTableCorredores.setModel(ModelosTabla.tablaCorredor());
         DefaultTableModel dtm = (DefaultTableModel)jTableCorredores.getModel();        
         for(Corredor c : listaCorredores){
             dtm.addRow(c.arrayToStrings());
         }
+        
+        jTableCorredores.setRowSorter(ModelosTabla.ordenaTablaPorDefecto(dtm,0));
+        
     }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

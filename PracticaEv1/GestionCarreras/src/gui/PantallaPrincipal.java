@@ -21,9 +21,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     LogicaCorredores listaCorredores;
     
     //Definicion de variables de pantallas
-    private PantallaAltaCorredor pac;
+    private PantallaDatosCorredor pac;
     private PantallaListaCorredores plc;
-    private PantallaCorredoresImportados pci;
     
     /**
      * Creates new form PantallaPrincipal
@@ -158,7 +157,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItemAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAltaActionPerformed
-        pac = new PantallaAltaCorredor(this, true, listaCorredores);
+        pac = new PantallaDatosCorredor(this, true, listaCorredores);
         pac.setVisible(true);
     }//GEN-LAST:event_jMenuItemAltaActionPerformed
 
@@ -174,7 +173,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private void jMenuItemModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemModificarActionPerformed
         String modifCorredor = JOptionPane.showInputDialog(this, "Indique el DNI del corredor", "");
         if(listaCorredores.buscaCorredor(modifCorredor)!=null){
-            pac = new PantallaAltaCorredor(this, true, listaCorredores, listaCorredores.buscaCorredor(modifCorredor));
+            pac = new PantallaDatosCorredor(this, true, listaCorredores, listaCorredores.buscaCorredor(modifCorredor));
             pac.setVisible(true);
         }
     }//GEN-LAST:event_jMenuItemModificarActionPerformed
@@ -197,8 +196,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             //En caso de confirmar se muestran los corredores que se van a importar
             if (confirmar == JOptionPane.YES_OPTION) {
                 selectFich = false;
-                pci = new PantallaCorredoresImportados(this, true, listaCorredores.importarCorredores(archivo));
-                pci.setVisible(true);
+                plc = new PantallaListaCorredores(this, true, listaCorredores.importarCorredores(archivo));
+                plc.setVisible(true);
 
             } else if (confirmar == JOptionPane.NO_OPTION) {
 
