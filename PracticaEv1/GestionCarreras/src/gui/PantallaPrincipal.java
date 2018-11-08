@@ -5,11 +5,10 @@
  */
 package gui;
 
-import Dto.Corredor;
 import Logica.LogicaCorredores;
 import java.io.File;
+import java.util.Locale;
 import javax.swing.JFileChooser;
-import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,13 +16,14 @@ import javax.swing.JOptionPane;
  * @author dbarriof
  */
 public class PantallaPrincipal extends javax.swing.JFrame {
+
     //Definicion de variables utilizadas
     LogicaCorredores listaCorredores;
-    
+
     //Definicion de variables de pantallas
     private PantallaDatosCorredor pac;
     private PantallaListaCorredores plc;
-    
+
     /**
      * Creates new form PantallaPrincipal
      */
@@ -43,32 +43,35 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
         jFileChooserFichImport = new javax.swing.JFileChooser();
         jPanelPantallaPrincipal = new javax.swing.JPanel();
+        jLabelImagen = new javax.swing.JLabel();
         jButtonCerrar = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuCorredores = new javax.swing.JMenu();
         jMenuItemAlta = new javax.swing.JMenuItem();
         jMenuItemModificar = new javax.swing.JMenuItem();
         jMenuItemConsultar = new javax.swing.JMenuItem();
-        jMenuItemOrdenar = new javax.swing.JMenuItem();
         jMenuItemEliminar = new javax.swing.JMenuItem();
         jMenuItemImportar = new javax.swing.JMenuItem();
         jMenuCarreras = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestión de Carreras");
+        setBackground(java.awt.Color.gray);
 
-        jPanelPantallaPrincipal.setForeground(new java.awt.Color(255, 0, 204));
+        jPanelPantallaPrincipal.setBackground(new java.awt.Color(0, 0, 0));
         jPanelPantallaPrincipal.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        jLabelImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/images/runners.jpg"))); // NOI18N
 
         javax.swing.GroupLayout jPanelPantallaPrincipalLayout = new javax.swing.GroupLayout(jPanelPantallaPrincipal);
         jPanelPantallaPrincipal.setLayout(jPanelPantallaPrincipalLayout);
         jPanelPantallaPrincipalLayout.setHorizontalGroup(
             jPanelPantallaPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 380, Short.MAX_VALUE)
+            .addComponent(jLabelImagen)
         );
         jPanelPantallaPrincipalLayout.setVerticalGroup(
             jPanelPantallaPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 223, Short.MAX_VALUE)
+            .addComponent(jLabelImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         jButtonCerrar.setText("Salir");
@@ -104,15 +107,12 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         });
         jMenuCorredores.add(jMenuItemConsultar);
 
-        jMenuItemOrdenar.setText("Ordenar...");
-        jMenuItemOrdenar.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemEliminar.setText("Eliminar...");
+        jMenuItemEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemOrdenarActionPerformed(evt);
+                jMenuItemEliminarActionPerformed(evt);
             }
         });
-        jMenuCorredores.add(jMenuItemOrdenar);
-
-        jMenuItemEliminar.setText("Eliminar...");
         jMenuCorredores.add(jMenuItemEliminar);
 
         jMenuItemImportar.setText("Importar...");
@@ -138,16 +138,14 @@ public class PantallaPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanelPantallaPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButtonCerrar)))
+                    .addComponent(jButtonCerrar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanelPantallaPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelPantallaPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonCerrar)
                 .addContainerGap())
@@ -165,16 +163,27 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         int salir = JOptionPane.showConfirmDialog(this, "¿Confirma que quiere salir de la aplicación?", "Cerrar aplicación", JOptionPane.YES_NO_OPTION);
         if (salir == JOptionPane.YES_OPTION) {
             dispose();
-        } else if (salir == JOptionPane.NO_OPTION) {
-
         }
     }//GEN-LAST:event_jButtonCerrarActionPerformed
 
     private void jMenuItemModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemModificarActionPerformed
-        String modifCorredor = JOptionPane.showInputDialog(this, "Indique el DNI del corredor", "");
-        if(listaCorredores.buscaCorredor(modifCorredor)!=null){
-            pac = new PantallaDatosCorredor(this, true, listaCorredores, listaCorredores.buscaCorredor(modifCorredor));
-            pac.setVisible(true);
+        boolean salir = false;
+        while (!salir) {
+            String modifCorredor = JOptionPane.showInputDialog(this, "Indique el DNI del corredor", "");
+            if (modifCorredor == null) {
+                salir = true;
+            } else {
+                if (listaCorredores.buscaCorredor(modifCorredor) != null) {
+                    pac = new PantallaDatosCorredor(this, true, listaCorredores, listaCorredores.buscaCorredor(modifCorredor));
+                    pac.setVisible(true);
+                    salir = true;
+                } else if (listaCorredores.buscaCorredor(modifCorredor) == null) {
+                    int confirm = JOptionPane.showConfirmDialog(this, "No existe el corredor indicado \n ¿Realizar una nueva busqueda?", "Error al buscar", JOptionPane.YES_NO_OPTION);
+                    if (confirm == JOptionPane.NO_OPTION) {
+                        salir = true;
+                    }
+                }
+            }
         }
     }//GEN-LAST:event_jMenuItemModificarActionPerformed
 
@@ -183,7 +192,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
         while (selectFich) {
             //Seleccionamos el fichero desde el que importar
-            
+
             JFileChooser importarArchivo = new JFileChooser();
             importarArchivo.showOpenDialog(this);
             //File archivo = importarArchivo.getSelectedFile();
@@ -191,19 +200,19 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             File archivo = importarArchivo.getSelectedFile();
 
             //Solicitamos confirmacion para el fichero seleccionado
-            int confirmar = JOptionPane.showConfirmDialog(this, "¿Confirmar el archivo?\n" + archivo.getName(), "Confirmar", JOptionPane.YES_NO_OPTION);
+            int confirmar = JOptionPane.showConfirmDialog(this, "¿Confirmar el archivo seleccionado?" , "Confirmar", JOptionPane.YES_NO_OPTION);
 
             //En caso de confirmar se muestran los corredores que se van a importar
             if (confirmar == JOptionPane.YES_OPTION) {
                 selectFich = false;
-                plc = new PantallaListaCorredores(this, true, listaCorredores.importarCorredores(archivo));
+                plc = new PantallaListaCorredores(this, true, listaCorredores.importarCorredores(archivo),true);
                 plc.setVisible(true);
 
             } else if (confirmar == JOptionPane.NO_OPTION) {
 
                 //Seleccionar un nuevo archivo si cancela el anterior o salir en caso contrario
                 int nuevaEleccion = JOptionPane.showConfirmDialog(this, "¿Seleccionar otro fichero?", "Confirmar", JOptionPane.YES_NO_OPTION);
-                
+
                 if (nuevaEleccion == JOptionPane.NO_OPTION) {
                     selectFich = false;
                 }
@@ -212,16 +221,31 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemImportarActionPerformed
 
     private void jMenuItemConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemConsultarActionPerformed
-        plc = new PantallaListaCorredores(this, true, listaCorredores.verCorredores());       
+        plc = new PantallaListaCorredores(this, true, listaCorredores.verCorredores());
         plc.setVisible(true);
     }//GEN-LAST:event_jMenuItemConsultarActionPerformed
 
-    private void jMenuItemOrdenarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemOrdenarActionPerformed
-        listaCorredores.ordenarCorredores();
-        plc = new PantallaListaCorredores(this, true, listaCorredores.verCorredores());       
-        plc.setVisible(true);
-    }//GEN-LAST:event_jMenuItemOrdenarActionPerformed
-        
+    private void jMenuItemEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEliminarActionPerformed
+        boolean salir = false;
+        while (!salir) {
+            String elimCorredor = JOptionPane.showInputDialog(this, "Indique el DNI del corredor", "");
+            if (elimCorredor == null) {
+                salir = true;
+            } else {
+                if (listaCorredores.buscaCorredor(elimCorredor) != null) {
+                    pac = new PantallaDatosCorredor(this, true, listaCorredores, listaCorredores.buscaCorredor(elimCorredor), true);
+                    pac.setVisible(true);
+                    salir = true;
+                } else if (listaCorredores.buscaCorredor(elimCorredor) == null) {
+                    int confirm = JOptionPane.showConfirmDialog(this, "No existe el corredor indicado \n ¿Realizar una nueva busqueda?", "Error al buscar", JOptionPane.YES_NO_OPTION);
+                    if (confirm == JOptionPane.NO_OPTION) {
+                        salir = true;
+                    }
+                }
+            }
+        }
+    }//GEN-LAST:event_jMenuItemEliminarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -252,6 +276,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                //Establecemos ubicacion de la aplicacion
+                Locale.setDefault(new Locale("es","ES"));
                 new PantallaPrincipal().setVisible(true);
             }
         });
@@ -260,6 +286,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCerrar;
     private javax.swing.JFileChooser jFileChooserFichImport;
+    private javax.swing.JLabel jLabelImagen;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuCarreras;
     private javax.swing.JMenu jMenuCorredores;
@@ -268,7 +295,6 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemEliminar;
     private javax.swing.JMenuItem jMenuItemImportar;
     private javax.swing.JMenuItem jMenuItemModificar;
-    private javax.swing.JMenuItem jMenuItemOrdenar;
     private javax.swing.JPanel jPanelPantallaPrincipal;
     // End of variables declaration//GEN-END:variables
 }

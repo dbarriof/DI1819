@@ -20,27 +20,23 @@ import javax.swing.JOptionPane;
  */
 public class LogicaCorredores {
 
-    private ArrayList<Corredor> corredores;
+    private HashSet<Corredor> corredores;
 
     public LogicaCorredores() {
-        this.corredores = new ArrayList();
+        this.corredores = new HashSet<>();
     }
 
     public void altaCorredor(Corredor c) {
         corredores.add(c);
     }
 
-    public void bajaCorredor(Corredor c) {
+    public void bajaCorredor(Corredor c) {        
         for (Corredor cor : corredores) {
             if (cor.equals(c)) {
                 corredores.remove(cor);
                 break;
             }
         }
-    }
-
-    public void ordenarCorredores() {
-        Collections.sort(corredores);
     }
     
     public void modificaCorredor(Corredor corredor){
@@ -57,28 +53,28 @@ public class LogicaCorredores {
     }
     
     public Corredor buscaCorredor(String dni) {
-        Corredor corrBuscado = null;
+        Corredor corr = null;
         
         for (Corredor c : corredores){
+            
             if(c.getDni().equalsIgnoreCase(dni)){
                 //Prueba de busqueda
                 System.out.println(c.toString());
                 return c;
-
-            } else {
-                return corrBuscado;
             }
         }
-        return null;
+        
+        System.out.println("No encontrado");
+        return corr;
     }
 
-    public ArrayList<Corredor> verCorredores() {
+    public HashSet<Corredor> verCorredores() {
         return corredores;
     }
     
     //Devuelve un listado de jugadores para mostrarlos antes de confirmar la importación
-    public ArrayList<Corredor> importarCorredores(File fichero) {
-        ArrayList<Corredor> listaCorrImport = new ArrayList<>();
+    public HashSet<Corredor> importarCorredores(File fichero) {
+        HashSet<Corredor> listaCorrImport = new HashSet<>();
         
         try {
             BufferedReader br = new BufferedReader(new FileReader(fichero));

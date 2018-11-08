@@ -7,8 +7,7 @@ package gui;
 
 import Dto.Corredor;
 import Dto.ModelosTabla;
-import Logica.LogicaCorredores;
-import java.util.ArrayList;
+import java.util.HashSet;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -16,15 +15,37 @@ import javax.swing.table.DefaultTableModel;
  * @author dbarriof
  */
 public class PantallaListaCorredores extends javax.swing.JDialog {
-    private ArrayList<Corredor> listaCorredores;
+    private HashSet<Corredor> listaCorredores;
+    
     /**
-     * Creates new form PantallaListaCorredores
+     * Constructor para ver el listado completo de corredores dados de alta en la aplicación
+     * @param parent
+     * @param modal
+     * @param listaCorredores
      */
-    public PantallaListaCorredores(java.awt.Frame parent, boolean modal, ArrayList<Corredor> listaCorredores) {
+    public PantallaListaCorredores(java.awt.Frame parent, boolean modal, HashSet<Corredor> listaCorredores) {
         super(parent, modal);
         this.listaCorredores = listaCorredores;
         initComponents();
         cargarTabla();
+        
+        jLabelTitular.setText("Listado de corredores:");
+    }
+    
+    /**
+     * Constructor para ver el listado de corredores importados desde un fichero
+     * @param parent
+     * @param modal
+     * @param listaCorredores
+     * @param importados 
+     */
+    public PantallaListaCorredores(java.awt.Frame parent, boolean modal, HashSet<Corredor> listaCorredores, boolean importados) {
+        super(parent, modal);
+        this.listaCorredores = listaCorredores;
+        initComponents();
+        cargarTabla();
+        
+        jLabelTitular.setText("Corredores importados:");
     }
     
     public void cargarTabla(){
@@ -34,7 +55,7 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
             dtm.addRow(c.arrayToStrings());
         }
         
-        jTableCorredores.setRowSorter(ModelosTabla.ordenaTablaPorDefecto(dtm,0));
+        jTableCorredores.setRowSorter(ModelosTabla.ordenaTabla(dtm,0));
         
     }
     
@@ -54,8 +75,9 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
         jButtonVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Listado de corredores");
 
-        jLabelTitular.setText(null);
+        jLabelTitular.setText("null");
 
         jTableCorredores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

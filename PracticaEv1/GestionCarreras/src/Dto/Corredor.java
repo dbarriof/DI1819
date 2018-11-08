@@ -12,7 +12,7 @@ import java.util.Objects;
  *
  * @author dbarriof
  */
-public class Corredor implements Comparable<Corredor>{
+public class Corredor {
     private String nombre;
     private String dni;
     private Date fechaNac;
@@ -108,10 +108,7 @@ public class Corredor implements Comparable<Corredor>{
         return true;
     }
 
-    @Override
-    public int compareTo(Corredor c) {
-        return getFechaNac().compareTo(c.getFechaNac());
-    }
+    
     
     
     

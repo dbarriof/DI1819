@@ -32,9 +32,8 @@ public class ModelosTabla {
         
     }
     
-    public static TableRowSorter ordenaTablaPorDefecto(DefaultTableModel dtm, int col){
-       TableRowSorter ordenador = new TableRowSorter(dtm);  
-       
+    public static TableRowSorter ordenaTabla(DefaultTableModel dtm, int col){
+       TableRowSorter ordenador = new TableRowSorter(dtm);     
        List<SortKey> sortKeys = new ArrayList<>();
        sortKeys.add(new SortKey(col, SortOrder.ASCENDING));
        ordenador.setSortKeys(sortKeys);
