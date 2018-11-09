@@ -7,12 +7,9 @@ package Logica;
 
 import Dto.Corredor;
 import Dto.FormatoFecha;
-import gui.PantallaListaCorredores;
 import java.io.*;
 import java.util.*;
 import java.util.StringTokenizer;
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 
 /**
  *

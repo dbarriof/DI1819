@@ -16,15 +16,21 @@ public class Carrera {
     private Date fecha;
     private String lugar;
     private int numMaxParticipantes;
-    private Map corredores;
+    private Set<Participante> participantes;
+    private Set<Integer> dorsales;
 
     //Constructor
-    public Carrera(String nombre, Date fecha, String lugar, int numMaxParticipantes, Map corredores) {
+    public Carrera(String nombre, Date fecha, String lugar, int numMaxParticipantes, HashSet participantes) {
         this.nombre = nombre;
         this.fecha = fecha;
         this.lugar = lugar;
         this.numMaxParticipantes = numMaxParticipantes;
-        this.corredores = corredores;
+        this.participantes = participantes;
+        this.dorsales = new HashSet<>();   
+        //Recargamos coleccion de dorsales necesarios para los participantes de la carrera
+        for(int i=1;i<=numMaxParticipantes;i++){
+            dorsales.add(i);
+        }
     }
 
     public String getNombre() {
@@ -59,12 +65,12 @@ public class Carrera {
         this.numMaxParticipantes = numMaxParticipantes;
     }
 
-    public Map getCorredores() {
-        return corredores;
+    public Set<Participante> getParticipantes() {
+        return participantes;
     }
 
-    public void setCorredores(Map corredores) {
-        this.corredores = corredores;
+    public void setCorredores(Set<Participante> participantes) {
+        this.participantes = participantes;
     }
     
     

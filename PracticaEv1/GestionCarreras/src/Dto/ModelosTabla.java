@@ -28,8 +28,10 @@ public class ModelosTabla {
     
     
     //Modelo de tabla para carreras
-    public static void tablaCarrera(){
-        
+    public static DefaultTableModel tablaCarrera(){
+        DefaultTableModel dtm = new DefaultTableModel();
+        dtm.setColumnIdentifiers(new String [] {"Dorsal","Nombre","Dni","Tiempo","Pos. Final"});
+        return dtm;
     }
     
     public static TableRowSorter ordenaTabla(DefaultTableModel dtm, int col){
@@ -39,8 +41,6 @@ public class ModelosTabla {
        ordenador.setSortKeys(sortKeys);
        
        return ordenador;
-       
-       
     }
     
 }
