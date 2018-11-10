@@ -21,7 +21,8 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
 
     private LogicaCorredores logicaCorredores;
     private ValidationGroup group;
-  
+    private Corredor corrModificable;
+    private Corredor nuevoCorredor;
     
     //Constructor para dar de alta un corredor
     public PantallaDatosCorredor(java.awt.Frame parent, boolean modal, LogicaCorredores logicacorredores) {
@@ -30,7 +31,10 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
         this.logicaCorredores = logicacorredores;
         initComponents();
         validador();
-
+        
+        //Instanciamos corredor a crear
+        nuevoCorredor= new Corredor();
+        
         jButtonAceptarMoficacion.setVisible(false);
         jButtonEliminarCorredor.setVisible(false);
     }
@@ -45,6 +49,10 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
         
         //Detalles de pantalla
         jLabelAltaCorredor.setText("Modifica los campos necesarios:");
+        
+        
+        //Instanciamos corredor a modificar
+        corrModificable = c;
         
         jTextFieldNombre.setText(c.getNombre());
         jTextFieldDni.setText(c.getDni());
@@ -70,6 +78,7 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
         //Detalles de pantalla
         jLabelAltaCorredor.setText("Datos del corredor:");
         
+        //Cargamos datos del corredor
         jTextFieldNombre.setText(c.getNombre());
         jTextFieldNombre.setEditable(false);
         jTextFieldNombre.setForeground(Color.GRAY);
@@ -95,12 +104,15 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
         group = validationPanelValidacionDatos.getValidationGroup();
 
         group.add(jTextFieldNombre, StringValidators.REQUIRE_NON_EMPTY_STRING);
+        group.add(jTextFieldNombre, StringValidators.maxLength(50));
         group.add(jTextFieldDni, StringValidators.REQUIRE_NON_EMPTY_STRING);
         group.add(jTextFieldDni, StringValidators.maxLength(9));
         group.add(jTextFieldDni, StringValidators.minLength(9));
         group.add(jTextAreaDireccion, StringValidators.REQUIRE_NON_EMPTY_STRING);
+        group.add(jTextAreaDireccion, StringValidators.maxLength(150));
         group.add(jTextFieldTelefono, StringValidators.REQUIRE_VALID_INTEGER);
         group.add(jTextFieldTelefono, StringValidators.minLength(9));
+        group.add(jTextFieldTelefono, StringValidators.maxLength(12));
     }
     
     
@@ -307,16 +319,12 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
             int aceptar = JOptionPane.showConfirmDialog(this, "¿Confirmar cambios?", "Confirmar", JOptionPane.YES_NO_OPTION);
 
             if (aceptar == JOptionPane.YES_OPTION) {
-
-                String nombre = jTextFieldNombre.getText();
-                String dni = jTextFieldDni.getText();
-                Date fecNac = (Date) jSpinnerFechaNac.getValue();
-                String Direccion = jTextAreaDireccion.getText();
-                int telefono = Integer.parseInt(jTextFieldTelefono.getText());
-
-                Corredor c = new Corredor(nombre, dni, fecNac, Direccion, telefono);
-                logicaCorredores.altaCorredor(c);
-
+                
+                corrModificable.setNombre(jTextFieldNombre.getText());
+                corrModificable.setFechaNac((Date) jSpinnerFechaNac.getValue());
+                corrModificable.setDireccion(jTextAreaDireccion.getText());
+                corrModificable.setTelefono(Integer.parseInt(jTextFieldTelefono.getText()));
+                
                 JOptionPane.showConfirmDialog(this, "Cambios realizados con éxito.", "Confirmación", JOptionPane.CLOSED_OPTION);
 
                 dispose();
@@ -337,14 +345,14 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
 
             if (aceptar == JOptionPane.YES_OPTION) {
 
-                String nombre = jTextFieldNombre.getText();
-                String dni = jTextFieldDni.getText();
-                Date fecNac = (Date) jSpinnerFechaNac.getValue();
-                String Direccion = jTextAreaDireccion.getText();
-                int telefono = Integer.parseInt(jTextFieldTelefono.getText());
+                nuevoCorredor.setNombre(jTextFieldNombre.getText());
+                nuevoCorredor.setDni(jTextFieldDni.getText());
+                nuevoCorredor.setFechaNac((Date) jSpinnerFechaNac.getValue());
+                nuevoCorredor.setDireccion(jTextAreaDireccion.getText());
+                nuevoCorredor.setTelefono(Integer.parseInt(jTextFieldTelefono.getText()));
 
-                Corredor c = new Corredor(nombre, dni, fecNac, Direccion, telefono);
-                logicaCorredores.altaCorredor(c);
+
+                logicaCorredores.altaCorredor(nuevoCorredor);
 
                 JOptionPane.showConfirmDialog(this, "Alta realizada con éxito.", "Confirmación", JOptionPane.CLOSED_OPTION);
 
@@ -364,7 +372,7 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
             int aceptar = JOptionPane.showConfirmDialog(this, "¿Confirmar eliminación del corredor?", "Confirmar", JOptionPane.YES_NO_OPTION);
 
             if (aceptar == JOptionPane.YES_OPTION) {
-
+                
                 String nombre = jTextFieldNombre.getText();
                 String dni = jTextFieldDni.getText();
                 Date fecNac = (Date) jSpinnerFechaNac.getValue();

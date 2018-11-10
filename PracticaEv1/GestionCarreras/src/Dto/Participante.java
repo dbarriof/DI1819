@@ -13,11 +13,15 @@ public class Participante {
     private Corredor corredor;
     private int dorsal;
     private Carrera carrera;
+    private int tiempo;
+    private int posición;
 
     public Participante(Corredor corredor, int dorsal, Carrera carrera) {
         this.corredor = corredor;
         this.dorsal = dorsal;
         this.carrera = carrera;
+        tiempo = 0;
+        tiempo = 0;
     }
 
     public Corredor getCorredor() {

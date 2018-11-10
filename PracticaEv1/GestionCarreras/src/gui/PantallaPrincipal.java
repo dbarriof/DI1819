@@ -30,6 +30,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
      */
     public PantallaPrincipal() {
         listaCorredores = new LogicaCorredores();
+        listaCarreras = new LogicaCarreras();
         initComponents();
     }
 
@@ -247,7 +248,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemImportarActionPerformed
 
     private void jMenuItemVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemVerActionPerformed
-        plc = new PantallaListaCorredores(this, true, listaCorredores.verCorredores());
+        plc = new PantallaListaCorredores(this, true, listaCorredores);
         plc.setVisible(true);
     }//GEN-LAST:event_jMenuItemVerActionPerformed
 
@@ -273,7 +274,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemEliminarActionPerformed
 
     private void jMenuItemNuevaCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemNuevaCarreraActionPerformed
-        pdc = new PantallaDatosCarrera(this, true, listaCarreras);
+        pdc = new PantallaDatosCarrera(this, true, listaCarreras, listaCorredores);
         pdc.setVisible(true);
     }//GEN-LAST:event_jMenuItemNuevaCarreraActionPerformed
 

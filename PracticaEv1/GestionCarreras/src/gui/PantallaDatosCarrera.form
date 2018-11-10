@@ -3,12 +3,6 @@
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
-    <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[1005, 500]"/>
-    </Property>
-    <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[1004, 495]"/>
-    </Property>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -194,9 +188,9 @@
             <Property name="toolTipText" type="java.lang.String" value="Espacio para insertar el tel&#xe9;fono del corredor"/>
             <Property name="name" type="java.lang.String" value="Telef&#xf3;no" noResource="true"/>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldNumPartActionPerformed"/>
-          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="PantallaDatosCarrera_jTextFieldNumPart"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JSpinner" name="jSpinnerFecha">
           <Properties>
@@ -307,6 +301,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="A&#xf1;adir participante"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAniadirPartActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

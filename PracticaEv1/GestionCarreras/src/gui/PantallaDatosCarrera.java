@@ -17,8 +17,9 @@ import Logica.LogicaCorredores;
 import java.awt.Color;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Set;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
 import org.netbeans.validation.api.ui.ValidationGroup;
 
@@ -29,21 +30,31 @@ import org.netbeans.validation.api.ui.ValidationGroup;
 
 
 public class PantallaDatosCarrera extends javax.swing.JDialog {
-
+    private PantallaListaCorredores plc;
     private LogicaCarreras logicaCarreras;
-    private ValidationGroup group;
+    private LogicaCorredores logicaCorredores;
+    private HashSet<Corredor> corredores;
     private HashSet<Participante> participantes;
+    private ValidationGroup group;
+    private Carrera carrera;
     
     //Constructor para dar de alta un corredor
-    public PantallaDatosCarrera(java.awt.Frame parent, boolean modal, LogicaCarreras logicaCarreras) {
+    public PantallaDatosCarrera(java.awt.Frame parent, boolean modal, LogicaCarreras logicaCarreras, LogicaCorredores corredores) {
         super(parent, modal);
         setTitle("Nueva carrera");
         this.logicaCarreras = logicaCarreras;
         initComponents();
         validador();
         
+        //Instanciamos la carrera a crear sin participantes
+        carrera= new Carrera();
+        participantes = null;
+        
+        //Instanciamos el listado de corredores para elegir participantes
+        this.corredores = corredores.verCorredores();
+        
         //Instanciamos una coleccion para añadir participantes durante la creación de la carrera:       
-        participantes = new HashSet<Participante>();
+        participantes = new HashSet<>();
         
         jButtonAceptarMoficacion.setVisible(false);
         jButtonEliminarCarrera.setVisible(false);
@@ -139,8 +150,6 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
         jButtonAniadirPart = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1005, 500));
-        setPreferredSize(new java.awt.Dimension(1004, 495));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos de carrera", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
@@ -169,11 +178,6 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
 
         jTextFieldNumPart.setToolTipText("Espacio para insertar el teléfono del corredor");
         jTextFieldNumPart.setName("Telefóno"); // NOI18N
-        jTextFieldNumPart.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldNumPartActionPerformed(evt);
-            }
-        });
 
         jSpinnerFecha.setModel(new javax.swing.SpinnerDateModel());
         jSpinnerFecha.setToolTipText("Selecciona la fecha de nacimiento del corredor");
@@ -261,6 +265,11 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
         jScrollPane1.setViewportView(jTable1);
 
         jButtonAniadirPart.setText("Añadir participante");
+        jButtonAniadirPart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAniadirPartActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -361,17 +370,16 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
             //Mostrar dialogo de confirmacion
             int aceptar = JOptionPane.showConfirmDialog(this, "¿Confirmar nueva carrera?", "Confirmar", JOptionPane.YES_NO_OPTION);
 
-            if (aceptar == JOptionPane.YES_OPTION) {
-
-                String nombre = jTextFieldNombre.getText();
-                Date fecha = (Date) jSpinnerFecha.getValue();
-                String lugar = jTextFieldLugar.getText();                              
-                int numMaxPart = Integer.parseInt(jTextFieldNumPart.getText());
+            if (aceptar == JOptionPane.YES_OPTION) {             
                 
+                carrera.setNombre(jTextFieldNombre.getText());
+                carrera.setFecha((Date) jSpinnerFecha.getValue());
+                carrera.setLugar(jTextFieldLugar.getText());
+                carrera.setNumMaxParticipantes(Integer.parseInt(jTextFieldNumPart.getText()));
+                carrera.setCorredores(participantes);
                 
-                Carrera c = new Carrera(nombre, fecha, lugar, numMaxPart, participantes);
-                logicaCarreras.altaCarrera(c);
-
+                logicaCarreras.altaCarrera(carrera);
+                
                 JOptionPane.showConfirmDialog(this, "Carrera creada con éxito.", "Confirmación", JOptionPane.CLOSED_OPTION);
 
                 dispose();
@@ -409,9 +417,10 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
             }      
     }//GEN-LAST:event_jButtonEliminarCarreraActionPerformed
 
-    private void jTextFieldNumPartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNumPartActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldNumPartActionPerformed
+    private void jButtonAniadirPartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAniadirPartActionPerformed
+        plc = new PantallaListaCorredores(this, true, corredores, participantes, carrera);
+        plc.setVisible(true);
+    }//GEN-LAST:event_jButtonAniadirPartActionPerformed
     
      @Override
 

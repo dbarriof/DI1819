@@ -5,8 +5,12 @@
  */
 package gui;
 
+import Dto.Carrera;
 import Dto.Corredor;
 import Dto.ModelosTabla;
+import Dto.Participante;
+import Logica.LogicaCarreras;
+import Logica.LogicaCorredores;
 import java.util.HashSet;
 import javax.swing.table.DefaultTableModel;
 
@@ -16,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class PantallaListaCorredores extends javax.swing.JDialog {
     private HashSet<Corredor> listaCorredores;
+    private HashSet<Participante> listaParticipantes;
     
     /**
      * Constructor para ver el listado completo de corredores dados de alta en la aplicación
@@ -23,12 +28,13 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
      * @param modal
      * @param listaCorredores
      */
-    public PantallaListaCorredores(java.awt.Frame parent, boolean modal, HashSet<Corredor> listaCorredores) {
+    public PantallaListaCorredores(java.awt.Frame parent, boolean modal, LogicaCorredores listacorredores) {
         super(parent, modal);
-        this.listaCorredores = listaCorredores;
+        this.listaCorredores = listacorredores.verCorredores();
         initComponents();
         cargarTabla();
         
+        jButtonAniadir.setVisible(false);
         jLabelTitular.setText("Listado de corredores:");
     }
     
@@ -39,9 +45,19 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
      * @param listaCorredores
      * @param importados 
      */
-    public PantallaListaCorredores(java.awt.Frame parent, boolean modal, HashSet<Corredor> listaCorredores, boolean importados) {
+    public PantallaListaCorredores(java.awt.Frame parent, boolean modal, HashSet<Corredor> listacorredores, boolean importados) {
         super(parent, modal);
-        this.listaCorredores = listaCorredores;
+        this.listaCorredores = listacorredores;
+        initComponents();
+        cargarTabla();
+        
+        jButtonAniadir.setVisible(false);
+        jLabelTitular.setText("Corredores importados:");
+    }
+    
+    public PantallaListaCorredores(java.awt.Dialog parent, boolean modal, HashSet<Corredor> corredores, HashSet<Participante> participantes, Carrera carrera) {
+        super(parent, modal);
+        this.listaCorredores = corredores;
         initComponents();
         cargarTabla();
         
@@ -73,21 +89,25 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableCorredores = new javax.swing.JTable();
         jButtonVolver = new javax.swing.JButton();
+        jButtonAniadir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Listado de corredores");
 
         jLabelTitular.setText("null");
 
-        jTableCorredores.setModel(ModelosTabla.tablaCorredor());
-        jScrollPane1.setViewportView(jTableCorredores);
-
-        jButtonVolver.setText("Volver...");
-        jButtonVolver.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonVolverActionPerformed(evt);
+        jTableCorredores.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        });
+        ));
+        jScrollPane1.setViewportView(jTableCorredores);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -97,11 +117,7 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelTitular, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonVolver, javax.swing.GroupLayout.Alignment.TRAILING))))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 676, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -111,9 +127,22 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
                 .addComponent(jLabelTitular)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                .addComponent(jButtonVolver))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
+
+        jButtonVolver.setText("Volver...");
+        jButtonVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVolverActionPerformed(evt);
+            }
+        });
+
+        jButtonAniadir.setText("Añadir");
+        jButtonAniadir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAniadirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -121,7 +150,13 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonAniadir)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonVolver)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -129,7 +164,11 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonVolver)
+                    .addComponent(jButtonAniadir))
+                .addContainerGap())
         );
 
         pack();
@@ -139,12 +178,17 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_jButtonVolverActionPerformed
 
+    private void jButtonAniadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAniadirActionPerformed
+        
+    }//GEN-LAST:event_jButtonAniadirActionPerformed
+
     /**
      * @param args the command line arguments
      */
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonAniadir;
     private javax.swing.JButton jButtonVolver;
     private javax.swing.JLabel jLabelTitular;
     private javax.swing.JPanel jPanel1;

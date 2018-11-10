@@ -16,8 +16,8 @@ import java.util.HashSet;
 public class LogicaCarreras {
     private HashSet<Carrera> carreras;
 
-    public LogicaCarreras(HashSet<Carrera> carreras) {
-        this.carreras = carreras;
+    public LogicaCarreras() {
+        this.carreras = new HashSet<>();
     }
     
     public void altaCarrera(Carrera c){
