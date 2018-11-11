@@ -16,14 +16,16 @@ import java.util.StringTokenizer;
  * @author dbarriof
  */
 public class LogicaCorredores {
-    private HashSet<Corredor> corredores;
+    private ArrayList<Corredor> corredores;
 
     public LogicaCorredores() {
-        this.corredores = new HashSet<>();
+        this.corredores = new ArrayList<>();
     }
 
     public void altaCorredor(Corredor c) {
-        corredores.add(c);
+        if(!corredores.contains(c)){
+            corredores.add(c);
+        }   
     }
 
     public void bajaCorredor(Corredor c) {        
@@ -64,13 +66,13 @@ public class LogicaCorredores {
         return corr;
     }
 
-    public HashSet<Corredor> verCorredores() {
+    public ArrayList<Corredor> verCorredores() {
         return corredores;
     }
     
     //Devuelve un listado de jugadores para mostrarlos antes de confirmar la importación
-    public HashSet<Corredor> importarCorredores(File fichero) {
-        HashSet<Corredor> listaCorrImport = new HashSet<>();
+    public ArrayList<Corredor> importarCorredores(File fichero) {
+        ArrayList<Corredor> listaCorrImport = new ArrayList<>();
         
         try {
             BufferedReader br = new BufferedReader(new FileReader(fichero));
@@ -87,7 +89,7 @@ public class LogicaCorredores {
 
                 Corredor c = new Corredor(nombre, dni, fecha, direccion, telefono);
                 listaCorrImport.add(c);
-                corredores.add(c);
+                altaCorredor(c);
                 
                 linea = br.readLine();
 

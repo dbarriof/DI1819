@@ -36,9 +36,14 @@ public class LogicaCarreras {
         }
     }
     
-    public void aniadirParticipante(Carrera car, Corredor cor){
-        Participante participante = new Participante(cor, car.getDorsal() ,car);
-        car.getParticipantes().add(participante);     
+    public boolean aniadirParticipante(Carrera carrera, Corredor corredor){
+        if(!carrera.getParticipantes().contains(corredor)){
+            Participante participante = new Participante(corredor, carrera.getDorsal() ,carrera);
+            carrera.getParticipantes().add(participante);
+            return true;
+        } else {
+            return false;
+        }             
     }
 
 }

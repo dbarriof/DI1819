@@ -188,6 +188,9 @@
             <Property name="toolTipText" type="java.lang.String" value="Espacio para insertar el tel&#xe9;fono del corredor"/>
             <Property name="name" type="java.lang.String" value="Telef&#xf3;no" noResource="true"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldNumPartActionPerformed"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="PantallaDatosCarrera_jTextFieldNumPart"/>
           </AuxValues>

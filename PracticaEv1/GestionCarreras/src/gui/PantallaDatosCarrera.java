@@ -14,6 +14,7 @@ import Dto.*;
 import Logica.LogicaCarreras;
 import Logica.LogicaCorredores;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import javax.swing.JOptionPane;
@@ -30,13 +31,12 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
     private PantallaListaCorredores plc;
     private LogicaCarreras logicaCarreras;
     private LogicaCorredores logicaCorredores;
-    private HashSet<Corredor> corredores;
     private HashSet<Participante> participantes;
     private ValidationGroup group;
     private Carrera carrera;
     
     //Constructor para dar de alta un corredor
-    public PantallaDatosCarrera(java.awt.Frame parent, boolean modal, LogicaCarreras logicaCarreras, LogicaCorredores corredores) {
+    public PantallaDatosCarrera(java.awt.Frame parent, boolean modal, LogicaCarreras logicaCarreras, LogicaCorredores listaCorredores) {
         super(parent, modal);
         setTitle("Nueva carrera");
         this.logicaCarreras = logicaCarreras;
@@ -48,7 +48,7 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
         participantes = null;
         
         //Instanciamos el listado de corredores para elegir participantes
-        this.corredores = corredores.verCorredores();
+        this.logicaCorredores = listaCorredores;
         
         //Instanciamos una coleccion para añadir participantes durante la creación de la carrera:       
         participantes = new HashSet<>();
@@ -175,6 +175,11 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
 
         jTextFieldNumPart.setToolTipText("Espacio para insertar el teléfono del corredor");
         jTextFieldNumPart.setName("Telefóno"); // NOI18N
+        jTextFieldNumPart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldNumPartActionPerformed(evt);
+            }
+        });
 
         jSpinnerFecha.setModel(new javax.swing.SpinnerDateModel());
         jSpinnerFecha.setToolTipText("Selecciona la fecha de nacimiento del corredor");
@@ -418,9 +423,14 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonEliminarCarreraActionPerformed
 
     private void jButtonAniadirPartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAniadirPartActionPerformed
+        carrera.setNumMaxParticipantes(Integer.parseInt(jTextFieldNumPart.getText()));
         plc = new PantallaListaCorredores(this, true, logicaCarreras, logicaCorredores, carrera);
         plc.setVisible(true);
     }//GEN-LAST:event_jButtonAniadirPartActionPerformed
+
+    private void jTextFieldNumPartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNumPartActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldNumPartActionPerformed
     
      @Override
 

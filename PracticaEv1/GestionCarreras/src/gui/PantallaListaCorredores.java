@@ -12,7 +12,9 @@ import Dto.Participante;
 import Logica.LogicaCarreras;
 import Logica.LogicaCorredores;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashSet;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -22,6 +24,8 @@ import javax.swing.table.DefaultTableModel;
 public class PantallaListaCorredores extends javax.swing.JDialog {
     private LogicaCorredores listaCorredores;
     private LogicaCarreras listaCarreras;
+    private ArrayList<Corredor> corredoresParaAniadirACarrera;
+    
     private Carrera carrera;
     
     /**
@@ -49,7 +53,8 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
      */
     public PantallaListaCorredores(java.awt.Frame parent, boolean modal, LogicaCorredores listacorredores, File archivo) {
         super(parent, modal);
-        listaCorredores.importarCorredores(archivo);
+        this.listaCorredores = listacorredores;
+        listacorredores.importarCorredores(archivo);
         initComponents();
         cargarTabla();
         
@@ -192,10 +197,12 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
 
     private void jButtonAniadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAniadirActionPerformed
         int filaSeleccionada = jTableCorredores.convertRowIndexToModel(jTableCorredores.getSelectedRow());
-        Corredor seleccionado = listaCorredores.buscaCorredor(listaCorredores.verCorredores().get(filaSeleccionada).getDni);
-        filaSeleccionada.
-        listaCarreras.aniadirParticipante(carrera, cor);
-            
+        Corredor seleccionado = listaCorredores.buscaCorredor(listaCorredores.verCorredores().get(filaSeleccionada).getDni());
+        boolean resultado = listaCarreras.aniadirParticipante(carrera, seleccionado);
+        if(!resultado){
+            JOptionPane.showMessageDialog(this, "Se han cancelado los cambios", "Confirmación", JOptionPane.WARNING_MESSAGE);
+        }
+        //corredoresParaAniadirACarrera.remove(seleccionado);
         
     }//GEN-LAST:event_jButtonAniadirActionPerformed
 
