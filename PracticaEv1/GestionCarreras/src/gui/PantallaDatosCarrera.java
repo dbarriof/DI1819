@@ -11,15 +11,12 @@
 package gui;
 
 import Dto.*;
-import Dto.ModelosTabla;
 import Logica.LogicaCarreras;
 import Logica.LogicaCorredores;
 import java.awt.Color;
 import java.util.Date;
 import java.util.HashSet;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
 import org.netbeans.validation.api.ui.ValidationGroup;
 
@@ -335,7 +332,8 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
 
         dispose();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
-
+        
+    //Metodo para modificar los datos de una carrera existente
     private void jButtonAceptarMoficacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarMoficacionActionPerformed
         if (group.performValidation() == null) {
             //Mostrar dialogo de confirmacion
@@ -376,7 +374,8 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
                 carrera.setFecha((Date) jSpinnerFecha.getValue());
                 carrera.setLugar(jTextFieldLugar.getText());
                 carrera.setNumMaxParticipantes(Integer.parseInt(jTextFieldNumPart.getText()));
-                carrera.setCorredores(participantes);
+                
+                carrera.setParticipantes(participantes);
                 
                 logicaCarreras.altaCarrera(carrera);
                 
@@ -393,9 +392,10 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jButtonAceptarCarreraActionPerformed
     
+    //Metodo para eliminar una carrera existente
     private void jButtonEliminarCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarCarreraActionPerformed
                  //Mostrar dialogo de confirmacion
-            int aceptar = JOptionPane.showConfirmDialog(this, "¿Confirmar eliminación del corredor?", "Confirmar", JOptionPane.YES_NO_OPTION);
+            int aceptar = JOptionPane.showConfirmDialog(this, "¿Confirmar que quiere eliminar esta carrera?", "Confirmar", JOptionPane.YES_NO_OPTION);
 
             if (aceptar == JOptionPane.YES_OPTION) {
 
@@ -408,7 +408,7 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
                 Carrera c = new Carrera(nombre, fecha, lugar, numMaxPart, participantes);
                 logicaCarreras.eliminaCarrera(c);               
 
-                JOptionPane.showConfirmDialog(this, "Se ha eliminado el corredor.", "Confirmación", JOptionPane.CLOSED_OPTION);
+                JOptionPane.showConfirmDialog(this, "Se ha eliminado la carrera.", "Confirmación", JOptionPane.CLOSED_OPTION);
 
                 dispose();
             } else if (aceptar == JOptionPane.NO_OPTION) {
@@ -418,7 +418,7 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonEliminarCarreraActionPerformed
 
     private void jButtonAniadirPartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAniadirPartActionPerformed
-        plc = new PantallaListaCorredores(this, true, corredores, participantes, carrera);
+        plc = new PantallaListaCorredores(this, true, logicaCarreras, logicaCorredores, carrera);
         plc.setVisible(true);
     }//GEN-LAST:event_jButtonAniadirPartActionPerformed
     

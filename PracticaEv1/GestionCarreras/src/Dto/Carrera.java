@@ -17,7 +17,7 @@ public class Carrera {
     private String lugar;
     private int numMaxParticipantes;
     private HashSet<Participante> participantes;
-    private Set<Integer> dorsales;
+    private List<Integer> dorsales;
 
     //Constructor
     public Carrera(String nombre, Date fecha, String lugar, int numMaxParticipantes, HashSet<Participante> participantes) {
@@ -26,7 +26,7 @@ public class Carrera {
         this.lugar = lugar;
         this.numMaxParticipantes = numMaxParticipantes;
         this.participantes = participantes;
-        this.dorsales = new HashSet<>();   
+        this.dorsales = new ArrayList<>();   
         //Recargamos coleccion de dorsales necesarios para los participantes de la carrera
         for(int i=1;i<=numMaxParticipantes;i++){
             dorsales.add(i);
@@ -69,12 +69,21 @@ public class Carrera {
         this.numMaxParticipantes = numMaxParticipantes;
     }
 
-    public Set<Participante> getParticipantes() {
+    public HashSet<Participante> getParticipantes() {
         return participantes;
     }
 
-    public void setCorredores(HashSet<Participante> participantes) {
+    public void setParticipantes(HashSet<Participante> participantes) {
         this.participantes = participantes;
+    }
+
+    public int getDorsal() {
+        int dorsal = dorsales.get(0);
+        return dorsal;
+    }
+
+    public void setDorsales(ArrayList<Integer> dorsales) {
+        this.dorsales = dorsales;
     }
     
     

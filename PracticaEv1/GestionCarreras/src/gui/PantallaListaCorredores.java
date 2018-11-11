@@ -11,6 +11,7 @@ import Dto.ModelosTabla;
 import Dto.Participante;
 import Logica.LogicaCarreras;
 import Logica.LogicaCorredores;
+import java.io.File;
 import java.util.HashSet;
 import javax.swing.table.DefaultTableModel;
 
@@ -19,8 +20,9 @@ import javax.swing.table.DefaultTableModel;
  * @author dbarriof
  */
 public class PantallaListaCorredores extends javax.swing.JDialog {
-    private HashSet<Corredor> listaCorredores;
-    private HashSet<Participante> listaParticipantes;
+    private LogicaCorredores listaCorredores;
+    private LogicaCarreras listaCarreras;
+    private Carrera carrera;
     
     /**
      * Constructor para ver el listado completo de corredores dados de alta en la aplicación
@@ -30,7 +32,7 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
      */
     public PantallaListaCorredores(java.awt.Frame parent, boolean modal, LogicaCorredores listacorredores) {
         super(parent, modal);
-        this.listaCorredores = listacorredores.verCorredores();
+        this.listaCorredores = listacorredores;
         initComponents();
         cargarTabla();
         
@@ -45,9 +47,9 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
      * @param listaCorredores
      * @param importados 
      */
-    public PantallaListaCorredores(java.awt.Frame parent, boolean modal, HashSet<Corredor> listacorredores, boolean importados) {
+    public PantallaListaCorredores(java.awt.Frame parent, boolean modal, LogicaCorredores listacorredores, File archivo) {
         super(parent, modal);
-        this.listaCorredores = listacorredores;
+        listaCorredores.importarCorredores(archivo);
         initComponents();
         cargarTabla();
         
@@ -55,19 +57,29 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
         jLabelTitular.setText("Corredores importados:");
     }
     
-    public PantallaListaCorredores(java.awt.Dialog parent, boolean modal, HashSet<Corredor> corredores, HashSet<Participante> participantes, Carrera carrera) {
+    /**
+     * Constructor para mostrar listado de corredores y dar de alta en una carrera
+     * @param parent
+     * @param modal
+     * @param corredores
+     * @param participantes
+     * @param carrera 
+     */
+    public PantallaListaCorredores(java.awt.Dialog parent, boolean modal,LogicaCarreras listaCarreras, LogicaCorredores listaCorredores, Carrera carrera) {
         super(parent, modal);
-        this.listaCorredores = corredores;
+        this.listaCarreras = listaCarreras;
+        this.listaCorredores = listaCorredores;
+        this.carrera = carrera;
         initComponents();
         cargarTabla();
         
-        jLabelTitular.setText("Corredores importados:");
+        jLabelTitular.setText("Listado de corredores:");
     }
     
     public void cargarTabla(){
         jTableCorredores.setModel(ModelosTabla.tablaCorredor());
         DefaultTableModel dtm = (DefaultTableModel)jTableCorredores.getModel();        
-        for(Corredor c : listaCorredores){
+        for(Corredor c : listaCorredores.verCorredores()){
             dtm.addRow(c.arrayToStrings());
         }
         
@@ -179,6 +191,11 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonVolverActionPerformed
 
     private void jButtonAniadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAniadirActionPerformed
+        int filaSeleccionada = jTableCorredores.convertRowIndexToModel(jTableCorredores.getSelectedRow());
+        Corredor seleccionado = listaCorredores.buscaCorredor(listaCorredores.verCorredores().get(filaSeleccionada).getDni);
+        filaSeleccionada.
+        listaCarreras.aniadirParticipante(carrera, cor);
+            
         
     }//GEN-LAST:event_jButtonAniadirActionPerformed
 

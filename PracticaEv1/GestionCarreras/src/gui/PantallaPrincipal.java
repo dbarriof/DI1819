@@ -232,7 +232,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             //En caso de confirmar se muestran los corredores que se van a importar
             if (confirmar == JOptionPane.YES_OPTION) {
                 selectFich = false;
-                plc = new PantallaListaCorredores(this, true, listaCorredores.importarCorredores(archivo),true);
+                plc = new PantallaListaCorredores(this, true, listaCorredores, archivo);
                 plc.setVisible(true);
 
             } else if (confirmar == JOptionPane.NO_OPTION) {

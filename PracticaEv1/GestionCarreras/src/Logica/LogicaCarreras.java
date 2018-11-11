@@ -7,6 +7,8 @@
 package Logica;
 
 import Dto.Carrera;
+import Dto.Corredor;
+import Dto.Participante;
 import java.util.HashSet;
 
 /**
@@ -15,7 +17,7 @@ import java.util.HashSet;
  */
 public class LogicaCarreras {
     private HashSet<Carrera> carreras;
-
+    
     public LogicaCarreras() {
         this.carreras = new HashSet<>();
     }
@@ -29,9 +31,14 @@ public class LogicaCarreras {
             if (cor.equals(c)) {
                 carreras.remove(cor);
                 break;
+                
             }
         }
     }
     
-    
+    public void aniadirParticipante(Carrera car, Corredor cor){
+        Participante participante = new Participante(cor, car.getDorsal() ,car);
+        car.getParticipantes().add(participante);     
+    }
+
 }

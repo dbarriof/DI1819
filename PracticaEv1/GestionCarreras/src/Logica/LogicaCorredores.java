@@ -16,7 +16,6 @@ import java.util.StringTokenizer;
  * @author dbarriof
  */
 public class LogicaCorredores {
-
     private HashSet<Corredor> corredores;
 
     public LogicaCorredores() {
