@@ -5,25 +5,27 @@
  */
 package Dto;
 
+import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 
 /**
  *
  * @author dbarriof
  */
-public class Participante {
+public class Participante implements Serializable{
     private Corredor corredor;
     private int dorsal;
     private Carrera carrera;
-    private int tiempo;
-    private int posición;
+    private Date tiempo;
+    private int posicion;
 
     public Participante(Corredor corredor, Carrera carrera) {
         this.corredor = corredor;
         this.dorsal = 0;
         this.carrera = carrera;
-        tiempo = 0;
-        tiempo = 0;
+        tiempo = null;
+        posicion = 0;
     }
 
     public Corredor getCorredor() {
@@ -49,14 +51,32 @@ public class Participante {
     public void setCarrera(Carrera carrera) {
         this.carrera = carrera;
     }
+
+    public Date getTiempo() {
+        return tiempo;
+    }
+
+    public void setTiempo(Date tiempo) {
+        this.tiempo = tiempo;
+    }
+
+    public int getPosicion() {
+        return posicion;
+    }
+
+    public void setPosicion(int posicion) {
+        this.posicion = posicion;
+    }
+    
+    
     
     public String[] arrayToStrings(){
         String [] datos = new String [5];
         datos[0] = String.valueOf(getDorsal());
         datos[1] = corredor.getNombre();
         datos[2] = corredor.getDni();
-        if (tiempo == 0){datos[3] = "N/A";}else{ datos[3] = String.valueOf(tiempo);}
-        if (posición == 0){datos[4] = "N/A";}else{ datos[4] = String.valueOf(posición);}    
+        if (tiempo == null){datos[3] = "N/A";}else{ datos[3] = String.valueOf(tiempo);}
+        if (posicion == 0){datos[4] = "N/A";}else{ datos[4] = String.valueOf(posicion);}    
         
         return datos;
     }

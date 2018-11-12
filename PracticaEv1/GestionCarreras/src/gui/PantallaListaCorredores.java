@@ -7,7 +7,7 @@ package gui;
 
 import Dto.Carrera;
 import Dto.Corredor;
-import Dto.ModelosTabla;
+import gui.modelosTabla.ModelosTabla;
 import Dto.Participante;
 import Logica.LogicaCarreras;
 import Logica.LogicaCorredores;
@@ -192,7 +192,6 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVolverActionPerformed
-        java.awt.Dialog jad = (java.awt.Dialog) getParent();
         dispose();
     }//GEN-LAST:event_jButtonVolverActionPerformed
 

@@ -10,13 +10,16 @@
 
 package gui;
 
+import gui.modelosTabla.ModelosTabla;
 import Dto.*;
 import Logica.LogicaCarreras;
 import Logica.LogicaCorredores;
+import gui.modelosTabla.ParticipantesTableModel;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
@@ -32,7 +35,7 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
     private PantallaListaCorredores plc;
     private LogicaCarreras logicaCarreras;
     private LogicaCorredores logicaCorredores;
-    private HashSet<Participante> participantes;
+    private List<Participante> participantes;
     private ValidationGroup group;
     private Carrera carrera;
     
@@ -46,7 +49,7 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
         
         //Instanciamos la carrera y las colecciones asociadas (Participantes y dorsales)
         carrera= new Carrera();
-        carrera.setParticipantes(new HashSet<>());
+        carrera.setParticipantes(new ArrayList<>());
         carrera.setDorsales(new ArrayList<>());
         //Instanciamos el listado de corredores para elegir participantes
         this.logicaCorredores = listaCorredores;
@@ -117,14 +120,19 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
     }
     
     public void cargarTabla(){
-        jTableParticipantes.setModel(ModelosTabla.tablaParticipante());
+        /*jTableParticipantes.setModel(ModelosTabla.tablaParticipante());
         DefaultTableModel dtm = (DefaultTableModel)jTableParticipantes.getModel();        
         for(Participante p : carrera.getParticipantes()){
             dtm.addRow(p.arrayToStrings());
         }
         
-        jTableParticipantes.setRowSorter(ModelosTabla.ordenaTabla(dtm,0));
+        jTableParticipantes.setRowSorter(ModelosTabla.ordenaTabla(dtm,0));*/
         
+        
+        jTableParticipantes.setModel(new ParticipantesTableModel(participantes));
+        for(Participante p : carrera.getParticipantes()){
+            jTableParticipantes.
+        }
     }
     
     /**
@@ -377,7 +385,7 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
         
-    //Metodo para modificar los datos de una carrera existente
+    //Metodo para validar datos modificados de una carrera existente
     private void jButtonAceptarMoficacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarMoficacionActionPerformed
         if (group.performValidation() == null) {
             //Mostrar dialogo de confirmacion
@@ -471,12 +479,13 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonRefrescarTablaActionPerformed
 
     private void jButtonBorrarParticipanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarParticipanteActionPerformed
-        int filaSeleccionada = jTableParticipantes.convertRowIndexToModel(jTableParticipantes.getSelectedRow());
+        /*int filaSeleccionada = jTableParticipantes.convertRowIndexToModel(jTableParticipantes.getSelectedRow());
         Corredor seleccionado = participantes.buscaCorredor(listaCorredores.verCorredores().get(filaSeleccionada).getDni());
         boolean resultado = logicaCarreras.(carrera, seleccionado);
         if(!resultado){
             JOptionPane.showMessageDialog(this, "El corredor seleccionado ya está inscrito en está carrera", "Confirmación", JOptionPane.WARNING_MESSAGE);
         } 
+        */
     }//GEN-LAST:event_jButtonBorrarParticipanteActionPerformed
     
      @Override

@@ -139,7 +139,7 @@ public class LogicaCorredores {
         }
     }*/
 
-    public void exportarCorredores(File f) {
+    public void guardarDatos() {
         
     }
 }

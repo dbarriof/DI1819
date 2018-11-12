@@ -31,4 +31,21 @@ public class FormatoFecha {
         }
         return fecha;
     }
+    
+    public static String formatTiempo(Date d){
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        return sdf.format(d);
+    }
+
+    public static Date parseTiempo(String s){
+        Date fecha = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        try {
+            fecha = sdf.parse(s);
+        } catch (ParseException ex) {
+            System.out.println("Error al convertir fecha.");
+        }
+        return fecha;
+    }
+    
 }

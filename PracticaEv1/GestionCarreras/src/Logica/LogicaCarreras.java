@@ -63,7 +63,7 @@ public class LogicaCarreras {
         }             
     }
     
-    public boolean eliminarParticipante(Carrera carrera, Participante participante){
+    /*public boolean eliminarParticipante(Carrera carrera, Participante participante){
         Participante participante = new Participante(corredor,carrera);
         if(!carrera.getParticipantes().contains(participante) || carrera.getParticipantes()==null){
             participante.setDorsal(asignarDorsal(carrera));
@@ -73,7 +73,10 @@ public class LogicaCarreras {
             return false;
         }             
     }
+    */
     
-    
+    public void guardarDatos(){
+        
+    }
 
 }

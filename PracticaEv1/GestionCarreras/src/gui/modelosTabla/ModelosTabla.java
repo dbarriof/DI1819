@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Dto;
+package gui.modelosTabla;
 
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.RowSorter.SortKey;
 import javax.swing.SortOrder;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import javax.swing.text.TableView;
@@ -17,7 +18,7 @@ import javax.swing.text.TableView;
  *
  * @author dbarriof
  */
-public class ModelosTabla {
+public class ModelosTabla{
     
     //Modelo de tabla para corredores
     public static DefaultTableModel tablaCorredor(){

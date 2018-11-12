@@ -5,22 +5,23 @@
  */
 package Dto;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  *
  * @author dbarriof
  */
-public class Carrera {
+public class Carrera implements Serializable{
     private String nombre;
     private Date fecha;
     private String lugar;
     private int numMaxParticipantes;
-    private HashSet<Participante> participantes;
+    private List<Participante> participantes;
     private ArrayList<Integer> dorsales;
 
     //Constructor
-    public Carrera(String nombre, Date fecha, String lugar, int numMaxParticipantes, HashSet<Participante> participantes, ArrayList<Integer> dorsales) {
+    public Carrera(String nombre, Date fecha, String lugar, int numMaxParticipantes, ArrayList<Participante> participantes, ArrayList<Integer> dorsales) {
         this.nombre = nombre;
         this.fecha = fecha;
         this.lugar = lugar;
@@ -65,11 +66,11 @@ public class Carrera {
         this.numMaxParticipantes = numMaxParticipantes;
     }
 
-    public HashSet<Participante> getParticipantes() {
+    public List<Participante> getParticipantes() {
         return participantes;
     }
 
-    public void setParticipantes(HashSet<Participante> participantes) {
+    public void setParticipantes(List<Participante> participantes) {
         this.participantes = participantes;
     }
 
