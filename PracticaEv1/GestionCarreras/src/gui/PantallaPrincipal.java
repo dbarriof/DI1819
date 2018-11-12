@@ -145,6 +145,11 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jMenuCarreras.add(jMenuItemNuevaCarrera);
 
         jMenuItemModificarCarrera.setText("Modificar...");
+        jMenuItemModificarCarrera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemModificarCarreraActionPerformed(evt);
+            }
+        });
         jMenuCarreras.add(jMenuItemModificarCarrera);
 
         jMenuItemEliminarCarrera.setText("Eliminar...");
@@ -277,6 +282,11 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         pdc = new PantallaDatosCarrera(this, true, listaCarreras, listaCorredores);
         pdc.setVisible(true);
     }//GEN-LAST:event_jMenuItemNuevaCarreraActionPerformed
+
+    private void jMenuItemModificarCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemModificarCarreraActionPerformed
+        pdc = new PantallaDatosCarrera(this, true, listaCarreras, listaCorredores);
+        pdc.setVisible(true);
+    }//GEN-LAST:event_jMenuItemModificarCarreraActionPerformed
 
     /**
      * @param args the command line arguments

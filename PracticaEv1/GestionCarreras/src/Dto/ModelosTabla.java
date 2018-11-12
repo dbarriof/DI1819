@@ -28,7 +28,7 @@ public class ModelosTabla {
     
     
     //Modelo de tabla para carreras
-    public static DefaultTableModel tablaCarrera(){
+    public static DefaultTableModel tablaParticipante(){
         DefaultTableModel dtm = new DefaultTableModel();
         dtm.setColumnIdentifiers(new String [] {"Dorsal","Nombre","Dni","Tiempo","Pos. Final"});
         return dtm;

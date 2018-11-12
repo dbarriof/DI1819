@@ -5,6 +5,8 @@
  */
 package Dto;
 
+import java.util.Objects;
+
 /**
  *
  * @author dbarriof
@@ -16,9 +18,9 @@ public class Participante {
     private int tiempo;
     private int posición;
 
-    public Participante(Corredor corredor, int dorsal, Carrera carrera) {
+    public Participante(Corredor corredor, Carrera carrera) {
         this.corredor = corredor;
-        this.dorsal = dorsal;
+        this.dorsal = 0;
         this.carrera = carrera;
         tiempo = 0;
         tiempo = 0;
@@ -47,10 +49,46 @@ public class Participante {
     public void setCarrera(Carrera carrera) {
         this.carrera = carrera;
     }
+    
+    public String[] arrayToStrings(){
+        String [] datos = new String [5];
+        datos[0] = String.valueOf(getDorsal());
+        datos[1] = corredor.getNombre();
+        datos[2] = corredor.getDni();
+        if (tiempo == 0){datos[3] = "N/A";}else{ datos[3] = String.valueOf(tiempo);}
+        if (posición == 0){datos[4] = "N/A";}else{ datos[4] = String.valueOf(posición);}    
+        
+        return datos;
+    }
 
     @Override
     public String toString() {
         return "Participante{" + "corredor=" + corredor + ", dorsal=" + dorsal + ", carrera=" + carrera + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 89 * hash + Objects.hashCode(this.corredor);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Participante other = (Participante) obj;
+        if (!Objects.equals(this.corredor, other.corredor)) {
+            return false;
+        }
+        return true;
     }
     
     

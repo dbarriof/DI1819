@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
 import org.netbeans.validation.api.ui.ValidationGroup;
 
@@ -35,7 +36,7 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
     private ValidationGroup group;
     private Carrera carrera;
     
-    //Constructor para dar de alta un corredor
+    //Constructor para dar de alta una carrera
     public PantallaDatosCarrera(java.awt.Frame parent, boolean modal, LogicaCarreras logicaCarreras, LogicaCorredores listaCorredores) {
         super(parent, modal);
         setTitle("Nueva carrera");
@@ -43,21 +44,21 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
         initComponents();
         validador();
         
-        //Instanciamos la carrera a crear sin participantes
+        //Instanciamos la carrera y las colecciones asociadas (Participantes y dorsales)
         carrera= new Carrera();
-        participantes = null;
-        
+        carrera.setParticipantes(new HashSet<>());
+        carrera.setDorsales(new ArrayList<>());
         //Instanciamos el listado de corredores para elegir participantes
         this.logicaCorredores = listaCorredores;
         
         //Instanciamos una coleccion para añadir participantes durante la creación de la carrera:       
-        participantes = new HashSet<>();
+        //participantes = new HashSet<>();
         
         jButtonAceptarMoficacion.setVisible(false);
         jButtonEliminarCarrera.setVisible(false);
     }
     
-    //Constructor para modificar un corredor
+    //Constructor para modificar una carrera
     public PantallaDatosCarrera(java.awt.Frame parent, boolean modal, LogicaCarreras logicaCarreras, Carrera c) {
         super(parent, modal);
         setTitle("Modificar carrera");
@@ -77,7 +78,7 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
         jButtonEliminarCarrera.setVisible(false);
     }
     
-    //Constructor para eliminar un corredor
+    //Constructor para eliminar una carrera
     public PantallaDatosCarrera(java.awt.Frame parent, boolean modal, LogicaCarreras logicacarreras, Carrera c, boolean eliminar) {
         super(parent, modal);
         setTitle("Eliminar carrera");
@@ -115,6 +116,16 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
         group.add(jTextFieldNumPart, StringValidators.maxLength(3));
     }
     
+    public void cargarTabla(){
+        jTableParticipantes.setModel(ModelosTabla.tablaParticipante());
+        DefaultTableModel dtm = (DefaultTableModel)jTableParticipantes.getModel();        
+        for(Participante p : carrera.getParticipantes()){
+            dtm.addRow(p.arrayToStrings());
+        }
+        
+        jTableParticipantes.setRowSorter(ModelosTabla.ordenaTabla(dtm,0));
+        
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -143,8 +154,10 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
         jButtonEliminarCarrera = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableParticipantes = new javax.swing.JTable();
         jButtonAniadirPart = new javax.swing.JButton();
+        jButtonRefrescarTabla = new javax.swing.JButton();
+        jButtonBorrarParticipante = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -262,14 +275,34 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Participantes inscritos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
-        jTable1.setModel(ModelosTabla
-            .tablaCarrera());
-        jScrollPane1.setViewportView(jTable1);
+        jTableParticipantes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        jButtonAniadirPart.setText("Añadir participante");
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane1.setViewportView(jTableParticipantes);
+
+        jButtonAniadirPart.setText("Añadir participantes");
         jButtonAniadirPart.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAniadirPartActionPerformed(evt);
+            }
+        });
+
+        jButtonRefrescarTabla.setText("Refrescar tabla");
+        jButtonRefrescarTabla.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRefrescarTablaActionPerformed(evt);
+            }
+        });
+
+        jButtonBorrarParticipante.setText("Eliminar participante");
+        jButtonBorrarParticipante.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonBorrarParticipanteActionPerformed(evt);
             }
         });
 
@@ -278,16 +311,22 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 963, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButtonAniadirPart, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jButtonRefrescarTabla)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButtonAniadirPart, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonBorrarParticipante))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonAniadirPart)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonAniadirPart)
+                    .addComponent(jButtonRefrescarTabla)
+                    .addComponent(jButtonBorrarParticipante))
                 .addGap(0, 11, Short.MAX_VALUE))
         );
 
@@ -346,14 +385,13 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
 
             if (aceptar == JOptionPane.YES_OPTION) {
 
-                String nombre = jTextFieldNombre.getText();
-                Date fecha = (Date) jSpinnerFecha.getValue();
-                String lugar = jTextFieldLugar.getText();                              
-                int numMaxPart = Integer.parseInt(jTextFieldNumPart.getText());
+                carrera.setNombre(jTextFieldNombre.getText());
+                carrera.setFecha((Date) jSpinnerFecha.getValue());
+                carrera.setLugar(jTextFieldLugar.getText());                              
+                carrera.setNumMaxParticipantes(Integer.parseInt(jTextFieldNumPart.getText()));
                 
                 
-                Carrera c = new Carrera(nombre, fecha, lugar, numMaxPart, participantes);
-                logicaCarreras.altaCarrera(c);
+                
 
                 JOptionPane.showConfirmDialog(this, "Cambios realizados con éxito.", "Confirmación", JOptionPane.CLOSED_OPTION);
 
@@ -404,14 +442,10 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
 
             if (aceptar == JOptionPane.YES_OPTION) {
 
-                String nombre = jTextFieldNombre.getText();
-                Date fecha = (Date) jSpinnerFecha.getValue();
-                String lugar = jTextFieldLugar.getText();                              
-                int numMaxPart = Integer.parseInt(jTextFieldNumPart.getText());
-                
-                
-                Carrera c = new Carrera(nombre, fecha, lugar, numMaxPart, participantes);
-                logicaCarreras.eliminaCarrera(c);               
+                carrera.setNombre(jTextFieldNombre.getText());
+                carrera.setFecha((Date) jSpinnerFecha.getValue());
+                carrera.setLugar(jTextFieldLugar.getText());                              
+                carrera.setNumMaxParticipantes(Integer.parseInt(jTextFieldNumPart.getText()));               
 
                 JOptionPane.showConfirmDialog(this, "Se ha eliminado la carrera.", "Confirmación", JOptionPane.CLOSED_OPTION);
 
@@ -423,7 +457,7 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonEliminarCarreraActionPerformed
 
     private void jButtonAniadirPartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAniadirPartActionPerformed
-        carrera.setNumMaxParticipantes(Integer.parseInt(jTextFieldNumPart.getText()));
+        logicaCarreras.cargarDorsales(carrera, Integer.parseInt(jTextFieldNumPart.getText()));
         plc = new PantallaListaCorredores(this, true, logicaCarreras, logicaCorredores, carrera);
         plc.setVisible(true);
     }//GEN-LAST:event_jButtonAniadirPartActionPerformed
@@ -431,6 +465,19 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
     private void jTextFieldNumPartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNumPartActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldNumPartActionPerformed
+
+    private void jButtonRefrescarTablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRefrescarTablaActionPerformed
+        cargarTabla();
+    }//GEN-LAST:event_jButtonRefrescarTablaActionPerformed
+
+    private void jButtonBorrarParticipanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarParticipanteActionPerformed
+        int filaSeleccionada = jTableParticipantes.convertRowIndexToModel(jTableParticipantes.getSelectedRow());
+        Corredor seleccionado = participantes.buscaCorredor(listaCorredores.verCorredores().get(filaSeleccionada).getDni());
+        boolean resultado = logicaCarreras.(carrera, seleccionado);
+        if(!resultado){
+            JOptionPane.showMessageDialog(this, "El corredor seleccionado ya está inscrito en está carrera", "Confirmación", JOptionPane.WARNING_MESSAGE);
+        } 
+    }//GEN-LAST:event_jButtonBorrarParticipanteActionPerformed
     
      @Override
 
@@ -449,8 +496,10 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
     private javax.swing.JButton jButtonAceptarCarrera;
     private javax.swing.JButton jButtonAceptarMoficacion;
     private javax.swing.JButton jButtonAniadirPart;
+    private javax.swing.JButton jButtonBorrarParticipante;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonEliminarCarrera;
+    private javax.swing.JButton jButtonRefrescarTabla;
     private javax.swing.JLabel jLabelDatosCarrera;
     private javax.swing.JLabel jLabelFechaNac;
     private javax.swing.JLabel jLabelLugar;
@@ -460,7 +509,7 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner jSpinnerFecha;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTableParticipantes;
     private javax.swing.JTextField jTextFieldLugar;
     private javax.swing.JTextField jTextFieldNombre;
     private javax.swing.JTextField jTextFieldNumPart;

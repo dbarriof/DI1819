@@ -36,14 +36,44 @@ public class LogicaCarreras {
         }
     }
     
+    public void cargarDorsales(Carrera carrera, int numDeParticipantes){
+        for(int i=1; i <= numDeParticipantes ; i++){
+            carrera.getDorsales().add(i);
+        }
+    }
+    
+    public int asignarDorsal(Carrera carrera){
+        int dorsal = carrera.getDorsales().get(0);
+        carrera.getDorsales().remove(0);
+        return dorsal;
+    }
+    
+    public void devolverDorsal(Carrera carrera , int dorsal){
+        carrera.getDorsales().add(dorsal,dorsal);
+    }
+    
     public boolean aniadirParticipante(Carrera carrera, Corredor corredor){
-        if(!carrera.getParticipantes().contains(corredor)){
-            Participante participante = new Participante(corredor, carrera.getDorsal() ,carrera);
+        Participante participante = new Participante(corredor,carrera);
+        if(!carrera.getParticipantes().contains(participante) || carrera.getParticipantes()==null){
+            participante.setDorsal(asignarDorsal(carrera));
             carrera.getParticipantes().add(participante);
             return true;
         } else {
             return false;
         }             
     }
+    
+    public boolean eliminarParticipante(Carrera carrera, Participante participante){
+        Participante participante = new Participante(corredor,carrera);
+        if(!carrera.getParticipantes().contains(participante) || carrera.getParticipantes()==null){
+            participante.setDorsal(asignarDorsal(carrera));
+            carrera.getParticipantes().add(participante);
+            return true;
+        } else {
+            return false;
+        }             
+    }
+    
+    
 
 }

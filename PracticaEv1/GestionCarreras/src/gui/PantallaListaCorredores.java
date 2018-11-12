@@ -192,6 +192,7 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVolverActionPerformed
+        java.awt.Dialog jad = (java.awt.Dialog) getParent();
         dispose();
     }//GEN-LAST:event_jButtonVolverActionPerformed
 
@@ -200,9 +201,8 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
         Corredor seleccionado = listaCorredores.buscaCorredor(listaCorredores.verCorredores().get(filaSeleccionada).getDni());
         boolean resultado = listaCarreras.aniadirParticipante(carrera, seleccionado);
         if(!resultado){
-            JOptionPane.showMessageDialog(this, "Se han cancelado los cambios", "Confirmación", JOptionPane.WARNING_MESSAGE);
-        }
-        //corredoresParaAniadirACarrera.remove(seleccionado);
+            JOptionPane.showMessageDialog(this, "El corredor seleccionado ya está inscrito en está carrera", "Confirmación", JOptionPane.WARNING_MESSAGE);
+        }        
         
     }//GEN-LAST:event_jButtonAniadirActionPerformed
 
