@@ -9,6 +9,7 @@ package Logica;
 import Dto.Carrera;
 import Dto.Corredor;
 import Dto.Participante;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 /**
@@ -36,10 +37,12 @@ public class LogicaCarreras {
         }
     }
     
-    public void cargarDorsales(Carrera carrera, int numDeParticipantes){
-        for(int i=1; i <= numDeParticipantes ; i++){
-            carrera.getDorsales().add(i);
+    public void cargarDorsales(Carrera carrera){
+        ArrayList dorsales = (ArrayList) carrera.getDorsales();
+        for(int i=1; i <= carrera.getNumMaxParticipantes() ; i++){
+            dorsales.add(i);
         }
+        carrera.setDorsales(dorsales);
     }
     
     public int asignarDorsal(Carrera carrera){

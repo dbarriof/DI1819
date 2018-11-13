@@ -5,7 +5,9 @@
  */
 package gui.modelosTabla;
 
+import Dto.FormatoFecha;
 import Dto.Participante;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -15,22 +17,23 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ParticipantesTableModel extends AbstractTableModel{
     private List<Participante> listaParticipantes;
+    private final String[] columnas = {"Dorsal","Nombre","Dni","Tiempo","Pos. Final"};
     
     public ParticipantesTableModel(List<Participante> listaParticipantes) {
-        this.listaParticipantes = listaParticipantes;
+        this.listaParticipantes = (ArrayList) listaParticipantes;
     }
     
     @Override
     public int getRowCount() {
         if(listaParticipantes.isEmpty()){
-            return 1;
+            return 0;
         }
         return listaParticipantes.size();
     }
 
     @Override
     public int getColumnCount() {
-        return 5;
+        return columnas.length;
     }
 
     @Override
@@ -44,11 +47,26 @@ public class ParticipantesTableModel extends AbstractTableModel{
             case 2:
                 return listaParticipantes.get(fila).getCorredor().getDni();
             case 3:
-                return listaParticipantes.get(fila).getTiempo();
+                if(listaParticipantes.get(fila).getTiempo() == null){
+                    return null;
+                } else {
+                    return FormatoFecha.formatTiempo(listaParticipantes.get(fila).getTiempo());
+                }                         
             case 4:
-                return listaParticipantes.get(fila).getPosicion();
+                if(listaParticipantes.get(fila).getPosicion() == 0){
+                    return null;
+                } else {
+                    return listaParticipantes.get(fila).getPosicion();
+                }
+                
         }
         return null;
     }
+
+    @Override
+    public String getColumnName(int columna) {
+        return columnas[columna];
+    }
+    
     
 }

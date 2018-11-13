@@ -18,7 +18,7 @@ public class Carrera implements Serializable{
     private String lugar;
     private int numMaxParticipantes;
     private List<Participante> participantes;
-    private ArrayList<Integer> dorsales;
+    private List<Integer> dorsales;
 
     //Constructor
     public Carrera(String nombre, Date fecha, String lugar, int numMaxParticipantes, ArrayList<Participante> participantes, ArrayList<Integer> dorsales) {
@@ -31,7 +31,8 @@ public class Carrera implements Serializable{
     }
 
     public Carrera() {
-        
+        participantes = new ArrayList<>();
+        dorsales = new ArrayList<>();
     }
 
     public String getNombre() {
@@ -74,7 +75,7 @@ public class Carrera implements Serializable{
         this.participantes = participantes;
     }
 
-    public ArrayList<Integer> getDorsales() {        
+    public List<Integer> getDorsales() {        
         return dorsales;
     }
 

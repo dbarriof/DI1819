@@ -22,14 +22,16 @@ import javax.swing.table.DefaultTableModel;
  * @author dbarriof
  */
 public class PantallaListaCorredores extends javax.swing.JDialog {
+
     private LogicaCorredores listaCorredores;
     private LogicaCarreras listaCarreras;
-    private ArrayList<Corredor> corredoresParaAniadirACarrera;
-    
+    //private ArrayList<Corredor> corredoresParaAniadirACarrera;
     private Carrera carrera;
     
     /**
-     * Constructor para ver el listado completo de corredores dados de alta en la aplicación
+     * Constructor para ver el listado completo de corredores dados de alta en
+     * la aplicación
+     *
      * @param parent
      * @param modal
      * @param listaCorredores
@@ -39,17 +41,18 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
         this.listaCorredores = listacorredores;
         initComponents();
         cargarTabla();
-        
+
         jButtonAniadir.setVisible(false);
         jLabelTitular.setText("Listado de corredores:");
     }
-    
+
     /**
      * Constructor para ver el listado de corredores importados desde un fichero
+     *
      * @param parent
      * @param modal
      * @param listaCorredores
-     * @param importados 
+     * @param importados
      */
     public PantallaListaCorredores(java.awt.Frame parent, boolean modal, LogicaCorredores listacorredores, File archivo) {
         super(parent, modal);
@@ -57,41 +60,43 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
         listacorredores.importarCorredores(archivo);
         initComponents();
         cargarTabla();
-        
+
         jButtonAniadir.setVisible(false);
         jLabelTitular.setText("Corredores importados:");
     }
-    
+
     /**
-     * Constructor para mostrar listado de corredores y dar de alta en una carrera
+     * Constructor para mostrar listado de corredores y dar de alta en una
+     * carrera
+     * 
      * @param parent
      * @param modal
-     * @param corredores
-     * @param participantes
+     * @param listaCarreras
+     * @param listaCorredores
      * @param carrera 
      */
-    public PantallaListaCorredores(java.awt.Dialog parent, boolean modal,LogicaCarreras listaCarreras, LogicaCorredores listaCorredores, Carrera carrera) {
+    public PantallaListaCorredores(java.awt.Dialog parent, boolean modal, LogicaCarreras listaCarreras, LogicaCorredores listaCorredores, Carrera carrera) {
         super(parent, modal);
         this.listaCarreras = listaCarreras;
         this.listaCorredores = listaCorredores;
         this.carrera = carrera;
         initComponents();
-        cargarTabla();
         
+        cargarTabla();
         jLabelTitular.setText("Listado de corredores:");
     }
-    
-    public void cargarTabla(){
+
+    public void cargarTabla() {
         jTableCorredores.setModel(ModelosTabla.tablaCorredor());
-        DefaultTableModel dtm = (DefaultTableModel)jTableCorredores.getModel();        
-        for(Corredor c : listaCorredores.verCorredores()){
+        DefaultTableModel dtm = (DefaultTableModel) jTableCorredores.getModel();
+        for (Corredor c : listaCorredores.verCorredores()) {
             dtm.addRow(c.arrayToStrings());
         }
-        
-        jTableCorredores.setRowSorter(ModelosTabla.ordenaTabla(dtm,0));
-        
+
+        jTableCorredores.setRowSorter(ModelosTabla.ordenaTabla(dtm, 0));
+
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -196,19 +201,27 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonVolverActionPerformed
 
     private void jButtonAniadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAniadirActionPerformed
-        int filaSeleccionada = jTableCorredores.convertRowIndexToModel(jTableCorredores.getSelectedRow());
-        Corredor seleccionado = listaCorredores.buscaCorredor(listaCorredores.verCorredores().get(filaSeleccionada).getDni());
-        boolean resultado = listaCarreras.aniadirParticipante(carrera, seleccionado);
-        if(!resultado){
-            JOptionPane.showMessageDialog(this, "El corredor seleccionado ya está inscrito en está carrera", "Confirmación", JOptionPane.WARNING_MESSAGE);
-        }        
         
+        System.out.println(carrera.getDorsales());
+        if (!carrera.getDorsales().isEmpty()) {
+            int filaSeleccionada = jTableCorredores.convertRowIndexToModel(jTableCorredores.getSelectedRow());
+            Corredor seleccionado = listaCorredores.buscaCorredor(listaCorredores.verCorredores().get(filaSeleccionada).getDni());
+            boolean resultado = listaCarreras.aniadirParticipante(carrera, seleccionado);
+            System.out.println(String.valueOf(resultado));
+            if (!resultado) {
+                JOptionPane.showMessageDialog(this, "El corredor seleccionado ya está inscrito en está carrera y no se añadirá", "Confirmación", JOptionPane.WARNING_MESSAGE);
+            } /*else {
+                System.out.println("LLego y no sumo");
+                plazasCompletas++;
+            }*/
+        }else{
+            JOptionPane.showMessageDialog(this, "Se han completado todas las plazas disponibles para esta carrera", "Confirmación", JOptionPane.OK_OPTION);
+        }
     }//GEN-LAST:event_jButtonAniadirActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAniadir;

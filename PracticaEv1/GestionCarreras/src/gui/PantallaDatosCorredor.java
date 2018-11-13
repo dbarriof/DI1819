@@ -309,7 +309,6 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
-
         dispose();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 

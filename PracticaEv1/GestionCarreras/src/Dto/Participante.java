@@ -25,7 +25,6 @@ public class Participante implements Serializable{
         this.dorsal = 0;
         this.carrera = carrera;
         tiempo = null;
-        posicion = 0;
     }
 
     public Corredor getCorredor() {

@@ -35,7 +35,6 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
     private PantallaListaCorredores plc;
     private LogicaCarreras logicaCarreras;
     private LogicaCorredores logicaCorredores;
-    private List<Participante> participantes;
     private ValidationGroup group;
     private Carrera carrera;
     
@@ -44,21 +43,18 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
         super(parent, modal);
         setTitle("Nueva carrera");
         this.logicaCarreras = logicaCarreras;
+        this.logicaCorredores = listaCorredores;
         initComponents();
         validador();
-        
-        //Instanciamos la carrera y las colecciones asociadas (Participantes y dorsales)
+
+        //Instanciamos la carreraque vamos a crear para poder añadir elementos a sus colecciones antes de almacenarla en la colección de carreras.
         carrera= new Carrera();
-        carrera.setParticipantes(new ArrayList<>());
-        carrera.setDorsales(new ArrayList<>());
-        //Instanciamos el listado de corredores para elegir participantes
-        this.logicaCorredores = listaCorredores;
-        
-        //Instanciamos una coleccion para añadir participantes durante la creación de la carrera:       
-        //participantes = new HashSet<>();
+        cargarTabla();
         
         jButtonAceptarMoficacion.setVisible(false);
         jButtonEliminarCarrera.setVisible(false);
+        
+        
     }
     
     //Constructor para modificar una carrera
@@ -120,19 +116,7 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
     }
     
     public void cargarTabla(){
-        /*jTableParticipantes.setModel(ModelosTabla.tablaParticipante());
-        DefaultTableModel dtm = (DefaultTableModel)jTableParticipantes.getModel();        
-        for(Participante p : carrera.getParticipantes()){
-            dtm.addRow(p.arrayToStrings());
-        }
-        
-        jTableParticipantes.setRowSorter(ModelosTabla.ordenaTabla(dtm,0));*/
-        
-        
-        jTableParticipantes.setModel(new ParticipantesTableModel(participantes));
-        for(Participante p : carrera.getParticipantes()){
-            jTableParticipantes.
-        }
+        jTableParticipantes.setModel(new ParticipantesTableModel(carrera.getParticipantes()));
     }
     
     /**
@@ -173,7 +157,7 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
 
         jLabelDatosCarrera.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabelDatosCarrera.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabelDatosCarrera.setText("Datos del corredor:");
+        jLabelDatosCarrera.setText("Datos de la carrera:");
 
         jLabelNombre.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelNombre.setText("Nombre :");
@@ -381,7 +365,6 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
 
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
-
         dispose();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
         
@@ -426,7 +409,7 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
                 carrera.setLugar(jTextFieldLugar.getText());
                 carrera.setNumMaxParticipantes(Integer.parseInt(jTextFieldNumPart.getText()));
                 
-                carrera.setParticipantes(participantes);
+                //carrera.setParticipantes(participantes);
                 
                 logicaCarreras.altaCarrera(carrera);
                 
@@ -464,8 +447,11 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
             }      
     }//GEN-LAST:event_jButtonEliminarCarreraActionPerformed
 
+    //Metodo que permite desplegar la lista de corredores y añadirlos como participantes
     private void jButtonAniadirPartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAniadirPartActionPerformed
-        logicaCarreras.cargarDorsales(carrera, Integer.parseInt(jTextFieldNumPart.getText()));
+        //Asignamos la cantidad maxima de corredores según lo indicado en el campo correspondiente y generemaos los dorsales necesarios
+        carrera.setNumMaxParticipantes(Integer.parseInt(jTextFieldNumPart.getText()));
+        logicaCarreras.cargarDorsales(carrera);
         plc = new PantallaListaCorredores(this, true, logicaCarreras, logicaCorredores, carrera);
         plc.setVisible(true);
     }//GEN-LAST:event_jButtonAniadirPartActionPerformed
