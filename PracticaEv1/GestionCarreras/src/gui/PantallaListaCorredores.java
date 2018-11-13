@@ -15,6 +15,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import javax.swing.JOptionPane;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -25,7 +26,6 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
 
     private LogicaCorredores listaCorredores;
     private LogicaCarreras listaCarreras;
-    //private ArrayList<Corredor> corredoresParaAniadirACarrera;
     private Carrera carrera;
     
     /**
@@ -201,19 +201,13 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonVolverActionPerformed
 
     private void jButtonAniadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAniadirActionPerformed
-        
-        System.out.println(carrera.getDorsales());
         if (!carrera.getDorsales().isEmpty()) {
             int filaSeleccionada = jTableCorredores.convertRowIndexToModel(jTableCorredores.getSelectedRow());
             Corredor seleccionado = listaCorredores.buscaCorredor(listaCorredores.verCorredores().get(filaSeleccionada).getDni());
             boolean resultado = listaCarreras.aniadirParticipante(carrera, seleccionado);
-            System.out.println(String.valueOf(resultado));
             if (!resultado) {
                 JOptionPane.showMessageDialog(this, "El corredor seleccionado ya está inscrito en está carrera y no se añadirá", "Confirmación", JOptionPane.WARNING_MESSAGE);
-            } /*else {
-                System.out.println("LLego y no sumo");
-                plazasCompletas++;
-            }*/
+            }
         }else{
             JOptionPane.showMessageDialog(this, "Se han completado todas las plazas disponibles para esta carrera", "Confirmación", JOptionPane.OK_OPTION);
         }

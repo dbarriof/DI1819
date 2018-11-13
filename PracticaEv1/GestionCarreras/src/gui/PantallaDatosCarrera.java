@@ -117,6 +117,7 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
     
     public void cargarTabla(){
         jTableParticipantes.setModel(new ParticipantesTableModel(carrera.getParticipantes()));
+        
     }
     
     /**
