@@ -10,18 +10,14 @@
 
 package gui;
 
-import gui.modelosTabla.ModelosTabla;
 import Dto.*;
-import Logica.LogicaCarreras;
-import Logica.LogicaCorredores;
+import Logica.LogicaAplicacion;
 import gui.modelosTabla.ParticipantesTableModel;
 import java.awt.Color;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.*;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
 import org.netbeans.validation.api.ui.ValidationGroup;
 
@@ -33,35 +29,38 @@ import org.netbeans.validation.api.ui.ValidationGroup;
 
 public class PantallaDatosCarrera extends javax.swing.JDialog {
     private PantallaListaCorredores plc;
-    private LogicaCarreras logicaCarreras;
-    private LogicaCorredores logicaCorredores;
+    private LogicaAplicacion logicaAplicacion;   
     private ValidationGroup group;
     private Carrera carrera;
     
     //Constructor para dar de alta una carrera
-    public PantallaDatosCarrera(java.awt.Frame parent, boolean modal, LogicaCarreras logicaCarreras, LogicaCorredores listaCorredores) {
+    public PantallaDatosCarrera(java.awt.Frame parent, boolean modal, LogicaAplicacion logicaAplicacion) {
         super(parent, modal);
         setTitle("Nueva carrera");
-        this.logicaCarreras = logicaCarreras;
-        this.logicaCorredores = listaCorredores;
+        this.logicaAplicacion = logicaAplicacion;
         initComponents();
         validador();
-
+        
+        
         //Instanciamos la carreraque vamos a crear para poder añadir elementos a sus colecciones antes de almacenarla en la colección de carreras.
         carrera= new Carrera();
-        cargarTabla();
         
         jButtonAceptarMoficacion.setVisible(false);
         jButtonEliminarCarrera.setVisible(false);
         
-        
+        this.addWindowListener(new WindowAdapter(){
+            @Override
+            public void windowActivated(WindowEvent we){
+                cargarTablaParticipantes();
+            }
+        });
     }
     
     //Constructor para modificar una carrera
-    public PantallaDatosCarrera(java.awt.Frame parent, boolean modal, LogicaCarreras logicaCarreras, Carrera c) {
+    public PantallaDatosCarrera(java.awt.Frame parent, boolean modal, LogicaAplicacion logicaAplicacion, Carrera c) {
         super(parent, modal);
         setTitle("Modificar carrera");
-        this.logicaCarreras = logicaCarreras;
+        this.logicaAplicacion = logicaAplicacion;
         initComponents();
         validador();
         
@@ -78,10 +77,10 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
     }
     
     //Constructor para eliminar una carrera
-    public PantallaDatosCarrera(java.awt.Frame parent, boolean modal, LogicaCarreras logicacarreras, Carrera c, boolean eliminar) {
+    public PantallaDatosCarrera(java.awt.Frame parent, boolean modal, LogicaAplicacion logicaAplicacion, Carrera c, boolean eliminar) {
         super(parent, modal);
         setTitle("Eliminar carrera");
-        this.logicaCarreras = logicaCarreras;
+        this.logicaAplicacion = logicaAplicacion;
         initComponents();
         validador();
         
@@ -115,7 +114,7 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
         group.add(jTextFieldNumPart, StringValidators.maxLength(3));
     }
     
-    public void cargarTabla(){
+    public void cargarTablaParticipantes(){
         jTableParticipantes.setModel(new ParticipantesTableModel(carrera.getParticipantes()));
         
     }
@@ -130,7 +129,7 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jPanelDatosCarrera = new javax.swing.JPanel();
         jLabelDatosCarrera = new javax.swing.JLabel();
         jLabelNombre = new javax.swing.JLabel();
         jLabelLugar = new javax.swing.JLabel();
@@ -145,16 +144,16 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
         jButtonCancelar = new javax.swing.JButton();
         jButtonAceptarMoficacion = new javax.swing.JButton();
         jButtonEliminarCarrera = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jPanelParticipantes = new javax.swing.JPanel();
+        jScrollPaneParticipantes = new javax.swing.JScrollPane();
         jTableParticipantes = new javax.swing.JTable();
-        jButtonAniadirPart = new javax.swing.JButton();
-        jButtonRefrescarTabla = new javax.swing.JButton();
+        jButtonAniadirParticipante = new javax.swing.JButton();
         jButtonBorrarParticipante = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Datos de la carrera");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos de carrera", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+        jPanelDatosCarrera.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
         jLabelDatosCarrera.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabelDatosCarrera.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -191,45 +190,48 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
         jSpinnerFecha.setToolTipText("Selecciona la fecha de nacimiento del corredor");
         jSpinnerFecha.setName("Fecha de nacimiento"); // NOI18N
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+        javax.swing.GroupLayout jPanelDatosCarreraLayout = new javax.swing.GroupLayout(jPanelDatosCarrera);
+        jPanelDatosCarrera.setLayout(jPanelDatosCarreraLayout);
+        jPanelDatosCarreraLayout.setHorizontalGroup(
+            jPanelDatosCarreraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelDatosCarreraLayout.createSequentialGroup()
+                .addGroup(jPanelDatosCarreraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabelNumPart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabelFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)
                     .addComponent(jLabelLugar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabelNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabelDatosCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextFieldNombre)
-                    .addComponent(jTextFieldLugar)
-                    .addComponent(jTextFieldNumPart)
-                    .addComponent(jSpinnerFecha)
-                    .addComponent(validationPanelValidacionDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(jPanelDatosCarreraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(validationPanelValidacionDatos, javax.swing.GroupLayout.DEFAULT_SIZE, 816, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelDatosCarreraLayout.createSequentialGroup()
+                        .addGroup(jPanelDatosCarreraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jTextFieldNumPart, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSpinnerFecha, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldLugar, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldNombre))
+                        .addContainerGap())))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jPanelDatosCarreraLayout.setVerticalGroup(
+            jPanelDatosCarreraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelDatosCarreraLayout.createSequentialGroup()
+                .addGroup(jPanelDatosCarreraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(validationPanelValidacionDatos, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
                     .addComponent(jLabelDatosCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(22, 22, 22)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelDatosCarreraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(15, 15, 15)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelDatosCarreraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelLugar, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldLugar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(15, 15, 15)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelDatosCarreraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSpinnerFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelDatosCarreraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelNumPart, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldNumPart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
@@ -266,7 +268,7 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
             }
         });
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Participantes inscritos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+        jPanelParticipantes.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Participantes inscritos", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
         jTableParticipantes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -276,19 +278,12 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
 
             }
         ));
-        jScrollPane1.setViewportView(jTableParticipantes);
+        jScrollPaneParticipantes.setViewportView(jTableParticipantes);
 
-        jButtonAniadirPart.setText("Añadir participantes");
-        jButtonAniadirPart.addActionListener(new java.awt.event.ActionListener() {
+        jButtonAniadirParticipante.setText("Añadir participantes");
+        jButtonAniadirParticipante.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAniadirPartActionPerformed(evt);
-            }
-        });
-
-        jButtonRefrescarTabla.setText("Refrescar tabla");
-        jButtonRefrescarTabla.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonRefrescarTablaActionPerformed(evt);
+                jButtonAniadirParticipanteActionPerformed(evt);
             }
         });
 
@@ -299,28 +294,30 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 963, Short.MAX_VALUE)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jButtonRefrescarTabla)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonAniadirPart, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonBorrarParticipante))
+        javax.swing.GroupLayout jPanelParticipantesLayout = new javax.swing.GroupLayout(jPanelParticipantes);
+        jPanelParticipantes.setLayout(jPanelParticipantesLayout);
+        jPanelParticipantesLayout.setHorizontalGroup(
+            jPanelParticipantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelParticipantesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelParticipantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelParticipantesLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonAniadirParticipante, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonBorrarParticipante, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPaneParticipantes, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonAniadirPart)
-                    .addComponent(jButtonRefrescarTabla)
+        jPanelParticipantesLayout.setVerticalGroup(
+            jPanelParticipantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelParticipantesLayout.createSequentialGroup()
+                .addComponent(jScrollPaneParticipantes, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelParticipantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonAniadirParticipante)
                     .addComponent(jButtonBorrarParticipante))
-                .addGap(0, 11, Short.MAX_VALUE))
+                .addGap(6, 6, 6))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -330,35 +327,36 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButtonAceptarMoficacion, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(3, 3, 3)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButtonEliminarCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButtonAceptarCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(6, 6, 6)
-                        .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanelDatosCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelParticipantes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonAceptarMoficacion, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jButtonEliminarCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonAceptarCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(6, 6, 6)
+                .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelDatosCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanelParticipantes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButtonEliminarCarrera)
                     .addComponent(jButtonAceptarMoficacion)
                     .addComponent(jButtonAceptarCarrera)
                     .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38))
+                .addContainerGap())
         );
 
         pack();
@@ -381,10 +379,9 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
                 carrera.setFecha((Date) jSpinnerFecha.getValue());
                 carrera.setLugar(jTextFieldLugar.getText());                              
                 carrera.setNumMaxParticipantes(Integer.parseInt(jTextFieldNumPart.getText()));
+                              
+                logicaAplicacion.altaCarrera(carrera);
                 
-                
-                
-
                 JOptionPane.showConfirmDialog(this, "Cambios realizados con éxito.", "Confirmación", JOptionPane.CLOSED_OPTION);
 
                 dispose();
@@ -410,9 +407,7 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
                 carrera.setLugar(jTextFieldLugar.getText());
                 carrera.setNumMaxParticipantes(Integer.parseInt(jTextFieldNumPart.getText()));
                 
-                //carrera.setParticipantes(participantes);
-                
-                logicaCarreras.altaCarrera(carrera);
+                logicaAplicacion.altaCarrera(carrera);
                 
                 JOptionPane.showConfirmDialog(this, "Carrera creada con éxito.", "Confirmación", JOptionPane.CLOSED_OPTION);
 
@@ -449,31 +444,30 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonEliminarCarreraActionPerformed
 
     //Metodo que permite desplegar la lista de corredores y añadirlos como participantes
-    private void jButtonAniadirPartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAniadirPartActionPerformed
+    private void jButtonAniadirParticipanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAniadirParticipanteActionPerformed
         //Asignamos la cantidad maxima de corredores según lo indicado en el campo correspondiente y generemaos los dorsales necesarios
         carrera.setNumMaxParticipantes(Integer.parseInt(jTextFieldNumPart.getText()));
-        logicaCarreras.cargarDorsales(carrera);
-        plc = new PantallaListaCorredores(this, true, logicaCarreras, logicaCorredores, carrera);
+        logicaAplicacion.cargarDorsales(carrera);
+        plc = new PantallaListaCorredores(this, true, logicaAplicacion, carrera);
         plc.setVisible(true);
-    }//GEN-LAST:event_jButtonAniadirPartActionPerformed
+    }//GEN-LAST:event_jButtonAniadirParticipanteActionPerformed
 
     private void jTextFieldNumPartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNumPartActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldNumPartActionPerformed
-
-    private void jButtonRefrescarTablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRefrescarTablaActionPerformed
-        cargarTabla();
-    }//GEN-LAST:event_jButtonRefrescarTablaActionPerformed
-
+    
+    
     private void jButtonBorrarParticipanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarParticipanteActionPerformed
-        /*int filaSeleccionada = jTableParticipantes.convertRowIndexToModel(jTableParticipantes.getSelectedRow());
-        Corredor seleccionado = participantes.buscaCorredor(listaCorredores.verCorredores().get(filaSeleccionada).getDni());
-        boolean resultado = logicaCarreras.(carrera, seleccionado);
-        if(!resultado){
-            JOptionPane.showMessageDialog(this, "El corredor seleccionado ya está inscrito en está carrera", "Confirmación", JOptionPane.WARNING_MESSAGE);
-        } 
-        */
+        int filaSeleccionada = jTableParticipantes.convertRowIndexToModel(jTableParticipantes.getSelectedRow());       
+        Participante seleccionado = logicaAplicacion.buscaParticipante(carrera,carrera.getParticipantes().get(filaSeleccionada));
+        boolean resultado = logicaAplicacion.eliminarParticipante(carrera, seleccionado);
+        cargarTablaParticipantes();
+        if(resultado){
+            JOptionPane.showMessageDialog(this, "El participante se ha eliminado correctamente", "Confirmación", JOptionPane.OK_OPTION);
+        }
+        
     }//GEN-LAST:event_jButtonBorrarParticipanteActionPerformed
+    
     
      @Override
 
@@ -491,19 +485,18 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAceptarCarrera;
     private javax.swing.JButton jButtonAceptarMoficacion;
-    private javax.swing.JButton jButtonAniadirPart;
+    private javax.swing.JButton jButtonAniadirParticipante;
     private javax.swing.JButton jButtonBorrarParticipante;
     private javax.swing.JButton jButtonCancelar;
     private javax.swing.JButton jButtonEliminarCarrera;
-    private javax.swing.JButton jButtonRefrescarTabla;
     private javax.swing.JLabel jLabelDatosCarrera;
     private javax.swing.JLabel jLabelFechaNac;
     private javax.swing.JLabel jLabelLugar;
     private javax.swing.JLabel jLabelNombre;
     private javax.swing.JLabel jLabelNumPart;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel jPanelDatosCarrera;
+    private javax.swing.JPanel jPanelParticipantes;
+    private javax.swing.JScrollPane jScrollPaneParticipantes;
     private javax.swing.JSpinner jSpinnerFecha;
     private javax.swing.JTable jTableParticipantes;
     private javax.swing.JTextField jTextFieldLugar;

@@ -5,8 +5,7 @@
  */
 package gui;
 
-import Logica.LogicaCarreras;
-import Logica.LogicaCorredores;
+import Logica.LogicaAplicacion;
 import java.io.File;
 import java.util.Locale;
 import javax.swing.JFileChooser;
@@ -19,18 +18,18 @@ import javax.swing.JOptionPane;
 public class PantallaPrincipal extends javax.swing.JFrame {
 
     //Definicion de variables utilizadas
-    LogicaCorredores listaCorredores;
-    LogicaCarreras listaCarreras;
+    private LogicaAplicacion logicaAplicacion;
+    
     //Definicion de variables de pantallas
-    private PantallaDatosCorredor pac;
-    private PantallaListaCorredores plc;
-    private PantallaDatosCarrera pdc;
+    private PantallaDatosCorredor pdco;
+    private PantallaListaCorredores plco;
+    private PantallaDatosCarrera pdca;
+    private PantallaListaCarreras plca;
     /**
      * Creates new form PantallaPrincipal
      */
     public PantallaPrincipal() {
-        listaCorredores = new LogicaCorredores();
-        listaCarreras = new LogicaCarreras();
+        logicaAplicacion = new LogicaAplicacion();
         initComponents();
     }
 
@@ -47,7 +46,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jPanelPantallaPrincipal = new javax.swing.JPanel();
         jLabelImagen = new javax.swing.JLabel();
         jButtonCerrar = new javax.swing.JButton();
-        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenuAplicacion = new javax.swing.JMenuBar();
         jMenuCorredores = new javax.swing.JMenu();
         jMenuItemAlta = new javax.swing.JMenuItem();
         jMenuItemModificar = new javax.swing.JMenuItem();
@@ -87,7 +86,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        jMenuBar1.setPreferredSize(new java.awt.Dimension(118, 42));
+        jMenuAplicacion.setPreferredSize(new java.awt.Dimension(118, 42));
 
         jMenuCorredores.setBorder(null);
         jMenuCorredores.setText("Corredores");
@@ -132,7 +131,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         });
         jMenuCorredores.add(jMenuItemImportar);
 
-        jMenuBar1.add(jMenuCorredores);
+        jMenuAplicacion.add(jMenuCorredores);
 
         jMenuCarreras.setText("Carreras");
 
@@ -156,11 +155,16 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jMenuCarreras.add(jMenuItemEliminarCarrera);
 
         jMenuItemVerCarrera.setText("Ver...");
+        jMenuItemVerCarrera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemVerCarreraActionPerformed(evt);
+            }
+        });
         jMenuCarreras.add(jMenuItemVerCarrera);
 
-        jMenuBar1.add(jMenuCarreras);
+        jMenuAplicacion.add(jMenuCarreras);
 
-        setJMenuBar(jMenuBar1);
+        setJMenuBar(jMenuAplicacion);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -186,18 +190,28 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Boton para acceder al formulario de alta un nuevo corredor
+     * @param evt 
+     */
     private void jMenuItemAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAltaActionPerformed
-        pac = new PantallaDatosCorredor(this, true, listaCorredores);
-        pac.setVisible(true);
+        pdco = new PantallaDatosCorredor(this, true, logicaAplicacion);
+        pdco.setVisible(true);
     }//GEN-LAST:event_jMenuItemAltaActionPerformed
-
+    /**
+     * Boton para cerrar la aplicacion solicitando aceptacion
+     * @param evt 
+     */
     private void jButtonCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarActionPerformed
         int salir = JOptionPane.showConfirmDialog(this, "¿Confirma que quiere salir de la aplicación?", "Cerrar aplicación", JOptionPane.YES_NO_OPTION);
         if (salir == JOptionPane.YES_OPTION) {
             dispose();
         }
     }//GEN-LAST:event_jButtonCerrarActionPerformed
-
+    /**
+     * Boton para acceder al formulario de modificar los datos de un corredor
+     * @param evt 
+     */
     private void jMenuItemModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemModificarActionPerformed
         boolean salir = false;
         while (!salir) {
@@ -205,11 +219,11 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             if (modifCorredor == null) {
                 salir = true;
             } else {
-                if (listaCorredores.buscaCorredor(modifCorredor) != null) {
-                    pac = new PantallaDatosCorredor(this, true, listaCorredores, listaCorredores.buscaCorredor(modifCorredor));
-                    pac.setVisible(true);
+                if (logicaAplicacion.buscaCorredor(modifCorredor) != null) {
+                    pdco = new PantallaDatosCorredor(this, true, logicaAplicacion.buscaCorredor(modifCorredor));
+                    pdco.setVisible(true);
                     salir = true;
-                } else if (listaCorredores.buscaCorredor(modifCorredor) == null) {
+                } else if (logicaAplicacion.buscaCorredor(modifCorredor) == null) {
                     int confirm = JOptionPane.showConfirmDialog(this, "No existe el corredor indicado \n ¿Realizar una nueva busqueda?", "Error al buscar", JOptionPane.YES_NO_OPTION);
                     if (confirm == JOptionPane.NO_OPTION) {
                         salir = true;
@@ -218,7 +232,10 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jMenuItemModificarActionPerformed
-
+    /**
+     * Boton para seleccionar un fichero de donde importar corredores
+     * @param evt 
+     */
     private void jMenuItemImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemImportarActionPerformed
         boolean selectFich = true;
 
@@ -237,8 +254,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             //En caso de confirmar se muestran los corredores que se van a importar
             if (confirmar == JOptionPane.YES_OPTION) {
                 selectFich = false;
-                plc = new PantallaListaCorredores(this, true, listaCorredores, archivo);
-                plc.setVisible(true);
+                plco = new PantallaListaCorredores(this, true, logicaAplicacion, archivo);
+                plco.setVisible(true);
 
             } else if (confirmar == JOptionPane.NO_OPTION) {
 
@@ -253,8 +270,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemImportarActionPerformed
 
     private void jMenuItemVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemVerActionPerformed
-        plc = new PantallaListaCorredores(this, true, listaCorredores);
-        plc.setVisible(true);
+        plco = new PantallaListaCorredores(this, true, logicaAplicacion);
+        plco.setVisible(true);
     }//GEN-LAST:event_jMenuItemVerActionPerformed
 
     private void jMenuItemEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEliminarActionPerformed
@@ -264,11 +281,11 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             if (elimCorredor == null) {
                 salir = true;
             } else {
-                if (listaCorredores.buscaCorredor(elimCorredor) != null) {
-                    pac = new PantallaDatosCorredor(this, true, listaCorredores, listaCorredores.buscaCorredor(elimCorredor), true);
-                    pac.setVisible(true);
+                if (logicaAplicacion.buscaCorredor(elimCorredor) != null) {
+                    pdco = new PantallaDatosCorredor(this, true, logicaAplicacion, logicaAplicacion.buscaCorredor(elimCorredor));
+                    pdco.setVisible(true);
                     salir = true;
-                } else if (listaCorredores.buscaCorredor(elimCorredor) == null) {
+                } else if (logicaAplicacion.buscaCorredor(elimCorredor) == null) {
                     int confirm = JOptionPane.showConfirmDialog(this, "No existe el corredor indicado \n ¿Realizar una nueva busqueda?", "Error al buscar", JOptionPane.YES_NO_OPTION);
                     if (confirm == JOptionPane.NO_OPTION) {
                         salir = true;
@@ -279,14 +296,22 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemEliminarActionPerformed
 
     private void jMenuItemNuevaCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemNuevaCarreraActionPerformed
-        pdc = new PantallaDatosCarrera(this, true, listaCarreras, listaCorredores);
-        pdc.setVisible(true);
+        pdca = new PantallaDatosCarrera(this, true, logicaAplicacion);
+        pdca.setVisible(true);
     }//GEN-LAST:event_jMenuItemNuevaCarreraActionPerformed
-
+    /**
+     * PENDIENTE
+     * @param evt 
+     */
     private void jMenuItemModificarCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemModificarCarreraActionPerformed
-        pdc = new PantallaDatosCarrera(this, true, listaCarreras, listaCorredores);
-        pdc.setVisible(true);
+        /*pdc = new PantallaDatosCarrera(this, true, logicaAplicacion, logicaAplicacion.);
+        pdc.setVisible(true);*/
     }//GEN-LAST:event_jMenuItemModificarCarreraActionPerformed
+
+    private void jMenuItemVerCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemVerCarreraActionPerformed
+        plca = new PantallaListaCarreras(this, true, logicaAplicacion);
+        plca.setVisible(true);
+    }//GEN-LAST:event_jMenuItemVerCarreraActionPerformed
 
     /**
      * @param args the command line arguments
@@ -329,7 +354,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButtonCerrar;
     private javax.swing.JFileChooser jFileChooserFichImport;
     private javax.swing.JLabel jLabelImagen;
-    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuBar jMenuAplicacion;
     private javax.swing.JMenu jMenuCarreras;
     private javax.swing.JMenu jMenuCorredores;
     private javax.swing.JMenuItem jMenuItemAlta;

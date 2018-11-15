@@ -6,7 +6,7 @@
 package gui;
 
 import Dto.Corredor;
-import Logica.LogicaCorredores;
+import Logica.LogicaAplicacion;
 import java.awt.Color;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -19,31 +19,27 @@ import org.netbeans.validation.api.ui.ValidationGroup;
  */
 public class PantallaDatosCorredor extends javax.swing.JDialog {
 
-    private LogicaCorredores logicaCorredores;
+    private LogicaAplicacion logicaAplicacion;
     private ValidationGroup group;
-    private Corredor corrModificable;
-    private Corredor nuevoCorredor;
+    private Corredor corredor;
     
     //Constructor para dar de alta un corredor
-    public PantallaDatosCorredor(java.awt.Frame parent, boolean modal, LogicaCorredores logicacorredores) {
+    public PantallaDatosCorredor(java.awt.Frame parent, boolean modal, LogicaAplicacion logicaAplicacion) {
         super(parent, modal);
         setTitle("Alta corredor");
-        this.logicaCorredores = logicacorredores;
+        this.logicaAplicacion = logicaAplicacion;
         initComponents();
         validador();
         
-        //Instanciamos corredor a crear
-        nuevoCorredor= new Corredor();
         
         jButtonAceptarMoficacion.setVisible(false);
         jButtonEliminarCorredor.setVisible(false);
     }
     
     //Constructor para modificar un corredor
-    public PantallaDatosCorredor(java.awt.Frame parent, boolean modal, LogicaCorredores logicacorredores, Corredor c) {
+    public PantallaDatosCorredor(java.awt.Frame parent, boolean modal, Corredor c) {
         super(parent, modal);
         setTitle("Modificar corredor");
-        this.logicaCorredores = logicacorredores;
         initComponents();
         validador();
         
@@ -52,7 +48,7 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
         
         
         //Instanciamos corredor a modificar
-        corrModificable = c;
+        corredor = c;
         
         jTextFieldNombre.setText(c.getNombre());
         jTextFieldDni.setText(c.getDni());
@@ -68,10 +64,10 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
     }
     
     //Constructor para eliminar un corredor
-    public PantallaDatosCorredor(java.awt.Frame parent, boolean modal, LogicaCorredores logicacorredores, Corredor c, boolean eliminar) {
+    public PantallaDatosCorredor(java.awt.Frame parent, boolean modal, LogicaAplicacion logicaAplicacion, Corredor c) {
         super(parent, modal);
         setTitle("Eliminar corredor");
-        this.logicaCorredores = logicacorredores;
+        this.logicaAplicacion = logicaAplicacion;
         initComponents();
         validador();
         
@@ -125,7 +121,7 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jPanelDatosCorredor = new javax.swing.JPanel();
         jLabelAltaCorredor = new javax.swing.JLabel();
         jLabelNombre = new javax.swing.JLabel();
         jLabelDni = new javax.swing.JLabel();
@@ -145,6 +141,7 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
         jButtonEliminarCorredor = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Datos del corredor");
         setBounds(new java.awt.Rectangle(0, 0, 0, 0));
 
         jLabelAltaCorredor.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
@@ -190,12 +187,12 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
         jSpinnerFechaNac.setToolTipText("Selecciona la fecha de nacimiento del corredor");
         jSpinnerFechaNac.setName("Fecha de nacimiento"); // NOI18N
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+        javax.swing.GroupLayout jPanelDatosCorredorLayout = new javax.swing.GroupLayout(jPanelDatosCorredor);
+        jPanelDatosCorredor.setLayout(jPanelDatosCorredorLayout);
+        jPanelDatosCorredorLayout.setHorizontalGroup(
+            jPanelDatosCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelDatosCorredorLayout.createSequentialGroup()
+                .addGroup(jPanelDatosCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabelDireccion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabelTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabelFechaNac, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -203,7 +200,7 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
                     .addComponent(jLabelNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabelAltaCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelDatosCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextFieldNombre)
                     .addComponent(jTextFieldDni)
                     .addComponent(jTextFieldTelefono)
@@ -211,30 +208,30 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
                     .addComponent(validationPanelValidacionDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 824, Short.MAX_VALUE)))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jPanelDatosCorredorLayout.setVerticalGroup(
+            jPanelDatosCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelDatosCorredorLayout.createSequentialGroup()
+                .addGroup(jPanelDatosCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(validationPanelValidacionDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelAltaCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelDatosCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(15, 15, 15)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelDatosCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelDni, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldDni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(15, 15, 15)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelDatosCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSpinnerFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanelDatosCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(17, 17, 17)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanelDatosCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 100, Short.MAX_VALUE))
@@ -256,7 +253,6 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
         });
 
         jButtonAceptarMoficacion.setText("Aceptar");
-        jButtonAceptarMoficacion.setToolTipText("");
         jButtonAceptarMoficacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAceptarMoficacionActionPerformed(evt);
@@ -264,7 +260,6 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
         });
 
         jButtonEliminarCorredor.setText("Eliminar");
-        jButtonEliminarCorredor.setToolTipText("");
         jButtonEliminarCorredor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonEliminarCorredorActionPerformed(evt);
@@ -278,7 +273,7 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelDatosCorredor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButtonAceptarMoficacion, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -295,7 +290,7 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelDatosCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButtonEliminarCorredor)
@@ -319,10 +314,10 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
 
             if (aceptar == JOptionPane.YES_OPTION) {
                 
-                corrModificable.setNombre(jTextFieldNombre.getText());
-                corrModificable.setFechaNac((Date) jSpinnerFechaNac.getValue());
-                corrModificable.setDireccion(jTextAreaDireccion.getText());
-                corrModificable.setTelefono(Integer.parseInt(jTextFieldTelefono.getText()));
+                corredor.setNombre(jTextFieldNombre.getText());
+                corredor.setFechaNac((Date) jSpinnerFechaNac.getValue());
+                corredor.setDireccion(jTextAreaDireccion.getText());
+                corredor.setTelefono(Integer.parseInt(jTextFieldTelefono.getText()));
                 
                 JOptionPane.showConfirmDialog(this, "Cambios realizados con éxito.", "Confirmación", JOptionPane.CLOSED_OPTION);
 
@@ -344,14 +339,14 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
 
             if (aceptar == JOptionPane.YES_OPTION) {
 
-                nuevoCorredor.setNombre(jTextFieldNombre.getText());
-                nuevoCorredor.setDni(jTextFieldDni.getText());
-                nuevoCorredor.setFechaNac((Date) jSpinnerFechaNac.getValue());
-                nuevoCorredor.setDireccion(jTextAreaDireccion.getText());
-                nuevoCorredor.setTelefono(Integer.parseInt(jTextFieldTelefono.getText()));
+                String nombre = jTextFieldNombre.getText();
+                String dni = jTextFieldDni.getText();
+                Date fecNac = (Date) jSpinnerFechaNac.getValue();
+                String Direccion = jTextAreaDireccion.getText();
+                int telefono = Integer.parseInt(jTextFieldTelefono.getText());
 
-
-                logicaCorredores.altaCorredor(nuevoCorredor);
+                Corredor c = new Corredor(nombre, dni, fecNac, Direccion, telefono);
+                logicaAplicacion.altaCorredor(c);
 
                 JOptionPane.showConfirmDialog(this, "Alta realizada con éxito.", "Confirmación", JOptionPane.CLOSED_OPTION);
 
@@ -379,7 +374,7 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
                 int telefono = Integer.parseInt(jTextFieldTelefono.getText());
 
                 Corredor c = new Corredor(nombre, dni, fecNac, Direccion, telefono);
-                logicaCorredores.bajaCorredor(c);
+                logicaAplicacion.eliminarCorredor(c);
 
                 JOptionPane.showConfirmDialog(this, "Se ha eliminado el corredor.", "Confirmación", JOptionPane.CLOSED_OPTION);
 
@@ -418,7 +413,7 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
     private javax.swing.JLabel jLabelFechaNac;
     private javax.swing.JLabel jLabelNombre;
     private javax.swing.JLabel jLabelTelefono;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanelDatosCorredor;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner jSpinnerFechaNac;
     private javax.swing.JTextArea jTextAreaDireccion;

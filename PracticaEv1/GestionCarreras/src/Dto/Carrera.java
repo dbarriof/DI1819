@@ -83,5 +83,61 @@ public class Carrera implements Serializable{
         this.dorsales = dorsales;
     }
     
+   public String[] arrayToStrings(){
+        String [] datos = new String [5];
+        datos[0] = getNombre();
+        datos[1] = getLugar();
+        datos[2] = FormatoFecha.formatFecha(getFecha());
+        datos[4] = String.valueOf(getNumMaxParticipantes());
+        
+        return datos;
+    }
+
+    @Override
+    public String toString() {
+        return "Carrera{" + "nombre=" + nombre + ", fecha=" + fecha + ", lugar=" + lugar + ", numMaxParticipantes=" + numMaxParticipantes + ", participantes=" + participantes + ", dorsales=" + dorsales + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 61 * hash + Objects.hashCode(this.nombre);
+        hash = 61 * hash + Objects.hashCode(this.fecha);
+        hash = 61 * hash + Objects.hashCode(this.lugar);
+        hash = 61 * hash + this.numMaxParticipantes;
+        hash = 61 * hash + Objects.hashCode(this.participantes);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Carrera other = (Carrera) obj;
+        if (this.numMaxParticipantes != other.numMaxParticipantes) {
+            return false;
+        }
+        if (!Objects.equals(this.nombre, other.nombre)) {
+            return false;
+        }
+        if (!Objects.equals(this.lugar, other.lugar)) {
+            return false;
+        }
+        if (!Objects.equals(this.fecha, other.fecha)) {
+            return false;
+        }
+        if (!Objects.equals(this.participantes, other.participantes)) {
+            return false;
+        }
+        return true;
+    }
+   
     
 }

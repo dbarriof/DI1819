@@ -25,15 +25,7 @@ public class ModelosTabla{
         DefaultTableModel dtm = new DefaultTableModel();
         dtm.setColumnIdentifiers(new String [] {"Nombre","Dni","Fecha Nac.","Dirección","Teléfono"});
         return dtm;
-    }
-    
-    
-    //Modelo de tabla para carreras
-    public static DefaultTableModel tablaParticipante(){
-        DefaultTableModel dtm = new DefaultTableModel();
-        dtm.setColumnIdentifiers(new String [] {"Dorsal","Nombre","Dni","Tiempo","Pos. Final"});
-        return dtm;
-    }
+    }   
     
     public static TableRowSorter ordenaTabla(DefaultTableModel dtm, int col){
        TableRowSorter ordenador = new TableRowSorter(dtm);     
