@@ -19,17 +19,19 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
     //Definicion de variables utilizadas
     private LogicaAplicacion logicaAplicacion;
-    
+
     //Definicion de variables de pantallas
     private PantallaDatosCorredor pdco;
     private PantallaListaCorredores plco;
     private PantallaDatosCarrera pdca;
     private PantallaListaCarreras plca;
+
     /**
      * Creates new form PantallaPrincipal
      */
     public PantallaPrincipal() {
         logicaAplicacion = new LogicaAplicacion();
+        logicaAplicacion.cargarDatos();
         initComponents();
     }
 
@@ -192,7 +194,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
     /**
      * Boton para acceder al formulario de alta un nuevo corredor
-     * @param evt 
+     *
+     * @param evt
      */
     private void jMenuItemAltaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAltaActionPerformed
         pdco = new PantallaDatosCorredor(this, true, logicaAplicacion);
@@ -200,41 +203,49 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemAltaActionPerformed
     /**
      * Boton para cerrar la aplicacion solicitando aceptacion
-     * @param evt 
+     *
+     * @param evt
      */
     private void jButtonCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCerrarActionPerformed
         int salir = JOptionPane.showConfirmDialog(this, "¿Confirma que quiere salir de la aplicación?", "Cerrar aplicación", JOptionPane.YES_NO_OPTION);
         if (salir == JOptionPane.YES_OPTION) {
+            logicaAplicacion.guardarDatos();
             dispose();
         }
     }//GEN-LAST:event_jButtonCerrarActionPerformed
     /**
      * Boton para acceder al formulario de modificar los datos de un corredor
-     * @param evt 
+     *
+     * @param evt
      */
     private void jMenuItemModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemModificarActionPerformed
-        boolean salir = false;
-        while (!salir) {
-            String modifCorredor = JOptionPane.showInputDialog(this, "Indique el DNI del corredor", "");
-            if (modifCorredor == null) {
-                salir = true;
-            } else {
-                if (logicaAplicacion.buscaCorredor(modifCorredor) != null) {
-                    pdco = new PantallaDatosCorredor(this, true, logicaAplicacion.buscaCorredor(modifCorredor));
-                    pdco.setVisible(true);
+        if (!logicaAplicacion.verCorredores().isEmpty()) {
+            boolean salir = false;
+            while (!salir) {
+                String modifCorredor = JOptionPane.showInputDialog(this, "Indique el DNI del corredor", "");
+                if (modifCorredor == null) {
                     salir = true;
-                } else if (logicaAplicacion.buscaCorredor(modifCorredor) == null) {
-                    int confirm = JOptionPane.showConfirmDialog(this, "No existe el corredor indicado \n ¿Realizar una nueva busqueda?", "Error al buscar", JOptionPane.YES_NO_OPTION);
-                    if (confirm == JOptionPane.NO_OPTION) {
+                } else {
+                    if (logicaAplicacion.buscaCorredor(modifCorredor) != null) {
+                        pdco = new PantallaDatosCorredor(this, true, logicaAplicacion.buscaCorredor(modifCorredor));
+                        pdco.setVisible(true);
                         salir = true;
+                    } else if (logicaAplicacion.buscaCorredor(modifCorredor) == null) {
+                        int confirm = JOptionPane.showConfirmDialog(this, "No existe el corredor indicado \n ¿Realizar una nueva busqueda?", "Error al buscar", JOptionPane.YES_NO_OPTION);
+                        if (confirm == JOptionPane.NO_OPTION) {
+                            salir = true;
+                        }
                     }
                 }
             }
+        } else {
+            JOptionPane.showMessageDialog(this, "No hay corredores inscritos todavía", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jMenuItemModificarActionPerformed
     /**
      * Boton para seleccionar un fichero de donde importar corredores
-     * @param evt 
+     *
+     * @param evt
      */
     private void jMenuItemImportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemImportarActionPerformed
         boolean selectFich = true;
@@ -244,12 +255,10 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
             JFileChooser importarArchivo = new JFileChooser();
             importarArchivo.showOpenDialog(this);
-            //File archivo = importarArchivo.getSelectedFile();
-            //JFileChooserFichImport jfc = new jFileChooserFichImport();
             File archivo = importarArchivo.getSelectedFile();
 
             //Solicitamos confirmacion para el fichero seleccionado
-            int confirmar = JOptionPane.showConfirmDialog(this, "¿Confirmar el archivo seleccionado?" , "Confirmar", JOptionPane.YES_NO_OPTION);
+            int confirmar = JOptionPane.showConfirmDialog(this, "¿Confirmar el archivo seleccionado?", "Confirmar", JOptionPane.YES_NO_OPTION);
 
             //En caso de confirmar se muestran los corredores que se van a importar
             if (confirmar == JOptionPane.YES_OPTION) {
@@ -270,28 +279,37 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemImportarActionPerformed
 
     private void jMenuItemVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemVerActionPerformed
-        plco = new PantallaListaCorredores(this, true, logicaAplicacion);
-        plco.setVisible(true);
+        if (!logicaAplicacion.verCorredores().isEmpty()) {
+            plco = new PantallaListaCorredores(this, true, logicaAplicacion);
+            plco.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "No hay corredores inscritos todavía", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
     }//GEN-LAST:event_jMenuItemVerActionPerformed
 
     private void jMenuItemEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEliminarActionPerformed
-        boolean salir = false;
-        while (!salir) {
-            String elimCorredor = JOptionPane.showInputDialog(this, "Indique el DNI del corredor", "");
-            if (elimCorredor == null) {
-                salir = true;
-            } else {
-                if (logicaAplicacion.buscaCorredor(elimCorredor) != null) {
-                    pdco = new PantallaDatosCorredor(this, true, logicaAplicacion, logicaAplicacion.buscaCorredor(elimCorredor));
-                    pdco.setVisible(true);
+        if (!logicaAplicacion.verCorredores().isEmpty()) {
+            boolean salir = false;
+            while (!salir) {
+                String elimCorredor = JOptionPane.showInputDialog(this, "Indique el DNI del corredor", "");
+                if (elimCorredor == null) {
                     salir = true;
-                } else if (logicaAplicacion.buscaCorredor(elimCorredor) == null) {
-                    int confirm = JOptionPane.showConfirmDialog(this, "No existe el corredor indicado \n ¿Realizar una nueva busqueda?", "Error al buscar", JOptionPane.YES_NO_OPTION);
-                    if (confirm == JOptionPane.NO_OPTION) {
+                } else {
+                    if (logicaAplicacion.buscaCorredor(elimCorredor) != null) {
+                        pdco = new PantallaDatosCorredor(this, true, logicaAplicacion, logicaAplicacion.buscaCorredor(elimCorredor));
+                        pdco.setVisible(true);
                         salir = true;
+                    } else if (logicaAplicacion.buscaCorredor(elimCorredor) == null) {
+                        int confirm = JOptionPane.showConfirmDialog(this, "No existe el corredor indicado \n ¿Realizar una nueva busqueda?", "Error al buscar", JOptionPane.YES_NO_OPTION);
+                        if (confirm == JOptionPane.NO_OPTION) {
+                            salir = true;
+                        }
                     }
                 }
             }
+        } else {
+            JOptionPane.showMessageDialog(this, "No hay corredores inscritos todavía", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jMenuItemEliminarActionPerformed
 
@@ -299,18 +317,19 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         pdca = new PantallaDatosCarrera(this, true, logicaAplicacion);
         pdca.setVisible(true);
     }//GEN-LAST:event_jMenuItemNuevaCarreraActionPerformed
-    /**
-     * PENDIENTE
-     * @param evt 
-     */
+
     private void jMenuItemModificarCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemModificarCarreraActionPerformed
         /*pdc = new PantallaDatosCarrera(this, true, logicaAplicacion, logicaAplicacion.);
         pdc.setVisible(true);*/
     }//GEN-LAST:event_jMenuItemModificarCarreraActionPerformed
 
     private void jMenuItemVerCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemVerCarreraActionPerformed
-        plca = new PantallaListaCarreras(this, true, logicaAplicacion);
-        plca.setVisible(true);
+        if (!logicaAplicacion.verCarreras().isEmpty()) {
+            plca = new PantallaListaCarreras(this, true, logicaAplicacion);
+            plca.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "No hay carreras creadas todavía", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jMenuItemVerCarreraActionPerformed
 
     /**
@@ -344,7 +363,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 //Establecemos ubicacion de la aplicacion
-                Locale.setDefault(new Locale("es","ES"));
+                Locale.setDefault(new Locale("es", "ES"));
                 new PantallaPrincipal().setVisible(true);
             }
         });

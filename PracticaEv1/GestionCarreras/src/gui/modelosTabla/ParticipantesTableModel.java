@@ -9,7 +9,10 @@ import Dto.FormatoFecha;
 import Dto.Participante;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.RowSorter;
+import javax.swing.SortOrder;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -21,6 +24,15 @@ public class ParticipantesTableModel extends AbstractTableModel{
     
     public ParticipantesTableModel(List<Participante> listaParticipantes) {
         this.listaParticipantes = (ArrayList) listaParticipantes;
+    }
+    
+    public TableRowSorter ordenaTabla(AbstractTableModel dtm, int col){
+       TableRowSorter ordenador = new TableRowSorter(dtm);     
+       List<RowSorter.SortKey> sortKeys = new ArrayList<>();
+       sortKeys.add(new RowSorter.SortKey(col, SortOrder.ASCENDING));
+       ordenador.setSortKeys(sortKeys);
+       
+       return ordenador;
     }
     
     @Override

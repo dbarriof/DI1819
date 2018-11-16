@@ -7,25 +7,28 @@ package gui;
 
 import Dto.Carrera;
 import Dto.Corredor;
-import gui.modelosTabla.ModelosTabla;
+import gui.modelosTabla.CorredoresTableModel;
 import Dto.Participante;
 import Logica.LogicaAplicacion;
+import gui.modelosTabla.CarrerasTableModel;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
  * @author dbarriof
  */
 public class PantallaListaCorredores extends javax.swing.JDialog {
-    
+
     private LogicaAplicacion logicaAplicacion;
     private Carrera carrera;
-    
+
     /**
      * Constructor para ver el listado completo de corredores dados de alta en
      * la aplicación
@@ -66,32 +69,27 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
     /**
      * Constructor para mostrar listado de corredores y dar de alta en una
      * carrera
-     * 
+     *
      * @param parent
      * @param modal
      * @param listaCarreras
      * @param listaCorredores
-     * @param carrera 
+     * @param carrera
      */
     public PantallaListaCorredores(java.awt.Dialog parent, boolean modal, LogicaAplicacion logicaAplicacion, Carrera carrera) {
         super(parent, modal);
         this.logicaAplicacion = logicaAplicacion;
         this.carrera = carrera;
         initComponents();
-        
+
         cargarTabla();
         jLabelTitular.setText("Listado de corredores:");
     }
 
     public void cargarTabla() {
-        jTableCorredores.setModel(ModelosTabla.tablaCorredor());
-        DefaultTableModel dtm = (DefaultTableModel) jTableCorredores.getModel();
-        for (Corredor c : logicaAplicacion.verCorredores()) {
-            dtm.addRow(c.arrayToStrings());
-        }
-
-        jTableCorredores.setRowSorter(ModelosTabla.ordenaTabla(dtm, 0));
-
+        CorredoresTableModel ctm = new CorredoresTableModel(logicaAplicacion.verCorredores());
+        jTableCorredores.setModel(ctm);
+        jTableCorredores.setRowSorter(ctm.ordenaTabla(ctm, 0));
     }
 
     /**
@@ -119,15 +117,14 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
 
         jTableCorredores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5"
             }
         ));
+        jTableCorredores.setEditingColumn(0);
+        jTableCorredores.setEditingRow(0);
         jScrollPaneCorredores.setViewportView(jTableCorredores);
 
         javax.swing.GroupLayout jPanelCorredoresLayout = new javax.swing.GroupLayout(jPanelCorredores);
@@ -208,15 +205,15 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
             if (!resultado) {
                 JOptionPane.showMessageDialog(this, "El corredor seleccionado ya está inscrito en está carrera y no se añadirá", "Confirmación", JOptionPane.WARNING_MESSAGE);
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Se han completado todas las plazas disponibles para esta carrera", "Confirmación", JOptionPane.OK_OPTION);
         }
+
     }//GEN-LAST:event_jButtonAniadirActionPerformed
 
     /**
      * @param args the command line arguments
      */
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAniadir;
     private javax.swing.JButton jButtonVolver;

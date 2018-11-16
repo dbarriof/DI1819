@@ -346,13 +346,17 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
                 int telefono = Integer.parseInt(jTextFieldTelefono.getText());
 
                 Corredor c = new Corredor(nombre, dni, fecNac, Direccion, telefono);
-                logicaAplicacion.altaCorredor(c);
-
-                JOptionPane.showConfirmDialog(this, "Alta realizada con éxito.", "Confirmación", JOptionPane.CLOSED_OPTION);
-
-                dispose();
+                boolean resultado = logicaAplicacion.altaCorredor(c);
+                
+                if(resultado){
+                    JOptionPane.showConfirmDialog(this, "Alta realizada con éxito.", "Confirmación", JOptionPane.CLOSED_OPTION);
+                    dispose();
+                } else {
+                     JOptionPane.showMessageDialog(this, "El corredor ya esta dado de alta en la aplicación", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                
             } else if (aceptar == JOptionPane.NO_OPTION) {
-                JOptionPane.showMessageDialog(this, "Se ha cancelado la alta", "Confirmación", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Se ha cancelado la alta", "Mensaje", JOptionPane.WARNING_MESSAGE);
 
             }
 

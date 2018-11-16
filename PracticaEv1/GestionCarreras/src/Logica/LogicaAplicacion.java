@@ -31,11 +31,14 @@ public class LogicaAplicacion {
      *
      * @param corredor
      * @param c
+     * @return 
      */
-    public void altaCorredor(Corredor corredor) {
+    public boolean altaCorredor(Corredor corredor) {
         if (!corredores.contains(corredor)) {
             corredores.add(corredor);
+            return true;
         }
+        return false;
     }
 
     /**
@@ -138,47 +141,19 @@ public class LogicaAplicacion {
         return listaCorrImport;
     }
 
-    /*
-    public void selectImportFile(){
-        boolean selectFich = true;
-
-        while (selectFich) {
-            //Seleccionamos el fichero desde el que importar
-            
-            JFileChooser importarArchivo = new JFileChooser();
-            importarArchivo.showOpenDialog(this);
-            //File archivo = importarArchivo.getSelectedFile();
-            //JFileChooserFichImport jfc = new jFileChooserFichImport();
-            File archivo = importarArchivo.getSelectedFile();
-
-            //Solicitamos confirmacion para el fichero seleccionado
-            int confirmar = JOptionPane.showConfirmDialog(this, "¿Confirmar el archivo?\n" + archivo.getName(), "Confirmar", JOptionPane.YES_NO_OPTION);
-
-            //En caso de confirmar se muestran los corredores que se van a importar
-            if (confirmar == JOptionPane.YES_OPTION) {
-                selectFich = false;
-                plc = new PantallaListaCorredores(this, true, listaCorredores.importarCorredores(archivo));
-                plc.setVisible(true);
-
-            } else if (confirmar == JOptionPane.NO_OPTION) {
-
-                //Seleccionar un nuevo archivo si cancela el anterior o salir en caso contrario
-                int nuevaEleccion = JOptionPane.showConfirmDialog(this, "¿Seleccionar otro fichero?", "Confirmar", JOptionPane.YES_NO_OPTION);
-                
-                if (nuevaEleccion == JOptionPane.NO_OPTION) {
-                    selectFich = false;
-                }
-            }
-        }
-    }
-     */
     /**
      * Metodo para dar de alta una nueva carrera
      *
      * @param carrera
+     * @return 
      */
-    public void altaCarrera(Carrera carrera) {
-        carreras.add(carrera);
+    public boolean altaCarrera(Carrera carrera) {
+        if (!carreras.contains(carrera)) {
+            carreras.add(carrera);
+            return true;
+        }
+        return false;
+        
     }
 
     /**
@@ -298,7 +273,13 @@ public class LogicaAplicacion {
             return false;
         }
     }
-
+    
+    /**
+     * Metodo que devuelve un participante buscado dentro de una carrera si esta inscrito
+     * @param carrera
+     * @param participante
+     * @return 
+     */
     public Participante buscaParticipante(Carrera carrera, Participante participante) {
         for (Participante part : carrera.getParticipantes()) {
             if (participante.equals(part)) {
@@ -321,7 +302,7 @@ public class LogicaAplicacion {
     public void guardarDatos() {
 
     }
-
+        
     public void cargarDatos() {
 
     }

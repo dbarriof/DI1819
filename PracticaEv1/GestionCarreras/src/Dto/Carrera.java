@@ -100,12 +100,10 @@ public class Carrera implements Serializable{
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 61 * hash + Objects.hashCode(this.nombre);
-        hash = 61 * hash + Objects.hashCode(this.fecha);
-        hash = 61 * hash + Objects.hashCode(this.lugar);
-        hash = 61 * hash + this.numMaxParticipantes;
-        hash = 61 * hash + Objects.hashCode(this.participantes);
+        int hash = 5;
+        hash = 17 * hash + Objects.hashCode(this.nombre);
+        hash = 17 * hash + Objects.hashCode(this.lugar);
+        hash = 17 * hash + this.numMaxParticipantes;
         return hash;
     }
 
@@ -130,14 +128,8 @@ public class Carrera implements Serializable{
         if (!Objects.equals(this.lugar, other.lugar)) {
             return false;
         }
-        if (!Objects.equals(this.fecha, other.fecha)) {
-            return false;
-        }
-        if (!Objects.equals(this.participantes, other.participantes)) {
-            return false;
-        }
         return true;
     }
-   
+    
     
 }

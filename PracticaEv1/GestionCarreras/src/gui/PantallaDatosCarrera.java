@@ -278,6 +278,8 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
 
             }
         ));
+        jTableParticipantes.setEditingColumn(0);
+        jTableParticipantes.setEditingRow(0);
         jScrollPaneParticipantes.setViewportView(jTableParticipantes);
 
         jButtonAniadirParticipante.setText("Añadir participantes");
@@ -407,9 +409,15 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
                 carrera.setLugar(jTextFieldLugar.getText());
                 carrera.setNumMaxParticipantes(Integer.parseInt(jTextFieldNumPart.getText()));
                 
-                logicaAplicacion.altaCarrera(carrera);
+                boolean resultado = logicaAplicacion.altaCarrera(carrera);
+                System.out.println(resultado);
+                if(resultado){
+                    JOptionPane.showConfirmDialog(this, "Carrera creada con éxito.", "Confirmación", JOptionPane.CLOSED_OPTION);
+                    dispose();
+                } else {
+                     JOptionPane.showMessageDialog(this, "La carrera que quiere crear ya existe", "Error", JOptionPane.ERROR_MESSAGE);
+                }
                 
-                JOptionPane.showConfirmDialog(this, "Carrera creada con éxito.", "Confirmación", JOptionPane.CLOSED_OPTION);
 
                 dispose();
             } else if (aceptar == JOptionPane.NO_OPTION) {
