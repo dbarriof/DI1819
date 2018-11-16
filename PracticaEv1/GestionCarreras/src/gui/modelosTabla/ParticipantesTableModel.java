@@ -8,6 +8,7 @@ package gui.modelosTabla;
 import Dto.FormatoFecha;
 import Dto.Participante;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
@@ -62,7 +63,7 @@ public class ParticipantesTableModel extends AbstractTableModel{
                 if(listaParticipantes.get(fila).getTiempo() == null){
                     return null;
                 } else {
-                    return FormatoFecha.formatTiempo(listaParticipantes.get(fila).getTiempo());
+                    return listaParticipantes.get(fila).getTiempo();
                 }                         
             case 4:
                 if(listaParticipantes.get(fila).getPosicion() == 0){
@@ -80,5 +81,11 @@ public class ParticipantesTableModel extends AbstractTableModel{
         return columnas[columna];
     }
     
-    
+    @Override
+    public Class<?> getColumnClass(int i) {
+        if(i == 3){
+            return Date.class;
+        }
+        return super.getColumnClass(i);
+    }
 }

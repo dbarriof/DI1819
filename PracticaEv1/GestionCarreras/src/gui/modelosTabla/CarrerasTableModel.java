@@ -5,14 +5,13 @@
  */
 package gui.modelosTabla;
 
-import Dto.FormatoFecha;
 import Dto.Carrera;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.swing.RowSorter;
 import javax.swing.SortOrder;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
 /**
@@ -58,7 +57,7 @@ public class CarrerasTableModel extends AbstractTableModel{
             case 1:
                 return carreras.get(fila).getLugar();
             case 2:
-                return FormatoFecha.formatFecha(carreras.get(fila).getFecha());
+                return carreras.get(fila).getFecha();
             case 3:               
                 return String.valueOf(carreras.get(fila).getNumMaxParticipantes());                     
         }
@@ -70,5 +69,11 @@ public class CarrerasTableModel extends AbstractTableModel{
         return columnas[columna];
     }
     
-    
+    @Override
+    public Class<?> getColumnClass(int i) {
+        if(i == 2){
+            return Date.class;
+        }
+        return super.getColumnClass(i);
+    } 
 }

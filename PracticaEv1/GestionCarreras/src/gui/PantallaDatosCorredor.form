@@ -176,6 +176,9 @@
           <Properties>
             <Property name="toolTipText" type="java.lang.String" value="Espacio para insertar nombre del corredor"/>
             <Property name="name" type="java.lang.String" value="Nombre" noResource="true"/>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="jTextFieldDni"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldNombreActionPerformed"/>
@@ -185,6 +188,9 @@
           <Properties>
             <Property name="toolTipText" type="java.lang.String" value="Espacio para insertar el dni del corredor"/>
             <Property name="name" type="java.lang.String" value="Dni" noResource="true"/>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="jSpinnerFechaNac"/>
+            </Property>
           </Properties>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -200,6 +206,9 @@
                 <Property name="rows" type="int" value="5"/>
                 <Property name="toolTipText" type="java.lang.String" value="Espacio para insertar la direcci&#xf3;n del corredor"/>
                 <Property name="name" type="java.lang.String" value="Direcci&#xf3;n" noResource="true"/>
+                <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+                  <ComponentRef name="jTextFieldTelefono"/>
+                </Property>
               </Properties>
             </Component>
           </SubComponents>

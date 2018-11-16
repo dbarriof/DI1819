@@ -171,15 +171,19 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
 
         jLabelNumPart.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelNumPart.setText("Número de participantes :");
+        jLabelNumPart.setName("Número de participantes"); // NOI18N
 
         jTextFieldNombre.setToolTipText("Espacio para insertar nombre del corredor");
         jTextFieldNombre.setName("Nombre"); // NOI18N
+        jTextFieldNombre.setNextFocusableComponent(jTextFieldLugar);
 
         jTextFieldLugar.setToolTipText("Espacio para insertar el dni del corredor");
-        jTextFieldLugar.setName("Dni"); // NOI18N
+        jTextFieldLugar.setName("Lugar"); // NOI18N
+        jTextFieldLugar.setNextFocusableComponent(jSpinnerFecha);
 
         jTextFieldNumPart.setToolTipText("Espacio para insertar el teléfono del corredor");
-        jTextFieldNumPart.setName("Telefóno"); // NOI18N
+        jTextFieldNumPart.setName("Num de participantes"); // NOI18N
+        jTextFieldNumPart.setNextFocusableComponent(jButtonAniadirParticipante);
         jTextFieldNumPart.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldNumPartActionPerformed(evt);
@@ -189,6 +193,7 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
         jSpinnerFecha.setModel(new javax.swing.SpinnerDateModel());
         jSpinnerFecha.setToolTipText("Selecciona la fecha de nacimiento del corredor");
         jSpinnerFecha.setName("Fecha de nacimiento"); // NOI18N
+        jSpinnerFecha.setNextFocusableComponent(jTextFieldNumPart);
 
         javax.swing.GroupLayout jPanelDatosCarreraLayout = new javax.swing.GroupLayout(jPanelDatosCarrera);
         jPanelDatosCarrera.setLayout(jPanelDatosCarreraLayout);
@@ -238,6 +243,7 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
         );
 
         jButtonAceptarCarrera.setText("Aceptar");
+        jButtonAceptarCarrera.setNextFocusableComponent(jButtonCancelar);
         jButtonAceptarCarrera.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAceptarCarreraActionPerformed(evt);
@@ -283,6 +289,7 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
         jScrollPaneParticipantes.setViewportView(jTableParticipantes);
 
         jButtonAniadirParticipante.setText("Añadir participantes");
+        jButtonAniadirParticipante.setNextFocusableComponent(jButtonBorrarParticipante);
         jButtonAniadirParticipante.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAniadirParticipanteActionPerformed(evt);
@@ -290,6 +297,7 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
         });
 
         jButtonBorrarParticipante.setText("Eliminar participante");
+        jButtonBorrarParticipante.setNextFocusableComponent(jButtonAceptarCarrera);
         jButtonBorrarParticipante.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonBorrarParticipanteActionPerformed(evt);

@@ -7,18 +7,12 @@ package gui;
 
 import Dto.Carrera;
 import Dto.Corredor;
+import gui.modelosTabla.FormatoFechaTabla;
+import Dto.FormatoFecha;
 import gui.modelosTabla.CorredoresTableModel;
-import Dto.Participante;
 import Logica.LogicaAplicacion;
-import gui.modelosTabla.CarrerasTableModel;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashSet;
 import javax.swing.JOptionPane;
-import javax.swing.RowFilter;
-import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -90,6 +84,7 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
         CorredoresTableModel ctm = new CorredoresTableModel(logicaAplicacion.verCorredores());
         jTableCorredores.setModel(ctm);
         jTableCorredores.setRowSorter(ctm.ordenaTabla(ctm, 0));
+        jTableCorredores.getColumnModel().getColumn(2).setCellRenderer(new FormatoFechaTabla());       
     }
 
     /**

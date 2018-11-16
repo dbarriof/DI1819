@@ -5,17 +5,19 @@
  */
 package Dto;
 
+import java.text.DateFormat;
+import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.swing.JOptionPane;
-import org.openide.util.Exceptions;
+import javax.swing.table.DefaultTableCellRenderer;
 
 /**
  *
  * @author dbarriof
  */
 public class FormatoFecha {
+     
     public static String formatFecha(Date d){
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         return sdf.format(d);
@@ -36,7 +38,7 @@ public class FormatoFecha {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         return sdf.format(d);
     }
-
+    
     public static Date parseTiempo(String s){
         Date fecha = null;
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
@@ -46,6 +48,5 @@ public class FormatoFecha {
             System.out.println("Error al convertir fecha.");
         }
         return fecha;
-    }
-    
+    }   
 }

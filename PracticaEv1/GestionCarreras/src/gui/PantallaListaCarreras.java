@@ -5,10 +5,12 @@
  */
 package gui;
 
-import gui.*;
-import Dto.*;
+
+import Dto.Carrera;
+import Dto.Participante;
 import Logica.LogicaAplicacion;
 import gui.modelosTabla.CarrerasTableModel;
+import gui.modelosTabla.FormatoFechaTabla;
 import gui.modelosTabla.ParticipantesTableModel;
 import java.awt.Frame;
 import java.awt.event.KeyAdapter;
@@ -16,12 +18,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.*;
 import javax.swing.JOptionPane;
-import javax.swing.RowSorter;
-import javax.swing.SortOrder;
 import javax.swing.event.MouseInputListener;
-import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -116,6 +114,7 @@ public class PantallaListaCarreras extends javax.swing.JDialog {
         CarrerasTableModel ctm = new CarrerasTableModel(logicaAplicacion.verCarreras());
         jTableCarreras.setModel(ctm);
         jTableCarreras.setRowSorter(ctm.ordenaTabla(ctm, 0));
+        jTableCarreras.getColumnModel().getColumn(2).setCellRenderer(new FormatoFechaTabla());
     }
 
     public void cargarTablaParticipantes() {

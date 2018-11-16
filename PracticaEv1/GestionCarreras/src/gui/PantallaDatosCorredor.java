@@ -165,6 +165,7 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
 
         jTextFieldNombre.setToolTipText("Espacio para insertar nombre del corredor");
         jTextFieldNombre.setName("Nombre"); // NOI18N
+        jTextFieldNombre.setNextFocusableComponent(jTextFieldDni);
         jTextFieldNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldNombreActionPerformed(evt);
@@ -173,11 +174,13 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
 
         jTextFieldDni.setToolTipText("Espacio para insertar el dni del corredor");
         jTextFieldDni.setName("Dni"); // NOI18N
+        jTextFieldDni.setNextFocusableComponent(jSpinnerFechaNac);
 
         jTextAreaDireccion.setColumns(20);
         jTextAreaDireccion.setRows(5);
         jTextAreaDireccion.setToolTipText("Espacio para insertar la dirección del corredor");
         jTextAreaDireccion.setName("Dirección"); // NOI18N
+        jTextAreaDireccion.setNextFocusableComponent(jTextFieldTelefono);
         jScrollPane1.setViewportView(jTextAreaDireccion);
 
         jTextFieldTelefono.setToolTipText("Espacio para insertar el teléfono del corredor");

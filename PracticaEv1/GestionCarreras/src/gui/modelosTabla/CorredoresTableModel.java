@@ -58,7 +58,7 @@ public class CorredoresTableModel extends AbstractTableModel{
                 return listaCorredores.get(fila).getNombre();
             case 1:
                 return listaCorredores.get(fila).getDni();
-            case 2:  
+            case 2:                
                 return listaCorredores.get(fila).getFechaNac();
             case 3:               
                 return listaCorredores.get(fila).getDireccion();                         
@@ -79,5 +79,6 @@ public class CorredoresTableModel extends AbstractTableModel{
             return Date.class;
         }
         return super.getColumnClass(i);
-    }    
+    } 
+       
 }

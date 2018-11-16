@@ -174,24 +174,34 @@
           <Properties>
             <Property name="horizontalAlignment" type="int" value="4"/>
             <Property name="text" type="java.lang.String" value="N&#xfa;mero de participantes :"/>
+            <Property name="name" type="java.lang.String" value="N&#xfa;mero de participantes" noResource="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldNombre">
           <Properties>
             <Property name="toolTipText" type="java.lang.String" value="Espacio para insertar nombre del corredor"/>
             <Property name="name" type="java.lang.String" value="Nombre" noResource="true"/>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="jTextFieldLugar"/>
+            </Property>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldLugar">
           <Properties>
             <Property name="toolTipText" type="java.lang.String" value="Espacio para insertar el dni del corredor"/>
-            <Property name="name" type="java.lang.String" value="Dni" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="Lugar" noResource="true"/>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="jSpinnerFecha"/>
+            </Property>
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTextFieldNumPart">
           <Properties>
             <Property name="toolTipText" type="java.lang.String" value="Espacio para insertar el tel&#xe9;fono del corredor"/>
-            <Property name="name" type="java.lang.String" value="Telef&#xf3;no" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="Num de participantes" noResource="true"/>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="jButtonAniadirParticipante"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldNumPartActionPerformed"/>
@@ -207,6 +217,9 @@
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Selecciona la fecha de nacimiento del corredor"/>
             <Property name="name" type="java.lang.String" value="Fecha de nacimiento" noResource="true"/>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="jTextFieldNumPart"/>
+            </Property>
           </Properties>
         </Component>
         <Component class="org.netbeans.validation.api.ui.swing.ValidationPanel" name="validationPanelValidacionDatos">
@@ -216,6 +229,9 @@
     <Component class="javax.swing.JButton" name="jButtonAceptarCarrera">
       <Properties>
         <Property name="text" type="java.lang.String" value="Aceptar"/>
+        <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+          <ComponentRef name="jButtonCancelar"/>
+        </Property>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAceptarCarreraActionPerformed"/>
@@ -318,6 +334,9 @@
         <Component class="javax.swing.JButton" name="jButtonAniadirParticipante">
           <Properties>
             <Property name="text" type="java.lang.String" value="A&#xf1;adir participantes"/>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="jButtonBorrarParticipante"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAniadirParticipanteActionPerformed"/>
@@ -326,6 +345,9 @@
         <Component class="javax.swing.JButton" name="jButtonBorrarParticipante">
           <Properties>
             <Property name="text" type="java.lang.String" value="Eliminar participante"/>
+            <Property name="nextFocusableComponent" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="jButtonAceptarCarrera"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonBorrarParticipanteActionPerformed"/>
