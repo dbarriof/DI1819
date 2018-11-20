@@ -5,7 +5,6 @@
  */
 package gui;
 
-
 import Dto.Carrera;
 import Dto.Participante;
 import Logica.LogicaAplicacion;
@@ -36,19 +35,24 @@ public class PantallaListaCarreras extends javax.swing.JDialog {
         super(parent, modal);
         this.logicaAplicacion = logicaAplicacion;
         initComponents();
+        cargarTablaCarreras();
 
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowActivated(WindowEvent we) {
                 cargarTablaCarreras();
-                //cargarTablaParticipantes();
+                jTableCarreras.addRowSelectionInterval(0, 0);
+                cargarTablaParticipantes();
+
             }
         });
-
+        /*
         jTableCarreras.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-                if (jTableCarreras.getSelectedRows().length > 0) {
+                if (jTableCarreras.getSelectedRows().length >= 0) {
+                    jTableCarreras.removeRowSelectionInterval(0, 0);
+                    jTableParticipantes.removeRowSelectionInterval(WIDTH, WIDTH);
                     cargarTablaParticipantes();
                 }
             }
@@ -59,54 +63,56 @@ public class PantallaListaCarreras extends javax.swing.JDialog {
 
             @Override
             public void mouseClicked(MouseEvent me) {
-                if (jTableCarreras.getSelectedRows().length > 0) {
+                if (jTableCarreras.getSelectedRows().length >= 0) {
+                    jTableCarreras.removeRowSelectionInterval(0, 0);
                     cargarTablaParticipantes();
                 }
             }
 
             @Override
             public void mousePressed(MouseEvent me) {
-                if (jTableCarreras.getSelectedRows().length > 0) {
+                if (jTableCarreras.getSelectedRows().length >= 0) {
+                    jTableCarreras.removeRowSelectionInterval(0, 0);
                     cargarTablaParticipantes();
                 }
             }
 
             @Override
             public void mouseReleased(MouseEvent me) {
-                if (jTableCarreras.getSelectedRows().length > 0) {
-                    cargarTablaParticipantes();
+                if (jTableCarreras.getSelectedRows().length >= 0) {
+
                 }
             }
 
             @Override
             public void mouseEntered(MouseEvent me) {
-                if (jTableCarreras.getSelectedRows().length > 0) {
-                    cargarTablaParticipantes();
+                if (jTableCarreras.getSelectedRows().length >= 0) {
+
                 }
             }
 
             @Override
             public void mouseExited(MouseEvent me) {
-                if (jTableCarreras.getSelectedRows().length > 0) {
-                    cargarTablaParticipantes();
+                if (jTableCarreras.getSelectedRows().length >= 0) {
+
                 }
             }
 
             @Override
             public void mouseDragged(MouseEvent me) {
-                if (jTableCarreras.getSelectedRows().length > 0) {
-                    cargarTablaParticipantes();
+                if (jTableCarreras.getSelectedRows().length >= 0) {
+
                 }
             }
 
             @Override
             public void mouseMoved(MouseEvent me) {
-                if (jTableCarreras.getSelectedRows().length > 0) {
-                    cargarTablaParticipantes();
+                if (jTableCarreras.getSelectedRows().length >= 0) {
+
                 }
             }
 
-        });
+        });*/
 
     }
 
@@ -118,15 +124,12 @@ public class PantallaListaCarreras extends javax.swing.JDialog {
     }
 
     public void cargarTablaParticipantes() {
-        int filaSeleccionada = jTableCarreras.convertRowIndexToModel(jTableCarreras.getSelectedRow());
-        if (filaSeleccionada >= 0) {
+        if (!logicaAplicacion.verCarreras().isEmpty()) {
+            int filaSeleccionada = jTableCarreras.convertRowIndexToModel(jTableCarreras.getSelectedRow());
             Carrera seleccionada = logicaAplicacion.verCarreras().get(filaSeleccionada);
-            if (!seleccionada.getParticipantes().isEmpty()) {
+            //if (!seleccionada.getParticipantes().isEmpty()) {
                 jTableParticipantes.setModel(new ParticipantesTableModel(seleccionada.getParticipantes()));
-            }
-        } else {
-            Carrera seleccionada = logicaAplicacion.verCarreras().get(0);
-            jTableParticipantes.setModel(new ParticipantesTableModel(seleccionada.getParticipantes()));
+            //}
         }
     }
 
@@ -166,6 +169,11 @@ public class PantallaListaCarreras extends javax.swing.JDialog {
         ));
         jTableCarreras.setEditingColumn(0);
         jTableCarreras.setEditingRow(0);
+        jTableCarreras.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableCarrerasMouseClicked(evt);
+            }
+        });
         jScrollPaneCarreras.setViewportView(jTableCarreras);
 
         jButtonNuevaCarrera.setText("Nueva carrera");
@@ -323,6 +331,7 @@ public class PantallaListaCarreras extends javax.swing.JDialog {
             int filaSeleccionada = jTableCarreras.convertRowIndexToModel(jTableCarreras.getSelectedRow());
             Carrera seleccionada = logicaAplicacion.verCarreras().get(filaSeleccionada);
             logicaAplicacion.eliminaCarrera(seleccionada);
+            cargarTablaCarreras();
             cargarTablaParticipantes();
         }
 
@@ -332,28 +341,36 @@ public class PantallaListaCarreras extends javax.swing.JDialog {
         int filaSeleccionada = jTableCarreras.convertRowIndexToModel(jTableCarreras.getSelectedRow());
         Carrera seleccionada = logicaAplicacion.verCarreras().get(filaSeleccionada);
         System.out.println(seleccionada.getDorsales());
-        if(seleccionada.getParticipantes().isEmpty() && seleccionada.getDorsales().isEmpty()){
+        if (seleccionada.getParticipantes().isEmpty() && seleccionada.getDorsales().isEmpty()) {
             logicaAplicacion.cargarDorsales(seleccionada);
         }
         plc = new PantallaListaCorredores(this, true, logicaAplicacion, seleccionada);
-        
+
         plc.setVisible(true);
     }//GEN-LAST:event_jButtonAniadirParticipanteActionPerformed
 
     private void jButtonBorrarParticipanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarParticipanteActionPerformed
         int carreraleccionada = jTableCarreras.convertRowIndexToModel(jTableCarreras.getSelectedRow());
         Carrera seleccionada = logicaAplicacion.verCarreras().get(carreraleccionada);
-        int corredorSeleccionado = jTableParticipantes.convertRowIndexToModel(jTableParticipantes.getSelectedRow());
-        Participante seleccionado = logicaAplicacion.verParticipantes(seleccionada).get(corredorSeleccionado);
-        int confirm = JOptionPane.showConfirmDialog(this, "¿Seguro que desea eliminar el participante seleccionado?", "Eliminar", JOptionPane.YES_NO_OPTION);
-        if (confirm == JOptionPane.YES_OPTION) {
-            boolean resultado = logicaAplicacion.eliminarParticipante(seleccionada, seleccionado);
-            cargarTablaParticipantes();
-            if (resultado) {
-                JOptionPane.showMessageDialog(this, "El participante se ha eliminado correctamente", "Confirmación", JOptionPane.OK_OPTION);
+        if (!seleccionada.getParticipantes().isEmpty()) {
+            int corredorSeleccionado = jTableParticipantes.convertRowIndexToModel(jTableParticipantes.getSelectedRow());
+            Participante seleccionado = logicaAplicacion.verParticipantes(seleccionada).get(corredorSeleccionado);
+            int confirm = JOptionPane.showConfirmDialog(this, "¿Seguro que desea eliminar el participante seleccionado?", "Eliminar", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                boolean resultado = logicaAplicacion.eliminarParticipante(seleccionada, seleccionado);
+                cargarTablaParticipantes();
+                if (resultado) {
+                    JOptionPane.showMessageDialog(this, "El participante se ha eliminado correctamente", "Confirmación", JOptionPane.INFORMATION_MESSAGE);
+                }
             }
+        } else {
+            JOptionPane.showMessageDialog(this, "No hay participantes inscritos todavía", "Confirmación", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jButtonBorrarParticipanteActionPerformed
+
+    private void jTableCarrerasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableCarrerasMouseClicked
+        cargarTablaParticipantes();
+    }//GEN-LAST:event_jTableCarrerasMouseClicked
 
     @Override
 

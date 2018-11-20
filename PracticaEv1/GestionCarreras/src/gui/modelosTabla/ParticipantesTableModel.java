@@ -22,6 +22,10 @@ import javax.swing.table.TableRowSorter;
 public class ParticipantesTableModel extends AbstractTableModel{
     private List<Participante> listaParticipantes;
     private final String[] columnas = {"Dorsal","Nombre","Dni","Tiempo","Pos. Final"};
+
+    public ParticipantesTableModel() {
+    }
+    
     
     public ParticipantesTableModel(List<Participante> listaParticipantes) {
         this.listaParticipantes = (ArrayList) listaParticipantes;
