@@ -5,6 +5,7 @@
  */
 package Controlador;
 
+import LogicaAplicacion.Logica;
 import Modelo.Camello;
 import java.util.Scanner;
 import java.util.concurrent.CountDownLatch;
@@ -20,14 +21,15 @@ public class MainCarreraCamellos {
      */
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+        Logica logicaAplicacon = new Logica();
+        
         System.out.println("Numero de camellos:");
         int numCammellos = sc.nextInt();
         
         CountDownLatch contador = new CountDownLatch(numCammellos);
         
-        for(int i = 1 ; i <= numCammellos ; i++){
-            
-            Camello camello = new Camello("C"+i,contador);
+        for(int i = 1 ; i <= numCammellos ; i++){           
+            Camello camello = new Camello("C"+i,contador,logicaAplicacon);
             camello.start();
             contador.countDown();           
         }

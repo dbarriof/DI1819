@@ -1,6 +1,7 @@
 package Modelo;
 
 import LogicaAplicacion.Logica;
+import SincroMens.SincronizaMensajes;
 import java.util.concurrent.CountDownLatch;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,12 +18,12 @@ public class Camello extends Thread {
     private CountDownLatch contador;
     private Logica logicaAplicacion;
 
-    public Camello(String nombre, CountDownLatch contador) {
+    public Camello(String nombre, CountDownLatch contador, Logica logicaAplicacon) {
         this.nombre = nombre;
         dado = new Dado();
         posicionesAvanzadas = 0;
         this.contador = contador;
-        logicaAplicacion = new Logica(this);
+        this.logicaAplicacion = logicaAplicacon;
 
     }
 
@@ -37,7 +38,9 @@ public class Camello extends Thread {
             logicaAplicacion.tirarDado(this);
             logicaAplicacion.avanzarPosiciones(this);
             logicaAplicacion.imprimirPosiciones(this);
+            //logicaAplicacion.compruebaGanador(this);        
         }
+        
     }
 
     public String getNombre() {
