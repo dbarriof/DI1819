@@ -11,6 +11,9 @@ import Dto.FormatoFecha;
 import Dto.Participante;
 import java.io.*;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.openide.util.Exceptions;
 
 /**
  *
@@ -31,7 +34,7 @@ public class LogicaAplicacion {
      *
      * @param corredor
      * @param c
-     * @return 
+     * @return
      */
     public boolean altaCorredor(Corredor corredor) {
         if (!corredores.contains(corredor)) {
@@ -145,7 +148,7 @@ public class LogicaAplicacion {
      * Metodo para dar de alta una nueva carrera
      *
      * @param carrera
-     * @return 
+     * @return
      */
     public boolean altaCarrera(Carrera carrera) {
         if (!carreras.contains(carrera)) {
@@ -153,7 +156,7 @@ public class LogicaAplicacion {
             return true;
         }
         return false;
-        
+
     }
 
     /**
@@ -187,11 +190,11 @@ public class LogicaAplicacion {
             }
         }
     }
-    
+
     /**
      * Metodo para recuperar el listado de carreras
-     * 
-     * @return 
+     *
+     * @return
      */
     public ArrayList<Carrera> verCarreras() {
         return carreras;
@@ -273,12 +276,14 @@ public class LogicaAplicacion {
             return false;
         }
     }
-    
+
     /**
-     * Metodo que devuelve un participante buscado dentro de una carrera si esta inscrito
+     * Metodo que devuelve un participante buscado dentro de una carrera si esta
+     * inscrito
+     *
      * @param carrera
      * @param participante
-     * @return 
+     * @return
      */
     public Participante buscaParticipante(Carrera carrera, Participante participante) {
         for (Participante part : carrera.getParticipantes()) {
@@ -298,13 +303,126 @@ public class LogicaAplicacion {
     public ArrayList<Participante> verParticipantes(Carrera carrera) {
         return (ArrayList<Participante>) carrera.getParticipantes();
     }
-
+    
+    /**
+     * Metodo que permite guardar los datos existentes en la aplicacion
+     */
     public void guardarDatos() {
+        FileOutputStream fos = null;
+        BufferedOutputStream bos = null;
+        ObjectOutputStream oos = null;
 
+        try {
+            //Escritura de carreras
+            fos = new FileOutputStream("ListadoDeCarreras.dat");
+            bos = new BufferedOutputStream(fos);
+            oos = new ObjectOutputStream(bos);
+
+            for (Carrera carrera : carreras) {
+                oos.writeObject(carrera);
+            }
+
+            oos.flush();
+            bos.close();
+            fos.close();
+
+        } catch (FileNotFoundException ex) {
+        } catch (IOException ex) {
+        }
+
+        try {
+            //Escritura de corredores
+            fos = new FileOutputStream("ListadoDeCorredores.dat");
+            bos = new BufferedOutputStream(fos);
+            oos = new ObjectOutputStream(bos);
+
+            for (Corredor corredor : corredores) {
+                oos.writeObject(corredor);
+            }
+
+            oos.flush();
+            bos.close();
+            fos.close();
+
+        } catch (FileNotFoundException ex) {
+        } catch (IOException ex) {
+        }
     }
-        
+    
+    /**
+     * Metodo que permite cargar los datos almacenados tras el ultimo uso de la aplicacion
+     */
     public void cargarDatos() {
+        File fCarreras = new File("ListadoDeCarreras.dat");
+        File fCorredores = new File("ListadoDeCorredores.dat");
+        FileInputStream fis = null;
+        BufferedInputStream bis = null;
 
+        try {
+            //Lectura de los datos de carreras
+
+            fis = new FileInputStream(fCarreras);
+            bis = new BufferedInputStream(fis);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+
+            Carrera carrera = (Carrera) ois.readObject();
+            carreras.add(carrera);
+
+            while (carrera != null) {
+                carrera = (Carrera) ois.readObject();
+                carreras.add(carrera);
+            }
+
+            bis.close();
+            fis.close();
+            System.out.println("Cargado listado de carreras.");
+
+        } catch (FileNotFoundException ex) {
+            System.out.println("No hay datos previos que cargar.");
+        } catch (EOFException ex) {
+            if (carreras.size() > 0) {
+                System.out.println("Finalizada lectura de datos.");
+            } else {
+                System.out.println("No se han cargado datos de carreras almacenadas previamente");
+            }
+        } catch (IOException ex) {
+            Exceptions.printStackTrace(ex);
+        } catch (ClassNotFoundException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+
+        try {
+            //Lectura de los datos de corredores
+
+            fis = new FileInputStream(fCorredores);
+            bis = new BufferedInputStream(fis);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+
+            Corredor corredor = (Corredor) ois.readObject();
+            corredores.add(corredor);
+
+            while (corredor != null) {
+                corredor = (Corredor) ois.readObject();
+                corredores.add(corredor);
+            }
+
+            bis.close();
+            fis.close();
+            System.out.println("Cargado listado de corredores.");
+
+        } catch (FileNotFoundException ex) {
+            System.out.println("No hay datos previos que cargar.");
+        } catch (EOFException ex) {
+            if (carreras.size() > 0) {
+                System.out.println("Finalizada lectura de datos.");
+            } else {
+                System.out.println("No se han cargado datos de corredores almacenados previamente");
+            }
+        } catch (IOException ex) {
+            Exceptions.printStackTrace(ex);
+        } catch (ClassNotFoundException ex) {
+            Exceptions.printStackTrace(ex);
+        }
     }
 
 }

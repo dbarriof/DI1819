@@ -76,6 +76,8 @@
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           <Component id="jButtonNuevaCarrera" min="-2" pref="140" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="jButtonModificarCarrera" min="-2" pref="140" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jButtonBorrarCarrera" min="-2" pref="130" max="-2" attributes="0"/>
                       </Group>
                       <Component id="jScrollPaneCarreras" pref="948" max="32767" attributes="0"/>
@@ -92,6 +94,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jButtonNuevaCarrera" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="jButtonBorrarCarrera" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                      <Component id="jButtonModificarCarrera" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
               </Group>
@@ -145,7 +148,7 @@
         </Component>
         <Component class="javax.swing.JButton" name="jButtonBorrarCarrera">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Eliminar carrera"/>
+            <Property name="text" type="java.lang.String" value="Eliminar seleccionada"/>
             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[129, 23]"/>
             </Property>
@@ -158,6 +161,23 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonBorrarCarreraActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButtonModificarCarrera">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Modificar seleccionada"/>
+            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[129, 23]"/>
+            </Property>
+            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[129, 23]"/>
+            </Property>
+            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+              <Dimension value="[129, 23]"/>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonModificarCarreraActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

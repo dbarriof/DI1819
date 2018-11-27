@@ -98,17 +98,20 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
     public void validador(){
         //Validación de campos de entrada
         group = validationPanelValidacionDatos.getValidationGroup();
-
-        group.add(jTextFieldNombre, StringValidators.REQUIRE_NON_EMPTY_STRING);
-        group.add(jTextFieldNombre, StringValidators.maxLength(50));
-        group.add(jTextFieldDni, StringValidators.REQUIRE_NON_EMPTY_STRING);
-        group.add(jTextFieldDni, StringValidators.maxLength(9));
-        group.add(jTextFieldDni, StringValidators.minLength(9));
-        group.add(jTextAreaDireccion, StringValidators.REQUIRE_NON_EMPTY_STRING);
-        group.add(jTextAreaDireccion, StringValidators.maxLength(150));
+        
         group.add(jTextFieldTelefono, StringValidators.REQUIRE_VALID_INTEGER);
         group.add(jTextFieldTelefono, StringValidators.minLength(9));
         group.add(jTextFieldTelefono, StringValidators.maxLength(12));
+        group.add(jTextAreaDireccion, StringValidators.REQUIRE_NON_EMPTY_STRING);
+        group.add(jTextAreaDireccion, StringValidators.maxLength(150));
+        group.add(jTextFieldDni, StringValidators.REQUIRE_NON_EMPTY_STRING);
+        group.add(jTextFieldDni, StringValidators.maxLength(9));
+        group.add(jTextFieldDni, StringValidators.minLength(9));
+        group.add(jTextFieldNombre, StringValidators.REQUIRE_NON_EMPTY_STRING);
+        group.add(jTextFieldNombre, StringValidators.maxLength(50));
+        
+        
+        
     }
     
     

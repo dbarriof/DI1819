@@ -107,11 +107,14 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
     public void validador(){
         //Validación de campos de entrada
         group = validationPanelValidacionDatos.getValidationGroup();
-
-        group.add(jTextFieldNombre, StringValidators.REQUIRE_NON_EMPTY_STRING);
-        group.add(jTextFieldLugar, StringValidators.REQUIRE_NON_EMPTY_STRING);
+        
         group.add(jTextFieldNumPart, StringValidators.REQUIRE_VALID_INTEGER);
         group.add(jTextFieldNumPart, StringValidators.maxLength(3));
+        group.add(jTextFieldNumPart, StringValidators.REQUIRE_NON_EMPTY_STRING);
+        group.add(jTextFieldLugar, StringValidators.REQUIRE_NON_EMPTY_STRING);
+        group.add(jTextFieldNombre, StringValidators.REQUIRE_NON_EMPTY_STRING);
+        
+        
     }
     
     public void cargarTablaParticipantes(){
@@ -171,7 +174,7 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
 
         jLabelNumPart.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelNumPart.setText("Número de participantes :");
-        jLabelNumPart.setName("Número de participantes"); // NOI18N
+        jLabelNumPart.setName("Participantes"); // NOI18N
 
         jTextFieldNombre.setToolTipText("Espacio para insertar nombre del corredor");
         jTextFieldNombre.setName("Nombre"); // NOI18N
@@ -181,8 +184,9 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
         jTextFieldLugar.setName("Lugar"); // NOI18N
         jTextFieldLugar.setNextFocusableComponent(jSpinnerFecha);
 
-        jTextFieldNumPart.setToolTipText("Espacio para insertar el teléfono del corredor");
-        jTextFieldNumPart.setName("Num de participantes"); // NOI18N
+        jTextFieldNumPart.setToolTipText("Espacio para insertar el número máximo de participantes");
+        jTextFieldNumPart.setAutoscrolls(false);
+        jTextFieldNumPart.setName("Participantes"); // NOI18N
         jTextFieldNumPart.setNextFocusableComponent(jButtonAniadirParticipante);
         jTextFieldNumPart.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

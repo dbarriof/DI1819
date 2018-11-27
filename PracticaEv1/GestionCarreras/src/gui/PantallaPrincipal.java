@@ -25,6 +25,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private PantallaListaCorredores plco;
     private PantallaDatosCarrera pdca;
     private PantallaListaCarreras plca;
+    private PantallaCronometro pic;
 
     /**
      * Creates new form PantallaPrincipal
@@ -57,9 +58,9 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jMenuItemImportar = new javax.swing.JMenuItem();
         jMenuCarreras = new javax.swing.JMenu();
         jMenuItemNuevaCarrera = new javax.swing.JMenuItem();
-        jMenuItemModificarCarrera = new javax.swing.JMenuItem();
-        jMenuItemEliminarCarrera = new javax.swing.JMenuItem();
         jMenuItemVerCarrera = new javax.swing.JMenuItem();
+        jMenuFunciones = new javax.swing.JMenu();
+        jMenuItemIniciarCarrera = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Gestión de Carreras");
@@ -145,17 +146,6 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         });
         jMenuCarreras.add(jMenuItemNuevaCarrera);
 
-        jMenuItemModificarCarrera.setText("Modificar...");
-        jMenuItemModificarCarrera.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemModificarCarreraActionPerformed(evt);
-            }
-        });
-        jMenuCarreras.add(jMenuItemModificarCarrera);
-
-        jMenuItemEliminarCarrera.setText("Eliminar...");
-        jMenuCarreras.add(jMenuItemEliminarCarrera);
-
         jMenuItemVerCarrera.setText("Ver...");
         jMenuItemVerCarrera.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -165,6 +155,18 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jMenuCarreras.add(jMenuItemVerCarrera);
 
         jMenuAplicacion.add(jMenuCarreras);
+
+        jMenuFunciones.setText("Funciones");
+
+        jMenuItemIniciarCarrera.setText("Iniciar carrera...");
+        jMenuItemIniciarCarrera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemIniciarCarreraActionPerformed(evt);
+            }
+        });
+        jMenuFunciones.add(jMenuItemIniciarCarrera);
+
+        jMenuAplicacion.add(jMenuFunciones);
 
         setJMenuBar(jMenuAplicacion);
 
@@ -318,11 +320,6 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         pdca.setVisible(true);
     }//GEN-LAST:event_jMenuItemNuevaCarreraActionPerformed
 
-    private void jMenuItemModificarCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemModificarCarreraActionPerformed
-        /*pdc = new PantallaDatosCarrera(this, true, logicaAplicacion, logicaAplicacion.);
-        pdc.setVisible(true);*/
-    }//GEN-LAST:event_jMenuItemModificarCarreraActionPerformed
-
     private void jMenuItemVerCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemVerCarreraActionPerformed
         if (!logicaAplicacion.verCarreras().isEmpty()) {
             plca = new PantallaListaCarreras(this, true, logicaAplicacion);
@@ -331,6 +328,11 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No hay carreras creadas todavía", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jMenuItemVerCarreraActionPerformed
+
+    private void jMenuItemIniciarCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemIniciarCarreraActionPerformed
+        pic = new PantallaCronometro(this, true, logicaAplicacion);
+        pic.setVisible(true);
+    }//GEN-LAST:event_jMenuItemIniciarCarreraActionPerformed
 
     /**
      * @param args the command line arguments
@@ -360,12 +362,10 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                //Establecemos ubicacion de la aplicacion
-                Locale.setDefault(new Locale("es", "ES"));
-                new PantallaPrincipal().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            //Establecemos ubicacion de la aplicacion
+            Locale.setDefault(new Locale("es", "ES"));
+            new PantallaPrincipal().setVisible(true);
         });
     }
 
@@ -376,12 +376,12 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuAplicacion;
     private javax.swing.JMenu jMenuCarreras;
     private javax.swing.JMenu jMenuCorredores;
+    private javax.swing.JMenu jMenuFunciones;
     private javax.swing.JMenuItem jMenuItemAlta;
     private javax.swing.JMenuItem jMenuItemEliminar;
-    private javax.swing.JMenuItem jMenuItemEliminarCarrera;
     private javax.swing.JMenuItem jMenuItemImportar;
+    private javax.swing.JMenuItem jMenuItemIniciarCarrera;
     private javax.swing.JMenuItem jMenuItemModificar;
-    private javax.swing.JMenuItem jMenuItemModificarCarrera;
     private javax.swing.JMenuItem jMenuItemNuevaCarrera;
     private javax.swing.JMenuItem jMenuItemVer;
     private javax.swing.JMenuItem jMenuItemVerCarrera;

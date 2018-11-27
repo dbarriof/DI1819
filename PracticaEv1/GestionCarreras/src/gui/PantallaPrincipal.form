@@ -74,25 +74,27 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemNuevaCarreraActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemModificarCarrera">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Modificar..."/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemModificarCarreraActionPerformed"/>
-              </Events>
-            </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemEliminarCarrera">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Eliminar..."/>
-              </Properties>
-            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItemVerCarrera">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Ver..."/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemVerCarreraActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="jMenuFunciones">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Funciones"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemIniciarCarrera">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Iniciar carrera..."/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItemIniciarCarreraActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>
