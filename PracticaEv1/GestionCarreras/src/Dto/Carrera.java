@@ -17,6 +17,7 @@ public class Carrera implements Serializable{
     private Date fecha;
     private String lugar;
     private int numMaxParticipantes;
+    private boolean finalizada;
     private List<Participante> participantes;
     private List<Integer> dorsales;
 
@@ -27,7 +28,8 @@ public class Carrera implements Serializable{
         this.lugar = lugar;
         this.numMaxParticipantes = numMaxParticipantes;
         this.participantes = participantes;
-        this.dorsales = dorsales;          
+        this.dorsales = dorsales; 
+        finalizada = false;
     }
 
     public Carrera() {
@@ -67,6 +69,14 @@ public class Carrera implements Serializable{
         this.numMaxParticipantes = numMaxParticipantes;
     }
 
+    public boolean isFinalizada() {
+        return finalizada;
+    }
+
+    public void setFinalizada(boolean finalizada) {
+        this.finalizada = finalizada;
+    }
+
     public List<Participante> getParticipantes() {
         return participantes;
     }
@@ -84,19 +94,21 @@ public class Carrera implements Serializable{
     }
     
    public String[] arrayToStrings(){
-        String [] datos = new String [5];
+        String [] datos = new String [6];
         datos[0] = getNombre();
         datos[1] = getLugar();
         datos[2] = FormatoFecha.formatFecha(getFecha());
         datos[4] = String.valueOf(getNumMaxParticipantes());
-        
+        datos[5] = String.valueOf(isFinalizada());
         return datos;
     }
 
     @Override
     public String toString() {
-        return "Carrera{" + "nombre=" + nombre + ", fecha=" + fecha + ", lugar=" + lugar + ", numMaxParticipantes=" + numMaxParticipantes + ", participantes=" + participantes + ", dorsales=" + dorsales + '}';
+        return "Carrera{" + "nombre=" + nombre + ", fecha=" + fecha + ", lugar=" + lugar + ", numMaxParticipantes=" + numMaxParticipantes + ", finalizada=" + finalizada + ", participantes=" + participantes + ", dorsales=" + dorsales + '}';
     }
+
+    
 
     @Override
     public int hashCode() {

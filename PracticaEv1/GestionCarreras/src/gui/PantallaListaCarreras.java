@@ -12,13 +12,9 @@ import gui.modelosTabla.CarrerasTableModel;
 import gui.modelosTabla.FormatoFechaTabla;
 import gui.modelosTabla.ParticipantesTableModel;
 import java.awt.Frame;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JOptionPane;
-import javax.swing.event.MouseInputListener;
 
 /**
  *
@@ -26,8 +22,6 @@ import javax.swing.event.MouseInputListener;
  */
 public class PantallaListaCarreras extends javax.swing.JDialog {
 
-    private PantallaListaCorredores plc;
-    private PantallaDatosCarrera pdc;
     private LogicaAplicacion logicaAplicacion;
     private int filaSeleccionadaCarrera;
 
@@ -65,10 +59,11 @@ public class PantallaListaCarreras extends javax.swing.JDialog {
         if (!logicaAplicacion.verCarreras().isEmpty()) {
             int filaSeleccionada = jTableCarreras.convertRowIndexToModel(jTableCarreras.getSelectedRow());
             Carrera seleccionada = logicaAplicacion.verCarreras().get(filaSeleccionada);
-            //if (!seleccionada.getParticipantes().isEmpty()) {
-                jTableParticipantes.setModel(new ParticipantesTableModel(seleccionada.getParticipantes()));
-            //}
+            jTableParticipantes.setModel(new ParticipantesTableModel(seleccionada.getParticipantes()));
+        }else{
+            jTableParticipantes.setModel(new ParticipantesTableModel());
         }
+        
     }
 
     /**
@@ -94,7 +89,8 @@ public class PantallaListaCarreras extends javax.swing.JDialog {
         jButtonVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Listado de carreras programadas");
+        setTitle("Listado de carreras");
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/gui/images/icono.jpg")).getImage());
 
         jPanelCarreras.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Carreras programadas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
 
@@ -116,8 +112,8 @@ public class PantallaListaCarreras extends javax.swing.JDialog {
         jScrollPaneCarreras.setViewportView(jTableCarreras);
 
         jButtonNuevaCarrera.setText("Nueva carrera");
-        jButtonNuevaCarrera.setMaximumSize(new java.awt.Dimension(129, 23));
-        jButtonNuevaCarrera.setMinimumSize(new java.awt.Dimension(129, 23));
+        jButtonNuevaCarrera.setMaximumSize(new java.awt.Dimension(130, 25));
+        jButtonNuevaCarrera.setMinimumSize(new java.awt.Dimension(130, 25));
         jButtonNuevaCarrera.setPreferredSize(new java.awt.Dimension(129, 23));
         jButtonNuevaCarrera.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,7 +124,7 @@ public class PantallaListaCarreras extends javax.swing.JDialog {
         jButtonBorrarCarrera.setText("Eliminar seleccionada");
         jButtonBorrarCarrera.setMaximumSize(new java.awt.Dimension(129, 23));
         jButtonBorrarCarrera.setMinimumSize(new java.awt.Dimension(129, 23));
-        jButtonBorrarCarrera.setPreferredSize(new java.awt.Dimension(129, 23));
+        jButtonBorrarCarrera.setPreferredSize(new java.awt.Dimension(130, 25));
         jButtonBorrarCarrera.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonBorrarCarreraActionPerformed(evt);
@@ -136,8 +132,8 @@ public class PantallaListaCarreras extends javax.swing.JDialog {
         });
 
         jButtonModificarCarrera.setText("Modificar seleccionada");
-        jButtonModificarCarrera.setMaximumSize(new java.awt.Dimension(129, 23));
-        jButtonModificarCarrera.setMinimumSize(new java.awt.Dimension(129, 23));
+        jButtonModificarCarrera.setMaximumSize(new java.awt.Dimension(130, 25));
+        jButtonModificarCarrera.setMinimumSize(new java.awt.Dimension(130, 25));
         jButtonModificarCarrera.setPreferredSize(new java.awt.Dimension(129, 23));
         jButtonModificarCarrera.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -154,11 +150,11 @@ public class PantallaListaCarreras extends javax.swing.JDialog {
                 .addGroup(jPanelCarrerasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelCarrerasLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButtonNuevaCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonNuevaCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonModificarCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonBorrarCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButtonModificarCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(jButtonBorrarCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPaneCarreras, javax.swing.GroupLayout.DEFAULT_SIZE, 948, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -189,6 +185,8 @@ public class PantallaListaCarreras extends javax.swing.JDialog {
         jScrollPaneParticipantes.setViewportView(jTableParticipantes);
 
         jButtonAniadirParticipante.setText("Añadir participantes");
+        jButtonAniadirParticipante.setMaximumSize(new java.awt.Dimension(130, 25));
+        jButtonAniadirParticipante.setMinimumSize(new java.awt.Dimension(130, 25));
         jButtonAniadirParticipante.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAniadirParticipanteActionPerformed(evt);
@@ -196,6 +194,8 @@ public class PantallaListaCarreras extends javax.swing.JDialog {
         });
 
         jButtonBorrarParticipante.setText("Eliminar participante");
+        jButtonBorrarParticipante.setMaximumSize(new java.awt.Dimension(130, 25));
+        jButtonBorrarParticipante.setMinimumSize(new java.awt.Dimension(130, 25));
         jButtonBorrarParticipante.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonBorrarParticipanteActionPerformed(evt);
@@ -211,9 +211,9 @@ public class PantallaListaCarreras extends javax.swing.JDialog {
                 .addGroup(jPanelParticipantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelParticipantesLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButtonAniadirParticipante, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonAniadirParticipante, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonBorrarParticipante, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButtonBorrarParticipante, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPaneParticipantes, javax.swing.GroupLayout.DEFAULT_SIZE, 948, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -273,20 +273,20 @@ public class PantallaListaCarreras extends javax.swing.JDialog {
 
     //Metodo que permite crear una nueva carrera
     private void jButtonNuevaCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNuevaCarreraActionPerformed
-        pdc = new PantallaDatosCarrera((Frame) this.getParent(), true, logicaAplicacion);
+        PantallaDatosCarrera pdc = new PantallaDatosCarrera((Frame) this.getParent(), true, logicaAplicacion);
         pdc.setVisible(true);
     }//GEN-LAST:event_jButtonNuevaCarreraActionPerformed
 
     private void jButtonBorrarCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarCarreraActionPerformed
-        int confirm = JOptionPane.showConfirmDialog(this, "¿Seguro que desea eliminar la carrera seleccionada?", "Eliminar", JOptionPane.YES_NO_OPTION);
+        int confirm = JOptionPane.showConfirmDialog(this, "¿Seguro que desea eliminar la carrera seleccionada?", "Eliminar carrera", JOptionPane.YES_NO_OPTION);
         if (confirm == JOptionPane.YES_OPTION) {
             int filaSeleccionada = jTableCarreras.convertRowIndexToModel(jTableCarreras.getSelectedRow());
             Carrera seleccionada = logicaAplicacion.verCarreras().get(filaSeleccionada);
-            logicaAplicacion.eliminaCarrera(seleccionada);
-            
-            jTableCarreras.addRowSelectionInterval(0, 0);
+            logicaAplicacion.eliminaCarrera(seleccionada);  
+            if(logicaAplicacion.verCarreras().isEmpty()){
+                filaSeleccionadaCarrera = -1;
+            }
             cargarTablaCarreras();
-            //cargarTablaParticipantes();
         }
 
     }//GEN-LAST:event_jButtonBorrarCarreraActionPerformed
@@ -310,7 +310,7 @@ public class PantallaListaCarreras extends javax.swing.JDialog {
             logicaAplicacion.cargarDorsales(seleccionada);
         }
         
-        plc = new PantallaListaCorredores(this, true, logicaAplicacion, seleccionada);
+        PantallaListaCorredores plc = new PantallaListaCorredores((Frame) this.getParent(), true, logicaAplicacion, seleccionada);
 
         plc.setVisible(true);
     }//GEN-LAST:event_jButtonAniadirParticipanteActionPerformed

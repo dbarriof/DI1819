@@ -5,8 +5,10 @@
  */
 package gui.modelosTabla;
 
+import Dto.Corredor;
 import Dto.FormatoFecha;
 import Dto.Participante;
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,12 +22,11 @@ import javax.swing.table.TableRowSorter;
  * @author dbarriof
  */
 public class ParticipantesTableModel extends AbstractTableModel{
-    private List<Participante> listaParticipantes;
+    private List<Participante> listaParticipantes = new ArrayList<>();
     private final String[] columnas = {"Dorsal","Nombre","Dni","Tiempo","Pos. Final"};
 
     public ParticipantesTableModel() {
-    }
-    
+    }   
     
     public ParticipantesTableModel(List<Participante> listaParticipantes) {
         this.listaParticipantes = (ArrayList) listaParticipantes;
@@ -42,10 +43,10 @@ public class ParticipantesTableModel extends AbstractTableModel{
     
     @Override
     public int getRowCount() {
-        if(listaParticipantes.isEmpty()){
-            return 0;
+        if(!listaParticipantes.isEmpty()){
+             return listaParticipantes.size();     
         }
-        return listaParticipantes.size();
+        return 0;
     }
 
     @Override
@@ -71,7 +72,7 @@ public class ParticipantesTableModel extends AbstractTableModel{
                 }                         
             case 4:
                 if(listaParticipantes.get(fila).getPosicion() == 0){
-                    return null;
+                    return "N/A";
                 } else {
                     return listaParticipantes.get(fila).getPosicion();
                 }

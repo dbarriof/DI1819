@@ -13,6 +13,7 @@ import java.io.*;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import org.openide.util.Exceptions;
 
 /**
@@ -190,7 +191,21 @@ public class LogicaAplicacion {
             }
         }
     }
-
+    
+    /**
+     * Metodo para buscar una carrera en funcion de su nombre
+     * @param nombre
+     * @return 
+     */
+    public Carrera buscaCarrera(String nombre) {
+        for (Carrera carrera : carreras) {
+            if (carrera.getNombre().equals(nombre)) {
+                return carrera;
+            }
+        }
+        return null;
+    }
+    
     /**
      * Metodo para recuperar el listado de carreras
      *
@@ -302,6 +317,21 @@ public class LogicaAplicacion {
      */
     public ArrayList<Participante> verParticipantes(Carrera carrera) {
         return (ArrayList<Participante>) carrera.getParticipantes();
+    }
+    
+    /**
+     * Metodo que permite seleccionar un participante mediante su dorsal
+     * @param carrera
+     * @param dorsal
+     * @return 
+     */
+    public Participante buscaDorsal(Carrera carrera, int dorsal){
+        for(Participante participante: carrera.getParticipantes()){
+            if(participante.getDorsal() == dorsal){
+                return participante;
+            }
+        }
+        return null;
     }
     
     /**

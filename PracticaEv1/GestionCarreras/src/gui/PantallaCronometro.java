@@ -1,10 +1,15 @@
 package gui;
 
 import Dto.Carrera;
+import Dto.Corredor;
+import Dto.Participante;
 import Logica.LogicaAplicacion;
+import gui.modelosTabla.ParticipantesTableModel;
 import jLabelCronometro.CorredorLlegado;
 import jLabelCronometro.CronometroListener;
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -20,59 +25,64 @@ import javax.swing.JOptionPane;
  */
 public class PantallaCronometro extends javax.swing.JDialog {
 
-    private CorredorLlegado corredorLlegado;
     private LogicaAplicacion logicaAplicacion;
+    private List<Participante> listaClasificacion;
+    private Carrera carreraEnDisputa;
+    private int numParticipantes;
+
     /**
      * Creates new form NewJDialog
      *
      * @param parent
      * @param modal
      */
-    public PantallaCronometro(java.awt.Frame parent, boolean modal,LogicaAplicacion logicaAplicacion) {
+    public PantallaCronometro(java.awt.Frame parent, boolean modal, LogicaAplicacion logicaAplicacion) {
         super(parent, modal);
         this.logicaAplicacion = logicaAplicacion;
-        
+        listaClasificacion = new ArrayList<>();
         initComponents();
 
         cronometro.addCronometroListener(new CronometroListener() {
             @Override
-            public CorredorLlegado llegaCorredor() {
-                boolean aniadirLlegada = true;
-
-                CorredorLlegado corredor = new CorredorLlegado();
-                corredor.setTiempo(String.valueOf(cronometro.getCronometroDate()));
-
-                while (aniadirLlegada) {
-                    String dorsal = JOptionPane.showInputDialog(PantallaCronometro.this, "Indique el dorsal del corredor", "");
-                    if (dorsal == null) {
-                        JOptionPane.showMessageDialog(PantallaCronometro.this, "La operación se ha cancelado", "Error", JOptionPane.WARNING_MESSAGE);
-                        aniadirLlegada = false;
-                    } else {
-                        if (!dorsal.isEmpty()) {
-                            corredor.setDorsal(Integer.parseInt(dorsal));
-                            System.out.println(corredor.getDorsal() + " " + corredor.getTiempo());
-                            aniadirLlegada = false;
-                        } else {
-                            int repetirEntrada = JOptionPane.showConfirmDialog(PantallaCronometro.this, "No ha introducido ningún dorsal \n ¿Introducir de nuevo?", "Error", JOptionPane.ERROR_MESSAGE);
-                            if (repetirEntrada == JOptionPane.NO_OPTION) {
-                                JOptionPane.showMessageDialog(PantallaCronometro.this, "La operación se ha cancelado", "Error", JOptionPane.WARNING_MESSAGE);
-                                aniadirLlegada = false;
-                            }
-                        }
-                    }
-                }
-                return corredor;
+            public void llegaCorredor(CorredorLlegado corredorLlegado) {
+                actualizarClasificacion(corredorLlegado);
             }
         });
 
+        jButtonReiniciar.setEnabled(false);
     }
-    
-    public ComboBoxModel<String> cargarCarreras(){
+
+    //Metodo que devuelve un modelo para el spinner que selecciona las carreras
+    public ComboBoxModel<String> cargarCarreras() {
         DefaultComboBoxModel<String> dcm = new DefaultComboBoxModel<>();
-        for(Carrera carrera:logicaAplicacion.verCarreras()){
+        for (Carrera carrera : logicaAplicacion.verCarreras()) {
             dcm.addElement(carrera.getNombre());
         }
         return dcm;
+    }
+
+    public void cargarTablaParticipantes(List<Participante> clasificacionParticipantes) {
+        jTableParticipantes.setModel(new ParticipantesTableModel(listaClasificacion)); 
+    }
+
+    public void actualizarClasificacion(CorredorLlegado corredor) {
+        System.out.println(carreraEnDisputa.getNombre());
+        System.out.println(corredor.getDorsal() + " " + corredor.getPosicion() + " " + corredor.getTiempo());
+        Participante participanteFinalizado = logicaAplicacion.buscaDorsal(carreraEnDisputa, corredor.getDorsal());
+        if (participanteFinalizado.getTiempo() == null) {
+            participanteFinalizado.setPosicion(corredor.getPosicion());
+            //participanteFinalizado.setTiempo(Date.valueOf(corredor.getTiempo()));
+            listaClasificacion.add(participanteFinalizado);
+            numParticipantes--;
+            if (numParticipantes <= 0) {
+                cronometro.pausarCronometro();
+                carreraEnDisputa.setParticipantes(listaClasificacion);
+                JOptionPane.showMessageDialog(PantallaCronometro.this, "Ha llegado el último participante", "Finalización de carrera", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(PantallaCronometro.this, "El dorsal indicado ya habia llegado", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        cargarTablaParticipantes(listaClasificacion);
     }
 
     /**
@@ -84,16 +94,36 @@ public class PantallaCronometro extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabelNombreCarrera = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jButtonReiniciar = new javax.swing.JButton();
+        jButtonPausar = new javax.swing.JButton();
         jButtonIniciar = new javax.swing.JButton();
-        jButtonParar = new javax.swing.JButton();
-        jButtonLlegadaParticipante = new javax.swing.JButton();
         cronometro = new jLabelCronometro.Cronometro();
         jComboBox1 = new javax.swing.JComboBox<>();
+        jLabelNombreCarrera = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPaneParticipantes = new javax.swing.JScrollPane();
+        jTableParticipantes = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Celebración de carrera");
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/gui/images/icono.jpg")).getImage());
 
-        jLabelNombreCarrera.setText("Carrera:");
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Control de carrera", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
+
+        jButtonReiniciar.setText("Reiniciar la carrera");
+        jButtonReiniciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonReiniciarActionPerformed(evt);
+            }
+        });
+
+        jButtonPausar.setText("Pausar la carrera");
+        jButtonPausar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPausarActionPerformed(evt);
+            }
+        });
 
         jButtonIniciar.setText("Iniciar la carrera");
         jButtonIniciar.addActionListener(new java.awt.event.ActionListener() {
@@ -102,104 +132,157 @@ public class PantallaCronometro extends javax.swing.JDialog {
             }
         });
 
-        jButtonParar.setText("Parar carrera");
-        jButtonParar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonPararActionPerformed(evt);
-            }
-        });
-
-        jButtonLlegadaParticipante.setText("Llegada de participante");
-        jButtonLlegadaParticipante.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonLlegadaParticipanteActionPerformed(evt);
-            }
-        });
-
-        cronometro.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        cronometro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         cronometro.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        cronometro.setFont(new java.awt.Font("Tahoma", 0, 36)); // NOI18N
-        cronometro.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                cronometroMouseClicked(evt);
-            }
-        });
+        cronometro.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
 
         jComboBox1.setModel(cargarCarreras());
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+
+        jLabelNombreCarrera.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabelNombreCarrera.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelNombreCarrera.setText("Selecciona la carrera:");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabelNombreCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(cronometro, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 871, Short.MAX_VALUE)
+                    .addComponent(jButtonReiniciar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonIniciar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonPausar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(58, 58, 58))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                    .addComponent(jLabelNombreCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cronometro, javax.swing.GroupLayout.PREFERRED_SIZE, 50, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonIniciar, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonPausar, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonReiniciar, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Clasifiicacion", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
+
+        jTableParticipantes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
             }
-        });
+        ));
+        jTableParticipantes.setEditingColumn(0);
+        jTableParticipantes.setEditingRow(0);
+        jScrollPaneParticipantes.setViewportView(jTableParticipantes);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPaneParticipantes, javax.swing.GroupLayout.DEFAULT_SIZE, 948, Short.MAX_VALUE)
+                    .addContainerGap()))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 270, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jScrollPaneParticipantes, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
+                    .addContainerGap()))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(58, 58, 58)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonParar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonIniciar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonLlegadaParticipante, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabelNombreCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(cronometro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(59, 59, 59))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabelNombreCarrera, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jComboBox1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cronometro, javax.swing.GroupLayout.PREFERRED_SIZE, 44, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonIniciar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonLlegadaParticipante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonParar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(94, 94, 94))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Metodo que inicia el cronometro de la carrera
+     *
+     * @param evt
+     */
     private void jButtonIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIniciarActionPerformed
+        carreraEnDisputa = logicaAplicacion.buscaCarrera((String) jComboBox1.getSelectedItem());
+        numParticipantes = carreraEnDisputa.getParticipantes().size();
+
+        jButtonIniciar.setEnabled(false);
+        jButtonReiniciar.setEnabled(true);
+        jComboBox1.setEnabled(false);
         cronometro.iniciarCarrera();
     }//GEN-LAST:event_jButtonIniciarActionPerformed
 
-    private void jButtonPararActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPararActionPerformed
+    /**
+     * Metodo que permite resetear a 0 el tiempo del cronometro
+     *
+     * @param evt
+     */
+    private void jButtonReiniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonReiniciarActionPerformed
         cronometro.pausarCronometro();
         cronometro.resetCronometro();
-    }//GEN-LAST:event_jButtonPararActionPerformed
+        jButtonIniciar.setEnabled(true);
+        jButtonReiniciar.setEnabled(false);
+    }//GEN-LAST:event_jButtonReiniciarActionPerformed
 
-    private void cronometroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cronometroMouseClicked
-        cronometro.aniadirLlegada(evt);
-    }//GEN-LAST:event_cronometroMouseClicked
-
-    private void jButtonLlegadaParticipanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLlegadaParticipanteActionPerformed
+    /**
+     * Metodo que permite pausar una carrera
+     *
+     * @param evt
+     */
+    private void jButtonPausarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPausarActionPerformed
         cronometro.pausarCronometro();
-    }//GEN-LAST:event_jButtonLlegadaParticipanteActionPerformed
-
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_jButtonPausarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private jLabelCronometro.Cronometro cronometro;
     private javax.swing.JButton jButtonIniciar;
-    private javax.swing.JButton jButtonLlegadaParticipante;
-    private javax.swing.JButton jButtonParar;
+    private javax.swing.JButton jButtonPausar;
+    private javax.swing.JButton jButtonReiniciar;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabelNombreCarrera;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPaneParticipantes;
+    private javax.swing.JTable jTableParticipantes;
     // End of variables declaration//GEN-END:variables
 }

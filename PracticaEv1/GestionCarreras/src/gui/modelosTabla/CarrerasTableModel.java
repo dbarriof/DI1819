@@ -13,6 +13,7 @@ import javax.swing.RowSorter;
 import javax.swing.SortOrder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableRowSorter;
+import sun.nio.ch.ServerSocketAdaptor;
 
 /**
  *
@@ -20,7 +21,7 @@ import javax.swing.table.TableRowSorter;
  */
 public class CarrerasTableModel extends AbstractTableModel{
     private ArrayList<Carrera> carreras;
-    private final String[] columnas = {"Nombre","Lugar","Fecha","Participantes"};
+    private final String[] columnas = {"Nombre","Lugar","Fecha","Participantes","Estado"};
     
     public CarrerasTableModel(ArrayList<Carrera> carreras) {
         this.carreras = (ArrayList) carreras;
@@ -50,6 +51,7 @@ public class CarrerasTableModel extends AbstractTableModel{
 
     @Override
     public Object getValueAt(int fila, int columna) {
+        String estado;
         switch(columna)
         {
             case 0:
@@ -59,7 +61,14 @@ public class CarrerasTableModel extends AbstractTableModel{
             case 2:
                 return carreras.get(fila).getFecha();
             case 3:               
-                return String.valueOf(carreras.get(fila).getNumMaxParticipantes());                     
+                return String.valueOf(carreras.get(fila).getNumMaxParticipantes()); 
+            case 4:    
+                if(carreras.get(fila).isFinalizada()){
+                    estado = "Finalizada";
+                } else {
+                    estado = "Planificada";
+                }
+                return estado;
         }
         return null;
     }

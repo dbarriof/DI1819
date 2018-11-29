@@ -146,6 +146,7 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Datos del corredor");
         setBounds(new java.awt.Rectangle(0, 0, 0, 0));
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/gui/images/icono.jpg")).getImage());
 
         jLabelAltaCorredor.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabelAltaCorredor.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -212,7 +213,7 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
                     .addComponent(jTextFieldTelefono)
                     .addComponent(jSpinnerFechaNac)
                     .addComponent(validationPanelValidacionDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 824, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 754, Short.MAX_VALUE)))
         );
         jPanelDatosCorredorLayout.setVerticalGroup(
             jPanelDatosCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -303,7 +304,7 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
                     .addComponent(jButtonAceptarMoficacion)
                     .addComponent(jButtonAceptarAlta)
                     .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -404,13 +405,6 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
         public void setTitle(String title) {
             super.setTitle(title);
         }
-        
-    /**
-     * @param args the command line arguments
-     */
-
-    public PantallaDatosCorredor() {
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAceptarAlta;

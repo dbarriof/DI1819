@@ -14,6 +14,7 @@ import Dto.*;
 import Logica.LogicaAplicacion;
 import gui.modelosTabla.ParticipantesTableModel;
 import java.awt.Color;
+import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.*;
@@ -28,7 +29,7 @@ import org.netbeans.validation.api.ui.ValidationGroup;
 
 
 public class PantallaDatosCarrera extends javax.swing.JDialog {
-    private PantallaListaCorredores plc;
+    
     private LogicaAplicacion logicaAplicacion;   
     private ValidationGroup group;
     private Carrera carrera;
@@ -118,7 +119,7 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
     }
     
     public void cargarTablaParticipantes(){
-        jTableParticipantes.setModel(new ParticipantesTableModel(carrera.getParticipantes()));
+        jTableParticipantes.setModel(new ParticipantesTableModel((ArrayList<Participante>) carrera.getParticipantes()));
         
     }
     
@@ -155,6 +156,7 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Datos de la carrera");
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/gui/images/icono.jpg")).getImage());
 
         jPanelDatosCarrera.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
@@ -468,7 +470,7 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
         //Asignamos la cantidad maxima de corredores según lo indicado en el campo correspondiente y generemaos los dorsales necesarios
         carrera.setNumMaxParticipantes(Integer.parseInt(jTextFieldNumPart.getText()));
         logicaAplicacion.cargarDorsales(carrera);
-        plc = new PantallaListaCorredores(this, true, logicaAplicacion, carrera);
+        PantallaListaCorredores plc = new PantallaListaCorredores((Frame) this.getParent(), true, logicaAplicacion, carrera);
         plc.setVisible(true);
     }//GEN-LAST:event_jButtonAniadirParticipanteActionPerformed
 

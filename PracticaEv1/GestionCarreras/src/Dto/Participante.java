@@ -25,6 +25,11 @@ public class Participante implements Serializable{
         this.dorsal = 0;
         this.carrera = carrera;
         tiempo = null;
+        posicion = 0;
+    }
+
+    public Participante() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public Corredor getCorredor() {
@@ -75,7 +80,7 @@ public class Participante implements Serializable{
         datos[1] = corredor.getNombre();
         datos[2] = corredor.getDni();
         if (tiempo == null){datos[3] = "N/A";}else{ datos[3] = String.valueOf(tiempo);}
-        if (posicion == 0){datos[4] = "N/A";}else{ datos[4] = String.valueOf(posicion);}    
+        if (String.valueOf(posicion) == null){datos[4] = "N/A";}else{ datos[4] = String.valueOf(posicion);}    
         
         return datos;
     }
@@ -109,6 +114,7 @@ public class Participante implements Serializable{
         }
         return true;
     }
+    
     
     
 }
