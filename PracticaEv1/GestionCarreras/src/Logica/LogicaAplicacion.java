@@ -340,12 +340,14 @@ public class LogicaAplicacion {
         return (ArrayList<Participante>) carrera.getParticipantes();
     }
     
+    
     public void cancelarCarrera(Carrera carrera){
         for(Participante participante : carrera.getParticipantes()){
             participante.setTiempo(null);
             participante.setPosicion(0);
         }
     }
+    
     /**
      * Metodo que permite crear clonar una carrera para un posible backup si se cancela la disputa
      * @param carrera
@@ -368,7 +370,6 @@ public class LogicaAplicacion {
         backupCarrera = new Carrera(carrera.getNombre(), carrera.getFecha(),carrera.getLugar(), carrera.getNumMaxParticipantes(), participantesBackup, (ArrayList<Integer>) carrera.getDorsales());
         return backupCarrera;
     }
-    
     
     /**
      * Metodo que permite seleccionar un participante mediante su dorsal
@@ -517,7 +518,7 @@ public class LogicaAplicacion {
             informe.write(carrera.getNombre()+"\r\n");
             informe.write(String.valueOf(carrera.getFecha()+"\r\n"));
                 for (Participante participante : carrera.getParticipantes()) {
-                    informe.write(participante.getDorsal()+"/"+String.valueOf(participante.getTiempo())+"/"+participante.getCorredor().getNombre()+"\r\n");
+                    informe.write(participante.getDorsal()+"/"+FormatoFecha.formatearFecha(participante.getTiempo())+"/"+participante.getCorredor().getNombre()+"\r\n");
                 }
             informe.flush();
             informe.close();

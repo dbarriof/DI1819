@@ -67,7 +67,7 @@ public class PantallaCronometro extends javax.swing.JDialog {
         jTableParticipantes.getColumnModel().getColumn(3).setCellRenderer(new FormatoHoraTabla());
     }
 
-    public void actualizarClasificacion(CorredorLlegado corredor) {      
+    public void actualizarClasificacion(CorredorLlegado corredor) { 
         Participante participanteFinalizado = logicaAplicacion.buscaDorsal(carreraEnDisputa, corredor.getDorsal());
         if (corredor.getDorsal() <= numParticipantes && corredor.getDorsal() > 0) {
             if (participanteFinalizado.getTiempo() == null) {
@@ -86,12 +86,16 @@ public class PantallaCronometro extends javax.swing.JDialog {
             }
             if (participantesRestantes <= 0) {
                 cronometro.pausarCronometro();
+                cronometro.removeMouseListener(cronometro.getMouseListeners()[0]);
                 carreraEnDisputa.setParticipantes(listaClasificacion);
                 cargarTablaParticipantes(listaClasificacion);
                 carreraEnDisputa.setFinalizada(true);
                 JOptionPane.showMessageDialog(PantallaCronometro.this, "Ha llegado el último participante\nSe ha generado el informe de clasificación", "Finalización de carrera", JOptionPane.INFORMATION_MESSAGE);
                 logicaAplicacion.generarInforme(carreraEnDisputa);
                 jButtonVolver.setEnabled(true);
+                jButtonCancelarCarrera.setEnabled(false);
+                jButtonSeleccionar.setEnabled(false);
+                
             }
         } else {
             int confirmar = JOptionPane.showConfirmDialog(this, "El dorsal indicado no existe\n¿Indicar un nuevo dorsal?", "Error", JOptionPane.YES_NO_OPTION);
@@ -296,6 +300,7 @@ public class PantallaCronometro extends javax.swing.JDialog {
      */
     private void jButtonIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIniciarActionPerformed
         jButtonVolver.setEnabled(false);
+        jButtonIniciar.setEnabled(false);
         cronometro.iniciarCarrera();
     }//GEN-LAST:event_jButtonIniciarActionPerformed
 

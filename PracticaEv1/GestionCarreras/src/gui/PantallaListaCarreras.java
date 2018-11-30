@@ -365,6 +365,7 @@ public class PantallaListaCarreras extends javax.swing.JDialog {
         Carrera seleccionada = logicaAplicacion.verCarreras().get(filaSeleccionadaCarrera);
         if (!seleccionada.getParticipantes().isEmpty()) {
             int corredorSeleccionado = jTableParticipantes.convertRowIndexToModel(jTableParticipantes.getSelectedRow());
+            try{
             Participante seleccionado = logicaAplicacion.verParticipantes(seleccionada).get(corredorSeleccionado);
             int confirm = JOptionPane.showConfirmDialog(this, "¿Seguro que desea eliminar el participante seleccionado?", "Eliminar", JOptionPane.YES_NO_OPTION);
             if (confirm == JOptionPane.YES_OPTION) {
@@ -374,6 +375,10 @@ public class PantallaListaCarreras extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(this, "El participante se ha eliminado correctamente", "Confirmación", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
+            } catch (ArrayIndexOutOfBoundsException ex){
+                JOptionPane.showMessageDialog(this, "Debe seleccionar un participante para eliminarlo", "Error", JOptionPane.ERROR_MESSAGE);      
+            }
+            
         } else {
             JOptionPane.showMessageDialog(this, "No hay participantes inscritos todavía", "Confirmación", JOptionPane.WARNING_MESSAGE);
         }
