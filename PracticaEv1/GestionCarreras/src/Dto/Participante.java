@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Dto;
 
 import java.io.Serializable;
@@ -10,7 +5,8 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
- *
+ * Clase que representa un corredor cuando es participante de una carrera
+ * 
  * @author dbarriof
  */
 public class Participante implements Serializable{
@@ -72,8 +68,6 @@ public class Participante implements Serializable{
         this.posicion = posicion;
     }
     
-    
-    
     public String[] arrayToStrings(){
         String [] datos = new String [5];
         datos[0] = String.valueOf(getDorsal());
@@ -113,8 +107,6 @@ public class Participante implements Serializable{
             return false;
         }
         return true;
-    }
-    
-    
+    }   
     
 }

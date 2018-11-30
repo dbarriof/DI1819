@@ -1,17 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package gui.modelosTabla;
+package gui.Recursos;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.swing.table.DefaultTableCellRenderer;
 
 /**
- *
+ * Clase que permite aplicar un  formato a las fechas de una columna en una jTable
+ * 
  * @author dbarriof
  */
 public class FormatoFechaTabla extends DefaultTableCellRenderer{
@@ -27,6 +22,5 @@ public class FormatoFechaTabla extends DefaultTableCellRenderer{
             setText(formatoFecha.format(fecha));
         }
     }
-    
-    
+      
 }

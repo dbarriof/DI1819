@@ -1,13 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
-
-
-
 package gui;
 
 import Dto.*;
@@ -26,14 +16,12 @@ import org.netbeans.validation.api.ui.ValidationGroup;
  *
  * @author dbarriof
  */
-
-
 public class PantallaDatosCarrera extends javax.swing.JDialog {
-    
-    private LogicaAplicacion logicaAplicacion;   
+
+    private LogicaAplicacion logicaAplicacion;
     private ValidationGroup group;
     private Carrera carrera;
-    
+
     //Constructor para dar de alta una carrera
     public PantallaDatosCarrera(java.awt.Frame parent, boolean modal, LogicaAplicacion logicaAplicacion) {
         super(parent, modal);
@@ -41,42 +29,59 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
         this.logicaAplicacion = logicaAplicacion;
         initComponents();
         validador();
-        
-        
-        //Instanciamos la carreraque vamos a crear para poder añadir elementos a sus colecciones antes de almacenarla en la colección de carreras.
-        carrera= new Carrera();
-        
+
+        //Instanciamos la carrera que vamos a crear para poder añadir elementos a sus colecciones antes de almacenarla en la colección de carreras.
+        carrera = new Carrera();
+
         jButtonAceptarMoficacion.setVisible(false);
         jButtonEliminarCarrera.setVisible(false);
-        
-        this.addWindowListener(new WindowAdapter(){
+
+        this.addWindowListener(new WindowAdapter() {
             @Override
-            public void windowActivated(WindowEvent we){
+            public void windowActivated(WindowEvent we) {
                 cargarTablaParticipantes();
+                if(carrera.getParticipantes().size() == carrera.getNumMaxParticipantes() && carrera.getNumMaxParticipantes() > 0){
+                    jButtonAniadirParticipante.setEnabled(false);
+                } else {
+                    jButtonAniadirParticipante.setEnabled(true);
+                }
             }
         });
     }
-    
+
     //Constructor para modificar una carrera
-    public PantallaDatosCarrera(java.awt.Frame parent, boolean modal, LogicaAplicacion logicaAplicacion, Carrera c) {
+    public PantallaDatosCarrera(java.awt.Frame parent, boolean modal, LogicaAplicacion logicaAplicacion, Carrera carrera) {
         super(parent, modal);
         setTitle("Modificar carrera");
         this.logicaAplicacion = logicaAplicacion;
+        this.carrera = carrera;
         initComponents();
         validador();
         
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowActivated(WindowEvent we) {
+                cargarTablaParticipantes();
+                if(carrera.getParticipantes().size() == carrera.getNumMaxParticipantes() && carrera.getNumMaxParticipantes() > 0){
+                    jButtonAniadirParticipante.setEnabled(false);
+                } else {
+                    jButtonAniadirParticipante.setEnabled(true);
+                }
+            }
+        });
+        
         //Detalles de pantalla
         jLabelDatosCarrera.setText("Modifica los campos necesarios:");
-        
-        jTextFieldNombre.setText(c.getNombre());
-        jTextFieldLugar.setText(c.getLugar());
-        jSpinnerFecha.setValue(c.getFecha());
-        jTextFieldNumPart.setText(String.valueOf(c.getNumMaxParticipantes()));
-        
+
+        jTextFieldNombre.setText(carrera.getNombre());
+        jTextFieldLugar.setText(carrera.getLugar());
+        jSpinnerFecha.setValue(carrera.getFecha());
+        jTextFieldNumPart.setText(String.valueOf(carrera.getNumMaxParticipantes()));
+
         jButtonAceptarCarrera.setVisible(false);
         jButtonEliminarCarrera.setVisible(false);
     }
-    
+
     //Constructor para eliminar una carrera
     public PantallaDatosCarrera(java.awt.Frame parent, boolean modal, LogicaAplicacion logicaAplicacion, Carrera c, boolean eliminar) {
         super(parent, modal);
@@ -84,10 +89,10 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
         this.logicaAplicacion = logicaAplicacion;
         initComponents();
         validador();
-        
+
         //Detalles de pantalla
         jLabelDatosCarrera.setText("Datos de la carrera:");
-        
+
         jTextFieldNombre.setText(c.getNombre());
         jTextFieldNombre.setEditable(false);
         jTextFieldNombre.setForeground(Color.GRAY);
@@ -100,35 +105,33 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
         jTextFieldNumPart.setText(String.valueOf(c.getNumMaxParticipantes()));
         jTextFieldNumPart.setEditable(false);
         jTextFieldNumPart.setForeground(Color.GRAY);
-        
+
         jButtonAceptarMoficacion.setVisible(false);
         jButtonAceptarCarrera.setVisible(false);
     }
-    
-    public void validador(){
+
+    private void validador() {
         //Validación de campos de entrada
         group = validationPanelValidacionDatos.getValidationGroup();
-        
+
         group.add(jTextFieldNumPart, StringValidators.REQUIRE_VALID_INTEGER);
         group.add(jTextFieldNumPart, StringValidators.maxLength(3));
         group.add(jTextFieldNumPart, StringValidators.REQUIRE_NON_EMPTY_STRING);
         group.add(jTextFieldLugar, StringValidators.REQUIRE_NON_EMPTY_STRING);
         group.add(jTextFieldNombre, StringValidators.REQUIRE_NON_EMPTY_STRING);
-        
-        
+
     }
-    
-    public void cargarTablaParticipantes(){
+
+    public void cargarTablaParticipantes() {
         jTableParticipantes.setModel(new ParticipantesTableModel((ArrayList<Participante>) carrera.getParticipantes()));
-        
+
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
      * regenerated by the Form Editor.
      */
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -214,7 +217,7 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
                     .addComponent(jLabelDatosCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelDatosCarreraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(validationPanelValidacionDatos, javax.swing.GroupLayout.DEFAULT_SIZE, 816, Short.MAX_VALUE)
+                    .addComponent(validationPanelValidacionDatos, javax.swing.GroupLayout.DEFAULT_SIZE, 777, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelDatosCarreraLayout.createSequentialGroup()
                         .addGroup(jPanelDatosCarreraLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jTextFieldNumPart, javax.swing.GroupLayout.Alignment.LEADING)
@@ -328,7 +331,7 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
         jPanelParticipantesLayout.setVerticalGroup(
             jPanelParticipantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelParticipantesLayout.createSequentialGroup()
-                .addComponent(jScrollPaneParticipantes, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
+                .addComponent(jScrollPaneParticipantes, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelParticipantesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonAniadirParticipante)
@@ -376,13 +379,14 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
         dispose();
     }//GEN-LAST:event_jButtonCancelarActionPerformed
-        
+
     //Metodo para validar datos modificados de una carrera existente
     private void jButtonAceptarMoficacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarMoficacionActionPerformed
         if (group.performValidation() == null) {
@@ -393,11 +397,11 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
 
                 carrera.setNombre(jTextFieldNombre.getText());
                 carrera.setFecha((Date) jSpinnerFecha.getValue());
-                carrera.setLugar(jTextFieldLugar.getText());                              
+                carrera.setLugar(jTextFieldLugar.getText());
                 carrera.setNumMaxParticipantes(Integer.parseInt(jTextFieldNumPart.getText()));
-                              
+
                 logicaAplicacion.altaCarrera(carrera);
-                
+
                 JOptionPane.showConfirmDialog(this, "Cambios realizados con éxito.", "Confirmación", JOptionPane.CLOSED_OPTION);
 
                 dispose();
@@ -416,22 +420,20 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
             //Mostrar dialogo de confirmacion
             int aceptar = JOptionPane.showConfirmDialog(this, "¿Confirmar nueva carrera?", "Confirmar", JOptionPane.YES_NO_OPTION);
 
-            if (aceptar == JOptionPane.YES_OPTION) {             
-                
+            if (aceptar == JOptionPane.YES_OPTION) {
+
                 carrera.setNombre(jTextFieldNombre.getText());
                 carrera.setFecha((Date) jSpinnerFecha.getValue());
                 carrera.setLugar(jTextFieldLugar.getText());
                 carrera.setNumMaxParticipantes(Integer.parseInt(jTextFieldNumPart.getText()));
-                
+
                 boolean resultado = logicaAplicacion.altaCarrera(carrera);
-                System.out.println(resultado);
-                if(resultado){
+                if (resultado) {
                     JOptionPane.showConfirmDialog(this, "Carrera creada con éxito.", "Confirmación", JOptionPane.CLOSED_OPTION);
                     dispose();
                 } else {
-                     JOptionPane.showMessageDialog(this, "La carrera que quiere crear ya existe", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "La carrera que quiere crear ya existe", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-                
 
                 dispose();
             } else if (aceptar == JOptionPane.NO_OPTION) {
@@ -443,64 +445,80 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "No se ha rellenado el formulario correctamente", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonAceptarCarreraActionPerformed
-    
+
     //Metodo para eliminar una carrera existente
     private void jButtonEliminarCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEliminarCarreraActionPerformed
-                 //Mostrar dialogo de confirmacion
-            int aceptar = JOptionPane.showConfirmDialog(this, "¿Confirmar que quiere eliminar esta carrera?", "Confirmar", JOptionPane.YES_NO_OPTION);
+        //Mostrar dialogo de confirmacion
+        int aceptar = JOptionPane.showConfirmDialog(this, "¿Confirmar que quiere eliminar esta carrera?", "Confirmar", JOptionPane.YES_NO_OPTION);
 
-            if (aceptar == JOptionPane.YES_OPTION) {
+        if (aceptar == JOptionPane.YES_OPTION) {
 
-                carrera.setNombre(jTextFieldNombre.getText());
-                carrera.setFecha((Date) jSpinnerFecha.getValue());
-                carrera.setLugar(jTextFieldLugar.getText());                              
-                carrera.setNumMaxParticipantes(Integer.parseInt(jTextFieldNumPart.getText()));               
+            carrera.setNombre(jTextFieldNombre.getText());
+            carrera.setFecha((Date) jSpinnerFecha.getValue());
+            carrera.setLugar(jTextFieldLugar.getText());
+            carrera.setNumMaxParticipantes(Integer.parseInt(jTextFieldNumPart.getText()));
 
-                JOptionPane.showConfirmDialog(this, "Se ha eliminado la carrera.", "Confirmación", JOptionPane.CLOSED_OPTION);
+            JOptionPane.showConfirmDialog(this, "Se ha eliminado la carrera.", "Confirmación", JOptionPane.CLOSED_OPTION);
 
-                dispose();
-            } else if (aceptar == JOptionPane.NO_OPTION) {
-                JOptionPane.showMessageDialog(this, "Se ha cancelado la eliminación", "Confirmación", JOptionPane.WARNING_MESSAGE);
+            dispose();
+        } else if (aceptar == JOptionPane.NO_OPTION) {
+            JOptionPane.showMessageDialog(this, "Se ha cancelado la eliminación", "Confirmación", JOptionPane.WARNING_MESSAGE);
 
-            }      
+        }
     }//GEN-LAST:event_jButtonEliminarCarreraActionPerformed
 
     //Metodo que permite desplegar la lista de corredores y añadirlos como participantes
     private void jButtonAniadirParticipanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAniadirParticipanteActionPerformed
         //Asignamos la cantidad maxima de corredores según lo indicado en el campo correspondiente y generemaos los dorsales necesarios
+        if(!jTextFieldNumPart.getText().equals("")){
         carrera.setNumMaxParticipantes(Integer.parseInt(jTextFieldNumPart.getText()));
         logicaAplicacion.cargarDorsales(carrera);
         PantallaListaCorredores plc = new PantallaListaCorredores((Frame) this.getParent(), true, logicaAplicacion, carrera);
         plc.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "La carrera no tiene especificado un número de participantes", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButtonAniadirParticipanteActionPerformed
 
     private void jTextFieldNumPartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNumPartActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldNumPartActionPerformed
-    
-    
-    private void jButtonBorrarParticipanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarParticipanteActionPerformed
-        int filaSeleccionada = jTableParticipantes.convertRowIndexToModel(jTableParticipantes.getSelectedRow());       
-        Participante seleccionado = logicaAplicacion.buscaParticipante(carrera,carrera.getParticipantes().get(filaSeleccionada));
-        boolean resultado = logicaAplicacion.eliminarParticipante(carrera, seleccionado);
-        cargarTablaParticipantes();
-        if(resultado){
-            JOptionPane.showMessageDialog(this, "El participante se ha eliminado correctamente", "Confirmación", JOptionPane.OK_OPTION);
-        }
-        
-    }//GEN-LAST:event_jButtonBorrarParticipanteActionPerformed
-    
-    
-     @Override
 
-        public void setTitle(String title) {
-            super.setTitle(title);
+
+    private void jButtonBorrarParticipanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarParticipanteActionPerformed
+        int filaSeleccionada;
+        try{
+            filaSeleccionada = jTableParticipantes.convertRowIndexToModel(jTableParticipantes.getSelectedRow());
+        } catch (ArrayIndexOutOfBoundsException ex){
+            filaSeleccionada = -1;
         }
-        
+        if (!carrera.getParticipantes().isEmpty() && filaSeleccionada != -1) {           
+            Participante seleccionado = logicaAplicacion.buscaParticipante(carrera, carrera.getParticipantes().get(filaSeleccionada));
+            boolean resultado = logicaAplicacion.eliminarParticipante(carrera, seleccionado);
+            cargarTablaParticipantes();
+            if (resultado) {
+                JOptionPane.showMessageDialog(this, "El participante se ha eliminado correctamente", "Confirmación", JOptionPane.WARNING_MESSAGE);
+            }
+
+        } else {
+            if(carrera.getParticipantes().isEmpty()){
+                JOptionPane.showMessageDialog(this, "No hay participantes inscritos todavia", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar un corredor para poder eliminarlo", "Error", JOptionPane.ERROR_MESSAGE);
+            }      
+        }
+
+    }//GEN-LAST:event_jButtonBorrarParticipanteActionPerformed
+
+    @Override
+
+    public void setTitle(String title) {
+        super.setTitle(title);
+    }
+
     /**
      * @param args the command line arguments
      */
-
     public PantallaDatosCarrera() {
     }
 

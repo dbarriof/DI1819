@@ -1,15 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Dto;
 
+import gui.Recursos.FormatoFecha;
 import java.io.Serializable;
 import java.util.*;
 
 /**
- *
+ * Clase que representa una carrera a disputar
+ * 
  * @author dbarriof
  */
 public class Carrera implements Serializable{
@@ -21,7 +18,7 @@ public class Carrera implements Serializable{
     private List<Participante> participantes;
     private List<Integer> dorsales;
 
-    //Constructor
+    
     public Carrera(String nombre, Date fecha, String lugar, int numMaxParticipantes, ArrayList<Participante> participantes, ArrayList<Integer> dorsales) {
         this.nombre = nombre;
         this.fecha = fecha;
@@ -97,7 +94,7 @@ public class Carrera implements Serializable{
         String [] datos = new String [6];
         datos[0] = getNombre();
         datos[1] = getLugar();
-        datos[2] = FormatoFecha.formatFecha(getFecha());
+        datos[2] = FormatoFecha.formatearFecha(getFecha());
         datos[4] = String.valueOf(getNumMaxParticipantes());
         datos[5] = String.valueOf(isFinalizada());
         return datos;
@@ -107,8 +104,6 @@ public class Carrera implements Serializable{
     public String toString() {
         return "Carrera{" + "nombre=" + nombre + ", fecha=" + fecha + ", lugar=" + lugar + ", numMaxParticipantes=" + numMaxParticipantes + ", finalizada=" + finalizada + ", participantes=" + participantes + ", dorsales=" + dorsales + '}';
     }
-
-    
 
     @Override
     public int hashCode() {
@@ -142,6 +137,5 @@ public class Carrera implements Serializable{
         }
         return true;
     }
-    
-    
+        
 }

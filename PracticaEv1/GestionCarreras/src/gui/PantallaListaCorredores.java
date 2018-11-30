@@ -1,19 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui;
 
 import Dto.Carrera;
 import Dto.Corredor;
-import gui.modelosTabla.FormatoFechaTabla;
+import gui.Recursos.FormatoFechaTabla;
 import gui.modelosTabla.CorredoresTableModel;
 import Logica.LogicaAplicacion;
 import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -24,7 +20,8 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
 
     private LogicaAplicacion logicaAplicacion;
     private Carrera carrera;
-    
+    private ArrayList<Corredor> corredoresDisponibles;
+
     /**
      * Constructor para ver el listado completo de corredores dados de alta en
      * la aplicación
@@ -38,14 +35,14 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
         this.logicaAplicacion = logicaAplicacion;
         initComponents();
         cargarTabla();
-        
+
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowActivated(WindowEvent we) {
                 cargarTabla();
             }
         });
-        
+
         jButtonAniadirCorredorNuevo.setVisible(true);
         jButtonAniadirCorredorCarrera.setVisible(false);
         jLabelTitular.setText("Listado de corredores:");
@@ -83,18 +80,31 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
         super(parent, modal);
         this.logicaAplicacion = logicaAplicacion;
         this.carrera = carrera;
-        initComponents();       
-        cargarTabla();
-        //jButtonAniadirCorredorNuevo.setVisible(true);
-        //jButtonAniadirCorredorCarrera.setVisible(true);
+        corredoresDisponibles = logicaAplicacion.verCorredoresDisponibles();
+        initComponents();
+        cargarTablaCorredoresDisponibles();
+
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowActivated(WindowEvent we) {
+                cargarTablaCorredoresDisponibles();
+            }
+        });
         jLabelTitular.setText("Listado de corredores:");
+    }
+
+    private void cargarTablaCorredoresDisponibles() {
+        CorredoresTableModel ctm = new CorredoresTableModel(corredoresDisponibles);
+        jTableCorredores.setModel(ctm);
+        jTableCorredores.setRowSorter(ctm.ordenaTabla(ctm, 0));
+        jTableCorredores.getColumnModel().getColumn(2).setCellRenderer(new FormatoFechaTabla());
     }
 
     public void cargarTabla() {
         CorredoresTableModel ctm = new CorredoresTableModel(logicaAplicacion.verCorredores());
         jTableCorredores.setModel(ctm);
         jTableCorredores.setRowSorter(ctm.ordenaTabla(ctm, 0));
-        jTableCorredores.getColumnModel().getColumn(2).setCellRenderer(new FormatoFechaTabla());       
+        jTableCorredores.getColumnModel().getColumn(2).setCellRenderer(new FormatoFechaTabla());
     }
 
     /**
@@ -187,9 +197,8 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanelCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelTitular, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPaneCorredores, javax.swing.GroupLayout.DEFAULT_SIZE, 1032, Short.MAX_VALUE)
+                    .addComponent(jScrollPaneCorredores, javax.swing.GroupLayout.DEFAULT_SIZE, 948, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCorredoresLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButtonAniadirCorredorCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonAniadirCorredorNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -205,7 +214,7 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jLabelTitular)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPaneCorredores, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)
+                .addComponent(jScrollPaneCorredores, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelCorredoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonAniadirCorredorCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -235,7 +244,7 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanelCorredores, javax.swing.GroupLayout.DEFAULT_SIZE, 1064, Short.MAX_VALUE)
+                .addComponent(jPanelCorredores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -246,42 +255,65 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanelCorredores, javax.swing.GroupLayout.DEFAULT_SIZE, 377, Short.MAX_VALUE)
+                .addComponent(jPanelCorredores, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonVolver)
                 .addContainerGap())
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVolverActionPerformed
         dispose();
     }//GEN-LAST:event_jButtonVolverActionPerformed
-    
-    //Constructor para añadir participantes a carreras
+
+    //Metodo para añadir participantes a carreras
     private void jButtonAniadirCorredorCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAniadirCorredorCarreraActionPerformed
-        if (!carrera.getDorsales().isEmpty()) {
-            int filaSeleccionada = jTableCorredores.convertRowIndexToModel(jTableCorredores.getSelectedRow());
-            Corredor seleccionado = logicaAplicacion.buscaCorredor(logicaAplicacion.verCorredores().get(filaSeleccionada).getDni());
-            boolean resultado = logicaAplicacion.aniadirParticipante(carrera, seleccionado);
-            if (!resultado) {
-                JOptionPane.showMessageDialog(this, "El corredor seleccionado ya está inscrito en está carrera y no se añadirá", "Confirmación", JOptionPane.WARNING_MESSAGE);
+        boolean resultado = false;
+        if (!logicaAplicacion.verCorredores().isEmpty()) {
+            try {
+                int filaSeleccionada = jTableCorredores.convertRowIndexToModel(jTableCorredores.getSelectedRow());
+                if (!carrera.getDorsales().isEmpty()) {
+                    Corredor seleccionado = logicaAplicacion.buscaCorredor(corredoresDisponibles.get(filaSeleccionada).getDni());
+                    resultado = logicaAplicacion.aniadirParticipante(carrera, seleccionado);
+                    logicaAplicacion.eliminarCorredorDisponible(corredoresDisponibles, seleccionado);
+                    cargarTablaCorredoresDisponibles();
+                    if (!resultado) {
+                        JOptionPane.showMessageDialog(this, "El corredor seleccionado ya está inscrito en está carrera y no se añadirá", "Confirmación", JOptionPane.WARNING_MESSAGE);
+                    }
+                } 
+                if(carrera.getDorsales().isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Se han completado todas las plazas disponibles para esta carrera", "Confirmación", JOptionPane.INFORMATION_MESSAGE);
+                    jButtonAniadirCorredorCarrera.setEnabled(false);
+                }
+            } catch (ArrayIndexOutOfBoundsException ex) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar un corredor", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Se han completado todas las plazas disponibles para esta carrera", "Confirmación", JOptionPane.OK_OPTION);
+            JOptionPane.showMessageDialog(this, "No hay corredores inscritos todavia", "Error", JOptionPane.ERROR_MESSAGE);
         }
+
     }//GEN-LAST:event_jButtonAniadirCorredorCarreraActionPerformed
-    
-    
+
+
     private void jButtonBorrarCorredorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarCorredorActionPerformed
-        int confirm = JOptionPane.showConfirmDialog(this, "¿Seguro que desea eliminar el corredor seleccionado?", "Eliminar corredor", JOptionPane.YES_NO_OPTION);
-        if (confirm == JOptionPane.YES_OPTION) {
-            int filaSeleccionada = jTableCorredores.convertRowIndexToModel(jTableCorredores.getSelectedRow());
-            Corredor seleccionado = logicaAplicacion.verCorredores().get(filaSeleccionada);
-            logicaAplicacion.eliminarCorredor(seleccionado);           
-            jTableCorredores.addRowSelectionInterval(0, 0);
-            cargarTabla();
+        if (!logicaAplicacion.verCorredores().isEmpty()) {
+            try {
+                int filaSeleccionada = jTableCorredores.convertRowIndexToModel(jTableCorredores.getSelectedRow());               
+                int confirm = JOptionPane.showConfirmDialog(this, "¿Seguro que desea eliminar el corredor seleccionado?", "Eliminar corredor", JOptionPane.YES_NO_OPTION);
+                if (confirm == JOptionPane.YES_OPTION) {
+                    Corredor seleccionado = logicaAplicacion.verCorredores().get(filaSeleccionada);
+                    logicaAplicacion.eliminarCorredor(seleccionado);
+                    jTableCorredores.addRowSelectionInterval(0, 0);
+                    cargarTabla();
+                }
+            } catch (ArrayIndexOutOfBoundsException ex) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar un corredor", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No hay corredores inscritos todavia", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonBorrarCorredorActionPerformed
 
@@ -291,12 +323,20 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonAniadirCorredorNuevoActionPerformed
 
     private void jButtonModificarCorredorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificarCorredorActionPerformed
-        int confirm = JOptionPane.showConfirmDialog(this, "¿Seguro que desea modificar el corredor seleccionado?", "Modificar corredor", JOptionPane.YES_NO_OPTION);
-        if (confirm == JOptionPane.YES_OPTION) {
-            int filaSeleccionada = jTableCorredores.convertRowIndexToModel(jTableCorredores.getSelectedRow());
-            Corredor seleccionado = logicaAplicacion.verCorredores().get(filaSeleccionada);
-            PantallaDatosCorredor pdco = new PantallaDatosCorredor((Frame) this.getParent(), true, seleccionado);
-            pdco.setVisible(true);
+        if (!logicaAplicacion.verCorredores().isEmpty()) {
+            try {
+                int filaSeleccionada = jTableCorredores.convertRowIndexToModel(jTableCorredores.getSelectedRow());               
+                int confirm = JOptionPane.showConfirmDialog(this, "¿Seguro que desea modificar el corredor seleccionado?", "Modificar corredor", JOptionPane.YES_NO_OPTION);
+                if (confirm == JOptionPane.YES_OPTION) {
+                    Corredor seleccionado = logicaAplicacion.verCorredores().get(filaSeleccionada);
+                    PantallaDatosCorredor pdco = new PantallaDatosCorredor((Frame) this.getParent(), true, seleccionado);
+                    pdco.setVisible(true);
+                }
+            } catch (ArrayIndexOutOfBoundsException ex) {
+                JOptionPane.showMessageDialog(this, "Debe seleccionar un corredor", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No hay corredores inscritos todavia", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButtonModificarCorredorActionPerformed
 

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui.modelosTabla;
 
 import Dto.Carrera;
@@ -13,10 +8,10 @@ import javax.swing.RowSorter;
 import javax.swing.SortOrder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableRowSorter;
-import sun.nio.ch.ServerSocketAdaptor;
 
 /**
- *
+ * Clase que permite gestionar de forma genérica la tabla de carreras
+ * 
  * @author dbarriof
  */
 public class CarrerasTableModel extends AbstractTableModel{

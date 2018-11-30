@@ -1,29 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package Dto;
+package gui.Recursos;
 
-import java.text.DateFormat;
-import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.swing.table.DefaultTableCellRenderer;
 
 /**
- *
+ * Clase que permite aplicar formato y casting a fechas y horas
+ * 
  * @author dbarriof
  */
 public class FormatoFecha {
      
-    public static String formatFecha(Date d){
+    public static String formatearFecha(Date d){
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         return sdf.format(d);
     }
 
-    public static Date parseFecha(String s){
+    public static Date parsearFecha(String s){
         Date fecha = null;
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         try {
@@ -34,12 +27,12 @@ public class FormatoFecha {
         return fecha;
     }
     
-    public static String formatTiempo(Date d){
+    public static String formatearTiempo(Date d){
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         return sdf.format(d);
     }
     
-    public static Date parseTiempo(String s){
+    public static Date parsearTiempo(String s){
         Date fecha = null;
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         try {

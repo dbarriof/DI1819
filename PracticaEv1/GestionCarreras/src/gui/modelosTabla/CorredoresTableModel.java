@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui.modelosTabla;
 
 import Dto.Corredor;
-import Dto.FormatoFecha;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,10 +9,9 @@ import javax.swing.SortOrder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableRowSorter;
 
-
-
 /**
- *
+ * Clase que permite gestionar de forma genérica la tabla de corredores
+ * 
  * @author dbarriof
  */
 public class CorredoresTableModel extends AbstractTableModel{

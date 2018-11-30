@@ -10,7 +10,7 @@
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -29,7 +29,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <EmptySpace min="-2" max="-2" attributes="0"/>
-              <Component id="jPanelCorredores" pref="1064" max="32767" attributes="0"/>
+              <Component id="jPanelCorredores" max="32767" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="1" attributes="0">
@@ -43,7 +43,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jPanelCorredores" pref="377" max="32767" attributes="0"/>
+              <Component id="jPanelCorredores" pref="449" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jButtonVolver" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -73,9 +73,8 @@
                   <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabelTitular" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jScrollPaneCorredores" pref="1032" max="32767" attributes="0"/>
+                      <Component id="jScrollPaneCorredores" pref="948" max="32767" attributes="0"/>
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace max="32767" attributes="0"/>
                           <Component id="jButtonAniadirCorredorCarrera" min="-2" pref="135" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jButtonAniadirCorredorNuevo" min="-2" pref="135" max="-2" attributes="0"/>
@@ -95,7 +94,7 @@
                   <EmptySpace min="-2" max="-2" attributes="0"/>
                   <Component id="jLabelTitular" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" max="-2" attributes="0"/>
-                  <Component id="jScrollPaneCorredores" pref="271" max="32767" attributes="0"/>
+                  <Component id="jScrollPaneCorredores" pref="343" max="32767" attributes="0"/>
                   <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jButtonAniadirCorredorCarrera" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>

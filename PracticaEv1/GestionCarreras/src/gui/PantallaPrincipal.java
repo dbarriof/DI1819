@@ -1,18 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui;
 
 import Logica.LogicaAplicacion;
+import gui.Recursos.ListenerTemporizadorGuardado;
+import gui.Recursos.TemporizadorGuardadoAutomatico;
 import java.io.File;
-import java.net.URL;
 import java.util.Locale;
-import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import org.openide.util.Exceptions;
 
 /**
  *
@@ -29,6 +23,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private PantallaDatosCarrera pdca;
     private PantallaListaCarreras plca;
     private PantallaCronometro pic;
+    private TemporizadorGuardadoAutomatico temporizador = new TemporizadorGuardadoAutomatico();
 
     /**
      * Creates new form PantallaPrincipal
@@ -37,6 +32,14 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         logicaAplicacion = new LogicaAplicacion();
         logicaAplicacion.cargarDatos();
         initComponents();
+
+        temporizador.addListenerTemporizadorGuardado(new ListenerTemporizadorGuardado() {
+            @Override
+            public void guardarDatos(Object object) {
+                temporizador = new TemporizadorGuardadoAutomatico(logicaAplicacion);
+            }
+        });
+
     }
 
     /**
@@ -63,12 +66,17 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jMenuItemNuevaCarrera = new javax.swing.JMenuItem();
         jMenuItemVerCarreras = new javax.swing.JMenuItem();
         jMenuItemIniciarCarrera = new javax.swing.JMenuItem();
-        jMenuFunciones = new javax.swing.JMenu();
+        jMenuOpciones = new javax.swing.JMenu();
+        jMenuItemGuardado = new javax.swing.JMenuItem();
+        jMenuItemCambiarAspecto = new javax.swing.JMenuItem();
+        jMenuAyuda = new javax.swing.JMenu();
+        jMenuItemAbrirAyuda = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Gestión de Carreras");
+        setTitle("Gestión de Carreras v1.0");
         setBounds(new java.awt.Rectangle(0, 0, 0, 0));
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/gui/images/icono.jpg")).getImage());
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -78,17 +86,19 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jPanelPantallaPrincipal.setBackground(new java.awt.Color(0, 0, 0));
         jPanelPantallaPrincipal.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        jLabelImagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelImagen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/images/runners.jpg"))); // NOI18N
+        jLabelImagen.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout jPanelPantallaPrincipalLayout = new javax.swing.GroupLayout(jPanelPantallaPrincipal);
         jPanelPantallaPrincipal.setLayout(jPanelPantallaPrincipalLayout);
         jPanelPantallaPrincipalLayout.setHorizontalGroup(
             jPanelPantallaPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabelImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabelImagen)
         );
         jPanelPantallaPrincipalLayout.setVerticalGroup(
             jPanelPantallaPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabelImagen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabelImagen)
         );
 
         jButtonCerrar.setText("Salir");
@@ -182,12 +192,46 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
         jMenuAplicacion.add(jMenuCarreras);
 
-        jMenuFunciones.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jMenuFunciones.setText("Funciones");
-        jMenuFunciones.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jMenuFunciones.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jMenuFunciones.setPreferredSize(new java.awt.Dimension(75, 19));
-        jMenuAplicacion.add(jMenuFunciones);
+        jMenuOpciones.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jMenuOpciones.setText("Opciones");
+        jMenuOpciones.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jMenuOpciones.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jMenuOpciones.setPreferredSize(new java.awt.Dimension(75, 19));
+
+        jMenuItemGuardado.setText("Configurar guardado automático");
+        jMenuItemGuardado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemGuardadoActionPerformed(evt);
+            }
+        });
+        jMenuOpciones.add(jMenuItemGuardado);
+
+        jMenuItemCambiarAspecto.setText("Cambiar aspecto visual");
+        jMenuItemCambiarAspecto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemCambiarAspectoActionPerformed(evt);
+            }
+        });
+        jMenuOpciones.add(jMenuItemCambiarAspecto);
+
+        jMenuAplicacion.add(jMenuOpciones);
+
+        jMenuAyuda.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jMenuAyuda.setText("Ayuda");
+        jMenuAyuda.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jMenuAyuda.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jMenuAyuda.setPreferredSize(new java.awt.Dimension(75, 19));
+
+        jMenuItemAbrirAyuda.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        jMenuItemAbrirAyuda.setText("Abrir...");
+        jMenuItemAbrirAyuda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemAbrirAyudaActionPerformed(evt);
+            }
+        });
+        jMenuAyuda.add(jMenuItemAbrirAyuda);
+
+        jMenuAplicacion.add(jMenuAyuda);
 
         setJMenuBar(jMenuAplicacion);
 
@@ -213,6 +257,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -245,10 +290,9 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         if (!logicaAplicacion.verCorredores().isEmpty()) {
             boolean salir = false;
             while (!salir) {
-                String modifCorredor = JOptionPane.showInputDialog(this, "Indique el DNI del corredor", "Buscar corredor");
-                if (modifCorredor == null) {
-                    salir = true;
-                } else {
+                String modifCorredor = null;
+                try {
+                    modifCorredor = JOptionPane.showInputDialog(this, "Indique el DNI del corredor", "");
                     if (logicaAplicacion.buscaCorredor(modifCorredor) != null) {
                         pdco = new PantallaDatosCorredor(this, true, logicaAplicacion.buscaCorredor(modifCorredor));
                         pdco.setVisible(true);
@@ -258,6 +302,14 @@ public class PantallaPrincipal extends javax.swing.JFrame {
                         if (confirm == JOptionPane.NO_OPTION) {
                             salir = true;
                         }
+                    }                 
+                } catch (IllegalArgumentException ex) {
+                    if(modifCorredor == null){
+                        //JOptionPane.showMessageDialog(this, "No ha introducido un DNI válido", "Error", JOptionPane.ERROR_MESSAGE);
+                        salir = true;
+                    } else {
+                    JOptionPane.showMessageDialog(this, "No ha introducido un DNI válido", "Error", JOptionPane.ERROR_MESSAGE);
+                    salir = true;
                     }
                 }
             }
@@ -322,10 +374,9 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         if (!logicaAplicacion.verCorredores().isEmpty()) {
             boolean salir = false;
             while (!salir) {
-                String elimCorredor = JOptionPane.showInputDialog(this, "Indique el DNI del corredor", "Buscar corredor");
-                if (elimCorredor == null) {
-                    salir = true;
-                } else {
+                String elimCorredor = null;
+                try {
+                    elimCorredor = JOptionPane.showInputDialog(this, "Indique el DNI del corredor", "");
                     if (logicaAplicacion.buscaCorredor(elimCorredor) != null) {
                         pdco = new PantallaDatosCorredor(this, true, logicaAplicacion, logicaAplicacion.buscaCorredor(elimCorredor));
                         pdco.setVisible(true);
@@ -335,6 +386,14 @@ public class PantallaPrincipal extends javax.swing.JFrame {
                         if (confirm == JOptionPane.NO_OPTION) {
                             salir = true;
                         }
+                    }    
+                } catch (IllegalArgumentException ex){
+                    if(elimCorredor == null){
+                        //JOptionPane.showMessageDialog(this, "No ha introducido un DNI válido", "Error", JOptionPane.ERROR_MESSAGE);
+                        salir = true;
+                    } else {
+                    JOptionPane.showMessageDialog(this, "No ha introducido un DNI válido", "Error", JOptionPane.ERROR_MESSAGE);
+                    salir = true;
                     }
                 }
             }
@@ -358,17 +417,48 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemVerCarrerasActionPerformed
 
     private void jMenuItemIniciarCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemIniciarCarreraActionPerformed
-        pic = new PantallaCronometro(this, true, logicaAplicacion);
-        pic.setVisible(true);
+        if (!logicaAplicacion.verCarreras().isEmpty()) {
+            pic = new PantallaCronometro(this, true, logicaAplicacion);
+            pic.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "No hay carreras creadas todavía", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jMenuItemIniciarCarreraActionPerformed
-    
+
     /**
-     * Metodo que permite guardar los datos en caso de cieere de la aplicacion mediante X
-     * @param evt 
+     * Metodo que permite guardar los datos en caso de cieere de la aplicacion
+     * mediante X
+     *
+     * @param evt
      */
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-         logicaAplicacion.guardarDatos();     
+        logicaAplicacion.guardarDatos();
     }//GEN-LAST:event_formWindowClosing
+
+    private void jMenuItemGuardadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemGuardadoActionPerformed
+        String tiempo;
+        //Solicitamos el tiempo que se asignará a guardado automático        
+        tiempo = JOptionPane.showInputDialog(this, "¿Cada cuanto tiempo quieres guardar los datos?\n(En minutos)", "Confirmar", JOptionPane.YES_NO_CANCEL_OPTION);
+        try{
+            int tiempoProgramado = Integer.parseInt(tiempo);
+            if (tiempoProgramado == 0){
+                JOptionPane.showMessageDialog(this, "Debe introducir un valor mayor de 0,\nel tiempo definido por defecto es 10 minutos", "Guardado automático", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                temporizador = new TemporizadorGuardadoAutomatico(logicaAplicacion, tiempoProgramado);
+                JOptionPane.showMessageDialog(this, "Guardado automático cada " + tiempo + " minutos\nconfigurado correctamente.", "Guardado automático", JOptionPane.INFORMATION_MESSAGE);  
+            }      
+            } catch (NumberFormatException ex ){
+                JOptionPane.showMessageDialog(this, "Debe introducir un valor numérico,\nel tiempo definido por defecto es 10 minutos", "Guardado automático", JOptionPane.INFORMATION_MESSAGE);               
+            }      
+    }//GEN-LAST:event_jMenuItemGuardadoActionPerformed
+
+    private void jMenuItemAbrirAyudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAbrirAyudaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItemAbrirAyudaActionPerformed
+
+    private void jMenuItemCambiarAspectoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCambiarAspectoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItemCambiarAspectoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -403,7 +493,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             Locale.setDefault(new Locale("es", "ES"));
             new PantallaPrincipal().setVisible(true);
         });
-        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -411,18 +501,21 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JFileChooser jFileChooserFichImport;
     private javax.swing.JLabel jLabelImagen;
     private javax.swing.JMenuBar jMenuAplicacion;
+    private javax.swing.JMenu jMenuAyuda;
     private javax.swing.JMenu jMenuCarreras;
     private javax.swing.JMenu jMenuCorredores;
-    private javax.swing.JMenu jMenuFunciones;
+    private javax.swing.JMenuItem jMenuItemAbrirAyuda;
     private javax.swing.JMenuItem jMenuItemAltaCorredor;
+    private javax.swing.JMenuItem jMenuItemCambiarAspecto;
     private javax.swing.JMenuItem jMenuItemEliminarCorredor;
+    private javax.swing.JMenuItem jMenuItemGuardado;
     private javax.swing.JMenuItem jMenuItemImportarCorredores;
     private javax.swing.JMenuItem jMenuItemIniciarCarrera;
     private javax.swing.JMenuItem jMenuItemModificarCorredor;
     private javax.swing.JMenuItem jMenuItemNuevaCarrera;
     private javax.swing.JMenuItem jMenuItemVerCarreras;
     private javax.swing.JMenuItem jMenuItemVerCorredores;
+    private javax.swing.JMenu jMenuOpciones;
     private javax.swing.JPanel jPanelPantallaPrincipal;
     // End of variables declaration//GEN-END:variables
-
 }

@@ -1,16 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Dto;
 
+import gui.Recursos.FormatoFecha;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
 /**
- *
+ * Clase que representa a un corredor
+ * 
  * @author dbarriof
  */
 public class Corredor implements Serializable{
@@ -76,7 +73,7 @@ public class Corredor implements Serializable{
         String [] datos = new String [5];
         datos[0] = getNombre();
         datos[1] = getDni();
-        datos[2] = FormatoFecha.formatFecha(getFechaNac());
+        datos[2] = FormatoFecha.formatearFecha(getFechaNac());
         datos[3] = getDireccion();
         datos[4] = String.valueOf(getTelefono());
         
@@ -112,9 +109,5 @@ public class Corredor implements Serializable{
         }
         return true;
     }
-
-    
-    
-    
-    
+   
 }

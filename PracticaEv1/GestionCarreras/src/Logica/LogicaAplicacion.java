@@ -1,23 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Logica;
 
 import Dto.Carrera;
 import Dto.Corredor;
-import Dto.FormatoFecha;
+import gui.Recursos.FormatoFecha;
 import Dto.Participante;
 import java.io.*;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 import org.openide.util.Exceptions;
 
 /**
- *
+ * Clase que engloba los métodos que operan en la aplicación
+ * 
  * @author dbarriof
  */
 public class LogicaAplicacion {
@@ -122,7 +115,7 @@ public class LogicaAplicacion {
                 StringTokenizer st = new StringTokenizer(linea, ",");
                 String nombre = st.nextToken();
                 String dni = st.nextToken();
-                Date fecha = FormatoFecha.parseFecha(st.nextToken());
+                Date fecha = FormatoFecha.parsearFecha(st.nextToken());
                 String direccion = st.nextToken();
                 int telefono = Integer.parseInt(st.nextToken());
 
@@ -255,7 +248,35 @@ public class LogicaAplicacion {
     public void quitarDorsal(Carrera carrera, int dorsal) {
         carrera.getDorsales().add(dorsal);
     }
-
+    
+    /**
+     * Metodo que permite cargar un array de corredores disponibles para añadir a una carrera
+     * @return ArrayList
+     */
+    public ArrayList<Corredor> verCorredoresDisponibles(){
+        ArrayList<Corredor> corredoresDisponibles = new ArrayList<>();
+        for(Corredor corredor : corredores){
+            corredoresDisponibles.add(corredor);
+        }
+        return corredoresDisponibles;
+    }
+    
+    /**
+     * Metodo que permite borrar un corredor de la lista de corredores disponibles para añadir a una carrera
+     * @param corredoresDisponibles
+     * @param corredor
+     * @return ArrayList
+     */
+    public ArrayList<Corredor> eliminarCorredorDisponible(ArrayList<Corredor> corredoresDisponibles, Corredor corredor){
+        for (Corredor corr : corredoresDisponibles) {
+            if (corredor.equals(corr)) {
+                corredoresDisponibles.remove(corr);
+                break;
+            }
+        }
+        return corredoresDisponibles;
+    }
+    
     /**
      * Metodo que añade a la lista de participantes el corredor pasado como
      * parametro
@@ -318,6 +339,36 @@ public class LogicaAplicacion {
     public ArrayList<Participante> verParticipantes(Carrera carrera) {
         return (ArrayList<Participante>) carrera.getParticipantes();
     }
+    
+    public void cancelarCarrera(Carrera carrera){
+        for(Participante participante : carrera.getParticipantes()){
+            participante.setTiempo(null);
+            participante.setPosicion(0);
+        }
+    }
+    /**
+     * Metodo que permite crear clonar una carrera para un posible backup si se cancela la disputa
+     * @param carrera
+     * @return 
+     */
+    public Carrera clonarCarrera(Carrera carrera) {
+        Carrera backupCarrera = new Carrera();
+        backupCarrera.setNumMaxParticipantes(carrera.getNumMaxParticipantes());
+        cargarDorsales(backupCarrera);
+        
+        ArrayList<Participante> participantesBackup = new ArrayList<>();
+        for(Participante participante : carrera.getParticipantes()){
+            Participante part = new Participante(participante.getCorredor(),carrera);
+            participantesBackup.add(part);
+        }
+        ArrayList<Integer> dorsalesBackup = new ArrayList<>();
+        for(int dorsal : carrera.getDorsales()){
+            dorsalesBackup.add(dorsal);
+        }
+        backupCarrera = new Carrera(carrera.getNombre(), carrera.getFecha(),carrera.getLugar(), carrera.getNumMaxParticipantes(), participantesBackup, (ArrayList<Integer>) carrera.getDorsales());
+        return backupCarrera;
+    }
+    
     
     /**
      * Metodo que permite seleccionar un participante mediante su dorsal
@@ -454,5 +505,25 @@ public class LogicaAplicacion {
             Exceptions.printStackTrace(ex);
         }
     }
-
+    
+    /**
+     * Metodo que genera un informe de la carrera en formato txt
+     * @param carrera 
+     */
+    public void generarInforme(Carrera carrera){
+        FileWriter informe = null;
+        try {
+            informe = new FileWriter(new File("Informe "+carrera.getNombre()+".txt"));
+            informe.write(carrera.getNombre()+"\r\n");
+            informe.write(String.valueOf(carrera.getFecha()+"\r\n"));
+                for (Participante participante : carrera.getParticipantes()) {
+                    informe.write(participante.getDorsal()+"/"+String.valueOf(participante.getTiempo())+"/"+participante.getCorredor().getNombre()+"\r\n");
+                }
+            informe.flush();
+            informe.close();
+        } catch (IOException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+    }
+            
 }

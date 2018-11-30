@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package gui;
 
 import Dto.Corredor;
 import Logica.LogicaAplicacion;
+import gui.Recursos.FormatoFechaSpinners;
 import java.awt.Color;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -30,7 +26,6 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
         this.logicaAplicacion = logicaAplicacion;
         initComponents();
         validador();
-        
         
         jButtonAceptarMoficacion.setVisible(false);
         jButtonEliminarCorredor.setVisible(false);
@@ -95,7 +90,7 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
         jButtonAceptarAlta.setVisible(false);
     }
     
-    public void validador(){
+    private void validador(){
         //Validación de campos de entrada
         group = validationPanelValidacionDatos.getValidationGroup();
         
@@ -147,6 +142,7 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
         setTitle("Datos del corredor");
         setBounds(new java.awt.Rectangle(0, 0, 0, 0));
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/gui/images/icono.jpg")).getImage());
+        setResizable(false);
 
         jLabelAltaCorredor.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabelAltaCorredor.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -190,7 +186,7 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
         jTextFieldTelefono.setToolTipText("Espacio para insertar el teléfono del corredor");
         jTextFieldTelefono.setName("Telefóno"); // NOI18N
 
-        jSpinnerFechaNac.setModel(new javax.swing.SpinnerDateModel());
+        jSpinnerFechaNac.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(1543538827902L), null, null, java.util.Calendar.DAY_OF_MONTH));
         jSpinnerFechaNac.setToolTipText("Selecciona la fecha de nacimiento del corredor");
         jSpinnerFechaNac.setName("Fecha de nacimiento"); // NOI18N
 
@@ -213,7 +209,7 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
                     .addComponent(jTextFieldTelefono)
                     .addComponent(jSpinnerFechaNac)
                     .addComponent(validationPanelValidacionDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 754, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)))
         );
         jPanelDatosCorredorLayout.setVerticalGroup(
             jPanelDatosCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -241,7 +237,7 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
                 .addGroup(jPanelDatosCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 100, Short.MAX_VALUE))
+                .addGap(11, 11, 11))
         );
 
         jButtonAceptarAlta.setText("Aceptar");
@@ -298,7 +294,7 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanelDatosCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButtonEliminarCorredor)
                     .addComponent(jButtonAceptarMoficacion)
@@ -308,6 +304,7 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarActionPerformed
@@ -401,7 +398,6 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
     }//GEN-LAST:event_jTextFieldNombreActionPerformed
     
      @Override
-
         public void setTitle(String title) {
             super.setTitle(title);
         }
