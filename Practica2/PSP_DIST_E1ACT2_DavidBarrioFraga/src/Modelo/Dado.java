@@ -2,7 +2,7 @@ package Modelo;
 
 /**
  *
- * @author Guile
+ * @author dbarriof
  */
 public class Dado {
     private int valor;
@@ -17,6 +17,5 @@ public class Dado {
     public void setValor(int valor) {
         this.valor = valor;
     }
-    
-    
+      
 }

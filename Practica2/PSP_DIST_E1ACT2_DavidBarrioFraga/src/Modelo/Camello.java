@@ -1,14 +1,11 @@
 package Modelo;
 
 import LogicaAplicacion.Logica;
-import SincroMens.SincronizaMensajes;
 import java.util.concurrent.CountDownLatch;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
- * @author Guile
+ * @author dbarriof
  */
 public class Camello extends Thread {
 
@@ -30,17 +27,24 @@ public class Camello extends Thread {
     @Override
     public void run() {
         try {
+            
+            // Se ordena al hilo esperar indicaciones para comenzar a correr.
             this.contador.await();
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Camello.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        while (posicionesAvanzadas < 100) {
+        
+            // Se repetirán las acciones indicadas hasta que se verifique la condición, trñas lo que el hilo morirá
+        while (posicionesAvanzadas < 100) { 
+            
             logicaAplicacion.tirarDado(this);
+            
+            // Se añade un retardo simulando el tiempo que el camello tarda en avanzar las posiciones (Esto hace que los mensajes en consola se simulen de forma más sincronizada).
+            sleep(200);
+            
             logicaAplicacion.avanzarPosiciones(this);
-            logicaAplicacion.imprimirPosiciones(this);
-            //logicaAplicacion.compruebaGanador(this);        
+            logicaAplicacion.compruebaGanador(this);
         }
         
+        } catch (InterruptedException ex) {
+        }
     }
 
     public String getNombre() {
