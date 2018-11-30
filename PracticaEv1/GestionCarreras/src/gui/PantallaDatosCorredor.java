@@ -2,7 +2,6 @@ package gui;
 
 import Dto.Corredor;
 import Logica.LogicaAplicacion;
-import gui.Recursos.FormatoFechaSpinners;
 import java.awt.Color;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -142,7 +141,6 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
         setTitle("Datos del corredor");
         setBounds(new java.awt.Rectangle(0, 0, 0, 0));
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/gui/images/icono.jpg")).getImage());
-        setResizable(false);
 
         jLabelAltaCorredor.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         jLabelAltaCorredor.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
@@ -209,7 +207,7 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
                     .addComponent(jTextFieldTelefono)
                     .addComponent(jSpinnerFechaNac)
                     .addComponent(validationPanelValidacionDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 820, Short.MAX_VALUE)))
         );
         jPanelDatosCorredorLayout.setVerticalGroup(
             jPanelDatosCorredorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -293,14 +291,14 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanelDatosCorredor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelDatosCorredor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButtonEliminarCorredor)
                     .addComponent(jButtonAceptarMoficacion)
                     .addComponent(jButtonAceptarAlta)
                     .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();

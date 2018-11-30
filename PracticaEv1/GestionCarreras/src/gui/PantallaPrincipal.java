@@ -1,12 +1,16 @@
 package gui;
 
 import Logica.LogicaAplicacion;
+import gui.Recursos.EstilosVisuales;
 import gui.Recursos.ListenerTemporizadorGuardado;
 import gui.Recursos.TemporizadorGuardadoAutomatico;
 import java.io.File;
 import java.util.Locale;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 /**
  *
@@ -457,7 +461,9 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemAbrirAyudaActionPerformed
 
     private void jMenuItemCambiarAspectoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCambiarAspectoActionPerformed
-        // TODO add your handling code here:
+        String estilo = (String) JOptionPane.showInputDialog(this, "Seleccione el estilo que visual del listado", "Cambiar estilo",JOptionPane.QUESTION_MESSAGE,null,EstilosVisuales.estilosInstalados(),EstilosVisuales.estilosInstalados()[0]);
+        EstilosVisuales.asignarEstilo(estilo);
+        SwingUtilities.updateComponentTreeUI(this);
     }//GEN-LAST:event_jMenuItemCambiarAspectoActionPerformed
 
     /**

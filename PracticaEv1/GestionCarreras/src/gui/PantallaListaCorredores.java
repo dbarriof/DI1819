@@ -5,6 +5,7 @@ import Dto.Corredor;
 import gui.Recursos.FormatoFechaTabla;
 import gui.modelosTabla.CorredoresTableModel;
 import Logica.LogicaAplicacion;
+import gui.Recursos.OrdenadorTablas;
 import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -96,14 +97,14 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
     private void cargarTablaCorredoresDisponibles() {
         CorredoresTableModel ctm = new CorredoresTableModel(corredoresDisponibles);
         jTableCorredores.setModel(ctm);
-        jTableCorredores.setRowSorter(ctm.ordenaTabla(ctm, 0));
+        jTableCorredores.setRowSorter(OrdenadorTablas.ordenaTabla(ctm, 0));
         jTableCorredores.getColumnModel().getColumn(2).setCellRenderer(new FormatoFechaTabla());
     }
 
     public void cargarTabla() {
         CorredoresTableModel ctm = new CorredoresTableModel(logicaAplicacion.verCorredores());
         jTableCorredores.setModel(ctm);
-        jTableCorredores.setRowSorter(ctm.ordenaTabla(ctm, 0));
+        jTableCorredores.setRowSorter(OrdenadorTablas.ordenaTabla(ctm, 0));
         jTableCorredores.getColumnModel().getColumn(2).setCellRenderer(new FormatoFechaTabla());
     }
 

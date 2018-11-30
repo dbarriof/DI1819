@@ -4,10 +4,7 @@ import Dto.Corredor;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.swing.RowSorter.SortKey;
-import javax.swing.SortOrder;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableRowSorter;
 
 /**
  * Clase que permite gestionar de forma genérica la tabla de corredores
@@ -21,14 +18,6 @@ public class CorredoresTableModel extends AbstractTableModel{
     public CorredoresTableModel(ArrayList<Corredor> listaCorredores){        
         this.listaCorredores = (ArrayList) listaCorredores;       
     }   
-    
-    public TableRowSorter ordenaTabla(AbstractTableModel atm, int col){
-        TableRowSorter ordenador = new TableRowSorter(atm);     
-        List<SortKey> sortKeys = new ArrayList<>();       
-        sortKeys.add(new SortKey(col, SortOrder.ASCENDING));                  
-        ordenador.setSortKeys(sortKeys);      
-        return ordenador;
-    }
 
     @Override
     public int getRowCount() {

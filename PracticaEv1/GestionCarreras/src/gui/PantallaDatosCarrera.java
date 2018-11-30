@@ -2,6 +2,7 @@ package gui;
 
 import Dto.*;
 import Logica.LogicaAplicacion;
+import gui.Recursos.OrdenadorTablas;
 import gui.modelosTabla.ParticipantesTableModel;
 import java.awt.Color;
 import java.awt.Frame;
@@ -9,6 +10,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.*;
 import javax.swing.JOptionPane;
+import javax.swing.table.AbstractTableModel;
 import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
 import org.netbeans.validation.api.ui.ValidationGroup;
 
@@ -124,7 +126,7 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
 
     public void cargarTablaParticipantes() {
         jTableParticipantes.setModel(new ParticipantesTableModel((ArrayList<Participante>) carrera.getParticipantes()));
-
+        jTableParticipantes.setRowSorter(OrdenadorTablas.ordenaTabla((AbstractTableModel) jTableParticipantes.getModel(), 0));
     }
 
     /**

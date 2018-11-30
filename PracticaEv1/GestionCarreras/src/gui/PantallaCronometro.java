@@ -4,6 +4,7 @@ import Dto.Carrera;
 import Dto.Participante;
 import Logica.LogicaAplicacion;
 import gui.Recursos.FormatoHoraTabla;
+import gui.Recursos.OrdenadorTablas;
 import gui.modelosTabla.ParticipantesTableModel;
 import jLabelCronometro.CorredorLlegado;
 import jLabelCronometro.CronometroListener;
@@ -62,7 +63,7 @@ public class PantallaCronometro extends javax.swing.JDialog {
     public void cargarTablaParticipantes(List<Participante> clasificacionParticipantes) {
         ParticipantesTableModel ptm = new ParticipantesTableModel(listaClasificacion);
         jTableParticipantes.setModel(ptm);
-        jTableParticipantes.setRowSorter(ptm.ordenaTabla(ptm, 4));
+        jTableParticipantes.setRowSorter(OrdenadorTablas.ordenaTabla(ptm, 4));
         jTableParticipantes.getColumnModel().getColumn(3).setCellRenderer(new FormatoHoraTabla());
     }
 
