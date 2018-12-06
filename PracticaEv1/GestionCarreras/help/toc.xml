@@ -1,0 +1,10 @@
+<toc version="1.0">
+	<tocitem text="Gestion de carreras 1.0" target="aplicacion">
+		<tocitem text="Pantalla principal" target="pantalla_principal"/>
+		<tocitem text="Pantalla corredor" target="pantalla_corredor"/>
+		<tocitem text="pantalla lista corredores" target="pantalla_lista_corredores"/>
+		<tocitem text="pantalla carrera" target="pantalla_carrera"/>
+		<tocitem text="pantalla lista carreras" target="pantalla_lista_carreras"/>
+		<tocitem text="pantalla cronometro" target="pantalla_cronometro"/>
+	</tocitem>
+</toc>

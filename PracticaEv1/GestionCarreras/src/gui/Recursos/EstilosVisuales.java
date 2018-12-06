@@ -12,11 +12,16 @@ import javax.swing.UnsupportedLookAndFeelException;
 import org.openide.util.Exceptions;
 
 /**
- *
+ * Clase que permite manejar y aplicar estilos visuales a la aplicacion
+ * 
  * @author dbarriof
  */
 public class EstilosVisuales {
-
+    
+    /**
+     * Metodo que devuelve un array de los estilos disponibles para ser usados
+     * @return 
+     */
     public static String[] estilosInstalados(){
         
         String[] estilos = new String[UIManager.getInstalledLookAndFeels().length];
@@ -29,6 +34,10 @@ public class EstilosVisuales {
         return estilos;
     }
     
+    /**
+     * Metodo que permite aplicar un estilo visual pasando su nombre como parametro
+     * @param nombre 
+     */
     public static void asignarEstilo(String nombre) {
         for(UIManager.LookAndFeelInfo estilo : UIManager.getInstalledLookAndFeels()){
             if(estilo.getName().equals(nombre)){

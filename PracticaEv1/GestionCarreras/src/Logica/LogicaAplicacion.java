@@ -130,9 +130,9 @@ public class LogicaAplicacion {
             br.close();
 
         } catch (FileNotFoundException ex) {
-            System.out.println("No existe el fichero indicado.");
+            System.out.println("No existe el fichero "+fichero+".");
         } catch (IOException ex) {
-            System.out.println("Se ha producido un error al leer el fichero");
+            System.out.println("Se ha producido un error al leer el fichero"+fichero+".");
         }
 
         return listaCorrImport;
@@ -340,7 +340,10 @@ public class LogicaAplicacion {
         return (ArrayList<Participante>) carrera.getParticipantes();
     }
     
-    
+    /**
+     * Metodo que resetea los valores de los participantes de una carrera a los valores por defecto
+     * @param carrera 
+     */
     public void cancelarCarrera(Carrera carrera){
         for(Participante participante : carrera.getParticipantes()){
             participante.setTiempo(null);
@@ -390,13 +393,15 @@ public class LogicaAplicacion {
      * Metodo que permite guardar los datos existentes en la aplicacion
      */
     public void guardarDatos() {
+        File fCarreras = new File("ListadoDeCarreras.dat");
+        File fCorredores = new File("ListadoDeCorredores.dat");
         FileOutputStream fos = null;
         BufferedOutputStream bos = null;
         ObjectOutputStream oos = null;
 
         try {
             //Escritura de carreras
-            fos = new FileOutputStream("ListadoDeCarreras.dat");
+            fos = new FileOutputStream(fCarreras);
             bos = new BufferedOutputStream(fos);
             oos = new ObjectOutputStream(bos);
 
@@ -407,14 +412,16 @@ public class LogicaAplicacion {
             oos.flush();
             bos.close();
             fos.close();
-
+            
+            System.out.println("Guardado el listado de carreras en el fichero "+fCarreras+".");
         } catch (FileNotFoundException ex) {
         } catch (IOException ex) {
+            System.out.println("Se ha producido un error al escribi el fichero "+fCarreras+".");
         }
 
         try {
             //Escritura de corredores
-            fos = new FileOutputStream("ListadoDeCorredores.dat");
+            fos = new FileOutputStream(fCorredores);
             bos = new BufferedOutputStream(fos);
             oos = new ObjectOutputStream(bos);
 
@@ -425,9 +432,11 @@ public class LogicaAplicacion {
             oos.flush();
             bos.close();
             fos.close();
-
+            
+            System.out.println("Guardado el listado de corredores en el fichero "+fCorredores+".");
         } catch (FileNotFoundException ex) {
         } catch (IOException ex) {
+            System.out.println("Se ha producido un error al escribi el fichero "+fCorredores+".");
         }
     }
     
@@ -457,15 +466,15 @@ public class LogicaAplicacion {
 
             bis.close();
             fis.close();
-            System.out.println("Cargado listado de carreras.");
+            System.out.println("Cargado listado de carreras desde el fichero "+fCarreras+".");
 
         } catch (FileNotFoundException ex) {
-            System.out.println("No hay datos previos que cargar.");
+            System.out.println("No se han encontrado datos de carreras almacenadas previamente.");
         } catch (EOFException ex) {
             if (carreras.size() > 0) {
-                System.out.println("Finalizada lectura de datos.");
+                System.out.println("Finalizada lectura de datos del fichero "+fCarreras+".");
             } else {
-                System.out.println("No se han cargado datos de carreras almacenadas previamente");
+                System.out.println("No hay datos de carreras que cargar en el fichero "+fCarreras+".");
             }
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);
@@ -490,15 +499,15 @@ public class LogicaAplicacion {
 
             bis.close();
             fis.close();
-            System.out.println("Cargado listado de corredores.");
+            System.out.println("Cargado listado de corredores desde el fichero "+fCorredores+".");
 
         } catch (FileNotFoundException ex) {
-            System.out.println("No hay datos previos que cargar.");
+            System.out.println("No se han encontrado datos de corredores almacenados previamente.");
         } catch (EOFException ex) {
             if (carreras.size() > 0) {
-                System.out.println("Finalizada lectura de datos.");
+                System.out.println("Finalizada lectura de datos del fichero "+fCorredores+".");
             } else {
-                System.out.println("No se han cargado datos de corredores almacenados previamente");
+                System.out.println("No hay datos de corredores que cargar en el fichero "+fCorredores+".");
             }
         } catch (IOException ex) {
             Exceptions.printStackTrace(ex);

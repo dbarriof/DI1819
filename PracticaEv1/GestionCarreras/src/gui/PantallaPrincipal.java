@@ -3,14 +3,22 @@ package gui;
 import Logica.LogicaAplicacion;
 import gui.Recursos.EstilosVisuales;
 import gui.Recursos.ListenerTemporizadorGuardado;
+import gui.Recursos.MostrarAyuda;
 import gui.Recursos.TemporizadorGuardadoAutomatico;
+import java.awt.event.ActionEvent;
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Locale;
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
+import javax.help.HelpSetException;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import org.openide.util.Exceptions;
 
 /**
  *
@@ -36,7 +44,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         logicaAplicacion = new LogicaAplicacion();
         logicaAplicacion.cargarDatos();
         initComponents();
-
+        MostrarAyuda mostrarAyuda = new MostrarAyuda(getRootPane(),jMenuItemAbrirAyuda);
+ 
         temporizador.addListenerTemporizadorGuardado(new ListenerTemporizadorGuardado() {
             @Override
             public void guardarDatos(Object object) {
@@ -45,7 +54,30 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         });
 
     }
-
+    
+    /**
+     * Metodo que permite cargar la ayuda de la aplicacion
+     */
+    /*
+    private void mostrarAyuda(){
+        try {
+            //try {
+            //Acceso a fichero de ayuda
+            File fichero = new File("help"+File.separator+"help_set.hs");
+            URL hsURL = fichero.toURI().toURL();
+            
+            HelpSet helpset = new HelpSet(getClass().getClassLoader(), hsURL);
+            HelpBroker hb = helpset.createHelpBroker();
+            
+            hb.enableHelpOnButton(jMenuItemAbrirAyuda,"aplicacion",helpset);
+            hb.enableHelpKey(getRootPane(),"aplicacion",helpset);
+        } catch (MalformedURLException | HelpSetException ex) {
+            Exceptions.printStackTrace(ex);
+        }
+    }
+    */
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -228,11 +260,6 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
         jMenuItemAbrirAyuda.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
         jMenuItemAbrirAyuda.setText("Abrir...");
-        jMenuItemAbrirAyuda.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemAbrirAyudaActionPerformed(evt);
-            }
-        });
         jMenuAyuda.add(jMenuItemAbrirAyuda);
 
         jMenuAplicacion.add(jMenuAyuda);
@@ -273,6 +300,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         pdco = new PantallaDatosCorredor(this, true, logicaAplicacion);
         pdco.setVisible(true);
     }//GEN-LAST:event_jMenuItemAltaCorredorActionPerformed
+    
     /**
      * Boton para cerrar la aplicacion solicitando aceptacion
      *
@@ -282,11 +310,12 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         int salir = JOptionPane.showConfirmDialog(this, "¿Confirma que quiere salir de la aplicación?", "Cerrar aplicación", JOptionPane.YES_NO_OPTION);
         if (salir == JOptionPane.YES_OPTION) {
             logicaAplicacion.guardarDatos();
-            dispose();
+            System.exit(0);
         }
     }//GEN-LAST:event_jButtonCerrarActionPerformed
+    
     /**
-     * Boton para acceder al formulario de modificar los datos de un corredor
+     * Boton que permite solicitar un DNI y modificar  el corredor asociado
      *
      * @param evt
      */
@@ -321,6 +350,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No hay corredores inscritos todavía", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jMenuItemModificarCorredorActionPerformed
+    
     /**
      * Boton para seleccionar un fichero de donde importar corredores
      *
@@ -363,7 +393,11 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jMenuItemImportarCorredoresActionPerformed
-
+    
+    /**
+     * Boton que permite mostrar la pantalla con la lista de corredores creados
+     * @param evt 
+     */
     private void jMenuItemVerCorredoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemVerCorredoresActionPerformed
         if (!logicaAplicacion.verCorredores().isEmpty()) {
             plco = new PantallaListaCorredores(this, true, logicaAplicacion);
@@ -373,7 +407,11 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_jMenuItemVerCorredoresActionPerformed
-
+    
+    /**
+     * Boton que permite solicitar un DNI y eliminar el corredor asociado
+     * @param evt 
+     */
     private void jMenuItemEliminarCorredorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemEliminarCorredorActionPerformed
         if (!logicaAplicacion.verCorredores().isEmpty()) {
             boolean salir = false;
@@ -405,12 +443,20 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No hay corredores inscritos todavía", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jMenuItemEliminarCorredorActionPerformed
-
+    
+    /**
+     * Boton que permite crear una nueva carrera
+     * @param evt 
+     */
     private void jMenuItemNuevaCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemNuevaCarreraActionPerformed
         pdca = new PantallaDatosCarrera(this, true, logicaAplicacion);
         pdca.setVisible(true);
     }//GEN-LAST:event_jMenuItemNuevaCarreraActionPerformed
-
+    
+    /**
+     * Boton que permite mostrar la pantalla con la lista de carreras creadas
+     * @param evt 
+     */
     private void jMenuItemVerCarrerasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemVerCarrerasActionPerformed
         if (!logicaAplicacion.verCarreras().isEmpty()) {
             plca = new PantallaListaCarreras(this, true, logicaAplicacion);
@@ -419,7 +465,11 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No hay carreras creadas todavía", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jMenuItemVerCarrerasActionPerformed
-
+    
+    /**
+     * Boton que permite llamar a la pantalla de inicio de carrera
+     * @param evt 
+     */
     private void jMenuItemIniciarCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemIniciarCarreraActionPerformed
         if (!logicaAplicacion.verCarreras().isEmpty()) {
             pic = new PantallaCronometro(this, true, logicaAplicacion);
@@ -438,7 +488,11 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         logicaAplicacion.guardarDatos();
     }//GEN-LAST:event_formWindowClosing
-
+    
+    /**
+     * Metodo que permite pedir  el tiempo que quiere aplicar al guardado automatico
+     * @param evt 
+     */
     private void jMenuItemGuardadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemGuardadoActionPerformed
         String tiempo;
         //Solicitamos el tiempo que se asignará a guardado automático        
@@ -455,11 +509,12 @@ public class PantallaPrincipal extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Debe introducir un valor numérico,\nel tiempo definido por defecto es 10 minutos", "Guardado automático", JOptionPane.INFORMATION_MESSAGE);               
             }      
     }//GEN-LAST:event_jMenuItemGuardadoActionPerformed
-
-    private void jMenuItemAbrirAyudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAbrirAyudaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItemAbrirAyudaActionPerformed
-
+    
+   
+    /**
+     * Metodo que pregunta al usuario el estilo visual que quiere para la aplicacion
+     * @param evt 
+     */
     private void jMenuItemCambiarAspectoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCambiarAspectoActionPerformed
         String estilo = (String) JOptionPane.showInputDialog(this, "Seleccione el estilo que visual del listado", "Cambiar estilo",JOptionPane.QUESTION_MESSAGE,null,EstilosVisuales.estilosInstalados(),EstilosVisuales.estilosInstalados()[0]);
         EstilosVisuales.asignarEstilo(estilo);

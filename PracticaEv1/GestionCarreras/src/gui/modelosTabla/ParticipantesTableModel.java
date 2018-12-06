@@ -24,11 +24,8 @@ public class ParticipantesTableModel extends AbstractTableModel{
     @Override
     public int getRowCount() {
         if(!listaParticipantes.isEmpty()){
-            System.out.println("retorno algo");
-            System.out.println(listaParticipantes.size());
             return listaParticipantes.size();     
         }
-        System.out.println("retorno 0");
         return 0;
     }
 

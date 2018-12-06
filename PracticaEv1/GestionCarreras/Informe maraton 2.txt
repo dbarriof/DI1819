@@ -1,6 +1,0 @@
-maraton 2
-Fri Nov 30 00:16:22 CET 2018
-1/Thu Jan 01 00:00:04 CET 1970/Fernando Botana
-4/Thu Jan 01 00:00:07 CET 1970/Manuel Gonzalez
-3/Thu Jan 01 00:00:14 CET 1970/Maria Rodriguez
-2/Thu Jan 01 00:00:25 CET 1970/Roberto Fernandez

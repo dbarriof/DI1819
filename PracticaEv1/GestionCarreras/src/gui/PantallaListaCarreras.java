@@ -6,6 +6,7 @@ import Logica.LogicaAplicacion;
 import gui.modelosTabla.CarrerasTableModel;
 import gui.Recursos.FormatoFechaTabla;
 import gui.Recursos.FormatoHoraTabla;
+import gui.Recursos.MostrarAyuda;
 import gui.Recursos.OrdenadorTablas;
 import gui.modelosTabla.ParticipantesTableModel;
 import java.awt.Frame;
@@ -30,6 +31,9 @@ public class PantallaListaCarreras extends javax.swing.JDialog {
         super(parent, modal);
         this.logicaAplicacion = logicaAplicacion;
         initComponents();
+        
+        MostrarAyuda ayuda = new MostrarAyuda(getRootPane());
+        
         cargarTablaCarreras();
         jTableCarreras.setRowSelectionInterval(0, 0);
         cargarTablaParticipantes();
@@ -345,8 +349,6 @@ public class PantallaListaCarreras extends javax.swing.JDialog {
     private void jButtonAniadirParticipanteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAniadirParticipanteActionPerformed
         filaSeleccionadaCarrera = jTableCarreras.convertRowIndexToModel(jTableCarreras.getSelectedRow());
         Carrera seleccionada = logicaAplicacion.verCarreras().get(filaSeleccionadaCarrera);
-        System.out.println(seleccionada.getDorsales());
-        System.out.println("Fila seleccionada precarga" + filaSeleccionadaCarrera);
 
         if (seleccionada.getParticipantes().isEmpty() && seleccionada.getDorsales().isEmpty()) {
             logicaAplicacion.cargarDorsales(seleccionada);

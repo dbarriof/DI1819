@@ -2,6 +2,7 @@ package gui;
 
 import Dto.*;
 import Logica.LogicaAplicacion;
+import gui.Recursos.MostrarAyuda;
 import gui.Recursos.OrdenadorTablas;
 import gui.modelosTabla.ParticipantesTableModel;
 import java.awt.Color;
@@ -30,6 +31,7 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
         setTitle("Nueva carrera");
         this.logicaAplicacion = logicaAplicacion;
         initComponents();
+        MostrarAyuda ayuda = new MostrarAyuda(getRootPane());
         validador();
 
         //Instanciamos la carrera que vamos a crear para poder añadir elementos a sus colecciones antes de almacenarla en la colección de carreras.
@@ -58,6 +60,7 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
         this.logicaAplicacion = logicaAplicacion;
         this.carrera = carrera;
         initComponents();
+        MostrarAyuda ayuda = new MostrarAyuda(getRootPane());
         validador();
         
         this.addWindowListener(new WindowAdapter() {
@@ -90,6 +93,7 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
         setTitle("Eliminar carrera");
         this.logicaAplicacion = logicaAplicacion;
         initComponents();
+        MostrarAyuda ayuda = new MostrarAyuda(getRootPane());
         validador();
 
         //Detalles de pantalla

@@ -5,6 +5,7 @@ import Dto.Corredor;
 import gui.Recursos.FormatoFechaTabla;
 import gui.modelosTabla.CorredoresTableModel;
 import Logica.LogicaAplicacion;
+import gui.Recursos.MostrarAyuda;
 import gui.Recursos.OrdenadorTablas;
 import java.awt.Frame;
 import java.awt.event.WindowAdapter;
@@ -36,7 +37,9 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
         this.logicaAplicacion = logicaAplicacion;
         initComponents();
         cargarTabla();
-
+        
+        MostrarAyuda ayuda = new MostrarAyuda(getRootPane());
+        
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowActivated(WindowEvent we) {
@@ -62,6 +65,7 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
         this.logicaAplicacion = logicaAplicacion;
         logicaAplicacion.importarCorredores(archivo);
         initComponents();
+        MostrarAyuda ayuda = new MostrarAyuda(getRootPane());
         cargarTabla();
         jButtonAniadirCorredorNuevo.setVisible(false);
         jButtonAniadirCorredorCarrera.setVisible(false);
@@ -83,6 +87,7 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
         this.carrera = carrera;
         corredoresDisponibles = logicaAplicacion.verCorredoresDisponibles();
         initComponents();
+        MostrarAyuda ayuda = new MostrarAyuda(getRootPane());
         cargarTablaCorredoresDisponibles();
 
         this.addWindowListener(new WindowAdapter() {
@@ -297,7 +302,6 @@ public class PantallaListaCorredores extends javax.swing.JDialog {
         }
 
     }//GEN-LAST:event_jButtonAniadirCorredorCarreraActionPerformed
-
 
     private void jButtonBorrarCorredorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBorrarCorredorActionPerformed
         if (!logicaAplicacion.verCorredores().isEmpty()) {

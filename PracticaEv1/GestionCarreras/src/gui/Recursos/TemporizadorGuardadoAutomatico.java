@@ -19,30 +19,6 @@ public class TemporizadorGuardadoAutomatico implements Serializable{
     public TemporizadorGuardadoAutomatico() {               
     }
     
-    public TemporizadorGuardadoAutomatico(LogicaAplicacion logicaAplicacion) {        
-        temporizador = new Timer();
-        tarea = new TimerTask() {
-            @Override
-            public void run() {
-                logicaAplicacion.guardarDatos();
-                System.out.println("Se han guardado los datos.");
-            }        
-        };
-        temporizador.schedule(tarea, 0,600000 );
-    }
-
-    public TemporizadorGuardadoAutomatico(LogicaAplicacion logicaAplicacion, int tiempoProgramado) {                   
-        temporizador = new Timer();
-        tarea = new TimerTask() {
-            @Override
-            public void run() {  
-                logicaAplicacion.guardarDatos();
-                System.out.println("Se han guardado los datos.");
-            }        
-        };
-        temporizador.schedule(tarea, 0,tiempoProgramado * 60000);
-    }
-
     public Timer getTemporizador() {
         return temporizador;
     }
@@ -63,4 +39,36 @@ public class TemporizadorGuardadoAutomatico implements Serializable{
         this.listenerTemporizadorGuardado = listenerTemporizadorGuardado;
     }
     
+    /**
+     * Metodo que permite generar un temporizador para guardar los datos de la aplicacion con un tiempo establecido por defecto
+     * @param logicaAplicacion 
+     */
+    public TemporizadorGuardadoAutomatico(LogicaAplicacion logicaAplicacion) {        
+        temporizador = new Timer();
+        tarea = new TimerTask() {
+            @Override
+            public void run() {
+                logicaAplicacion.guardarDatos();
+                System.out.println("Se han guardado los datos.");
+            }        
+        };
+        temporizador.schedule(tarea, 0,600000 );
+    }
+    
+    /**
+     * Metodo que permite generar un temporizador para guardar los datos de la aplicacion con un tiempo introducido como parametro
+     * @param logicaAplicacion
+     * @param tiempoProgramado 
+     */
+    public TemporizadorGuardadoAutomatico(LogicaAplicacion logicaAplicacion, int tiempoProgramado) {                   
+        temporizador = new Timer();
+        tarea = new TimerTask() {
+            @Override
+            public void run() {  
+                logicaAplicacion.guardarDatos();
+                System.out.println("Se han guardado los datos.");
+            }        
+        };
+        temporizador.schedule(tarea, 0,tiempoProgramado * 60000);
+    }  
 }

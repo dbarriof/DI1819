@@ -4,6 +4,7 @@ import Dto.Carrera;
 import Dto.Participante;
 import Logica.LogicaAplicacion;
 import gui.Recursos.FormatoHoraTabla;
+import gui.Recursos.MostrarAyuda;
 import gui.Recursos.OrdenadorTablas;
 import gui.modelosTabla.ParticipantesTableModel;
 import jLabelCronometro.CorredorLlegado;
@@ -37,24 +38,25 @@ public class PantallaCronometro extends javax.swing.JDialog {
         super(parent, modal);
         this.logicaAplicacion = logicaAplicacion;
         listaClasificacion = new ArrayList<>();
-              
+
         initComponents();
-        jButtonIniciar.setEnabled(false); 
+        MostrarAyuda ayuda = new MostrarAyuda(getRootPane());
+        jButtonIniciar.setEnabled(false);
         jButtonCancelarCarrera.setEnabled(false);
         cronometro.addCronometroListener(new CronometroListener() {
             @Override
             public void llegaCorredor(CorredorLlegado corredorLlegado) {
                 actualizarClasificacion(corredorLlegado);
-            }           
-        });             
+            }
+        });
     }
 
     //Metodo que devuelve un modelo para el spinner que selecciona las carreras
     public ComboBoxModel<String> cargarCarreras() {
         DefaultComboBoxModel<String> dcm = new DefaultComboBoxModel<>();
         for (Carrera carrera : logicaAplicacion.verCarreras()) {
-            if(!carrera.isFinalizada()){
-                dcm.addElement(carrera.getNombre()); 
+            if (!carrera.isFinalizada()) {
+                dcm.addElement(carrera.getNombre());
             }
         }
         return dcm;
@@ -67,22 +69,22 @@ public class PantallaCronometro extends javax.swing.JDialog {
         jTableParticipantes.getColumnModel().getColumn(3).setCellRenderer(new FormatoHoraTabla());
     }
 
-    public void actualizarClasificacion(CorredorLlegado corredor) { 
+    public void actualizarClasificacion(CorredorLlegado corredor) {
         Participante participanteFinalizado = logicaAplicacion.buscaDorsal(carreraEnDisputa, corredor.getDorsal());
         if (corredor.getDorsal() <= numParticipantes && corredor.getDorsal() > 0) {
             if (participanteFinalizado.getTiempo() == null) {
                 listaClasificacion.add(participanteFinalizado);
                 participanteFinalizado.setPosicion(listaClasificacion.size());
-                participanteFinalizado.setTiempo(corredor.getTiempo());            
+                participanteFinalizado.setTiempo(corredor.getTiempo());
                 participantesRestantes--;
             } else {
                 int confirmar = JOptionPane.showConfirmDialog(this, "El dorsal indicado ya ha llegado a meta\n¿Corregir dorsal indicado?", "Error", JOptionPane.YES_NO_OPTION);
-                if(confirmar == JOptionPane.YES_OPTION){
-                int dorsalNuevo = Integer.parseInt(JOptionPane.showInputDialog(this, "Indique el dorsal correcto", "Nuevo dorsal", JOptionPane.OK_OPTION));
-                CorredorLlegado corredorLlegado = corredor;
-                corredorLlegado.setDorsal(dorsalNuevo);
-                actualizarClasificacion(corredorLlegado);
-                }  
+                if (confirmar == JOptionPane.YES_OPTION) {
+                    int dorsalNuevo = Integer.parseInt(JOptionPane.showInputDialog(this, "Indique el dorsal correcto", "Nuevo dorsal", JOptionPane.OK_OPTION));
+                    CorredorLlegado corredorLlegado = corredor;
+                    corredorLlegado.setDorsal(dorsalNuevo);
+                    actualizarClasificacion(corredorLlegado);
+                }
             }
             if (participantesRestantes <= 0) {
                 cronometro.pausarCronometro();
@@ -95,11 +97,11 @@ public class PantallaCronometro extends javax.swing.JDialog {
                 jButtonVolver.setEnabled(true);
                 jButtonCancelarCarrera.setEnabled(false);
                 jButtonSeleccionar.setEnabled(false);
-                
+
             }
         } else {
             int confirmar = JOptionPane.showConfirmDialog(this, "El dorsal indicado no existe\n¿Indicar un nuevo dorsal?", "Error", JOptionPane.YES_NO_OPTION);
-            if(confirmar == JOptionPane.YES_OPTION){
+            if (confirmar == JOptionPane.YES_OPTION) {
                 int dorsalNuevo = Integer.parseInt(JOptionPane.showInputDialog(this, "Indique el dorsal correcto", "Nuevo dorsal", JOptionPane.OK_OPTION));
                 CorredorLlegado corredorLlegado = corredor;
                 corredorLlegado.setDorsal(dorsalNuevo);
@@ -305,16 +307,20 @@ public class PantallaCronometro extends javax.swing.JDialog {
     }//GEN-LAST:event_jButtonIniciarActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-         
+
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButtonSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSeleccionarActionPerformed
-        carreraEnDisputa = logicaAplicacion.buscaCarrera((String) jComboBox1.getSelectedItem());
-        numParticipantes = carreraEnDisputa.getParticipantes().size();
-        participantesRestantes = numParticipantes;
-        jComboBox1.setEnabled(false);
-        jButtonIniciar.setEnabled(true);
-        jButtonCancelarCarrera.setEnabled(true);
+        try {
+            carreraEnDisputa = logicaAplicacion.buscaCarrera((String) jComboBox1.getSelectedItem());
+            numParticipantes = carreraEnDisputa.getParticipantes().size();
+            participantesRestantes = numParticipantes;
+            jComboBox1.setEnabled(false);
+            jButtonIniciar.setEnabled(true);
+            jButtonCancelarCarrera.setEnabled(true);
+        } catch (NullPointerException ex) {
+            JOptionPane.showMessageDialog(PantallaCronometro.this, "Debe seleccionar una carrera del listado antes de confirmarla.", "Error confirmando", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButtonSeleccionarActionPerformed
 
     private void jButtonVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVolverActionPerformed
@@ -323,12 +329,12 @@ public class PantallaCronometro extends javax.swing.JDialog {
 
     private void jButtonCancelarCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelarCarreraActionPerformed
         int cancelar = JOptionPane.showConfirmDialog(this, "Cancelar la carrera suspendera la misma,\nle hará volver al menú principal sin\nproducir cambios en los datos de la carrera.", "Cancelar carrera", JOptionPane.YES_NO_OPTION);
-        if(cancelar == JOptionPane.YES_OPTION){
+        if (cancelar == JOptionPane.YES_OPTION) {
             logicaAplicacion.cancelarCarrera(carreraEnDisputa);
-            cronometro.pausarCronometro();       
+            cronometro.pausarCronometro();
             JOptionPane.showMessageDialog(PantallaCronometro.this, "Se ha suspendido la carrera.", "Carrera cancelada", JOptionPane.INFORMATION_MESSAGE);
             dispose();
-        } 
+        }
     }//GEN-LAST:event_jButtonCancelarCarreraActionPerformed
 
 

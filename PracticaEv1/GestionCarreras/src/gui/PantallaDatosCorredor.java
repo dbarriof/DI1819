@@ -2,6 +2,7 @@ package gui;
 
 import Dto.Corredor;
 import Logica.LogicaAplicacion;
+import gui.Recursos.MostrarAyuda;
 import java.awt.Color;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -24,6 +25,7 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
         setTitle("Alta corredor");
         this.logicaAplicacion = logicaAplicacion;
         initComponents();
+        MostrarAyuda ayuda = new MostrarAyuda(getRootPane());
         validador();
         
         jButtonAceptarMoficacion.setVisible(false);
@@ -35,6 +37,7 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
         super(parent, modal);
         setTitle("Modificar corredor");
         initComponents();
+        MostrarAyuda ayuda = new MostrarAyuda(getRootPane());
         validador();
         
         //Detalles de pantalla
@@ -63,6 +66,7 @@ public class PantallaDatosCorredor extends javax.swing.JDialog {
         setTitle("Eliminar corredor");
         this.logicaAplicacion = logicaAplicacion;
         initComponents();
+        MostrarAyuda ayuda = new MostrarAyuda(getRootPane());
         validador();
         
         //Detalles de pantalla

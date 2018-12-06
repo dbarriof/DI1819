@@ -1,0 +1,9 @@
+<index version="1.0">
+	<indexitem text="Gestion de carreras 1.0" target="aplicacion"/>
+	<indexitem text="Pantalla principal" target="pantalla_principal"/>
+	<indexitem text="Pantalla corredor" target="pantalla_corredor"/>
+	<indexitem text="pantalla lista corredores" target="pantalla_lista_corredores"/>
+	<indexitem text="pantalla carrera" target="pantalla_carrera"/>
+	<indexitem text="pantalla lista carreras" target="pantalla_lista_carreras"/>
+	<indexitem text="pantalla cronometro" target="pantalla_cronometro"/>
+</index>
