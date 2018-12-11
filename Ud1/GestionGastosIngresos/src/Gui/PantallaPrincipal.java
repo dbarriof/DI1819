@@ -6,6 +6,7 @@
 package Gui;
 
 import Funcionalidad.Logica;
+import java.awt.Color;
 /**
  *
  * @author dbarriof
@@ -16,8 +17,20 @@ public class PantallaPrincipal extends javax.swing.JFrame {
      * Creates new form PantallaPrincipal
      */
     public PantallaPrincipal() {
-        initComponents();
         logica = new Logica();
+        initComponents();
+        setBalance();
+
+    }
+    
+    public void setBalance(){
+        double saldo = logica.cuenta.getSaldo();
+        jLabelSaldo.setText(String.valueOf(saldo));
+        if (saldo < 0){
+            jLabelSaldo.setForeground(Color.RED);
+        } else {
+            jLabelSaldo.setForeground(Color.GREEN);
+        }
     }
 
     /**
@@ -30,7 +43,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabelBalance = new javax.swing.JLabel();
+        jLabelSaldo = new javax.swing.JLabel();
+        jLabelEtiquetaSaldo = new javax.swing.JLabel();
         jButtonSalir = new javax.swing.JButton();
         jMenuBarMenuPrincipal = new javax.swing.JMenuBar();
         jMenuNuevo = new javax.swing.JMenu();
@@ -39,24 +53,41 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jMenuItemMovimientos = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Programa de contabilidad");
 
-        jLabelBalance.setText("Balance:");
+        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel1.setBorder(new javax.swing.border.MatteBorder(null));
+
+        jLabelSaldo.setBackground(new java.awt.Color(0, 0, 0));
+        jLabelSaldo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabelSaldo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelSaldo.setText("jLabel1");
+        jLabelSaldo.setBorder(new javax.swing.border.MatteBorder(null));
+
+        jLabelEtiquetaSaldo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabelEtiquetaSaldo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelEtiquetaSaldo.setText("Saldo Actual:");
+        jLabelEtiquetaSaldo.setBorder(javax.swing.BorderFactory.createEtchedBorder(null, new java.awt.Color(102, 102, 102)));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(162, Short.MAX_VALUE)
-                .addComponent(jLabelBalance)
-                .addGap(159, 159, 159))
+                .addGap(40, 40, 40)
+                .addComponent(jLabelEtiquetaSaldo, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(57, 57, 57)
-                .addComponent(jLabelBalance, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(59, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(30, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelEtiquetaSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(35, 35, 35))
         );
 
         jButtonSalir.setText("Salir");
@@ -97,22 +128,23 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(149, 149, 149))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(163, 163, 163)
+                        .addComponent(jButtonSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
+                .addGap(18, 18, 18)
                 .addComponent(jButtonSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         pack();
@@ -173,7 +205,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonSalir;
-    private javax.swing.JLabel jLabelBalance;
+    private javax.swing.JLabel jLabelEtiquetaSaldo;
+    private javax.swing.JLabel jLabelSaldo;
     private javax.swing.JMenuBar jMenuBarMenuPrincipal;
     private javax.swing.JMenuItem jMenuItemMovimiento;
     private javax.swing.JMenuItem jMenuItemMovimientos;

@@ -64,6 +64,7 @@
                   </Group>
                   <EmptySpace pref="10" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="validationPanel1" alignment="0" min="-2" pref="199" max="-2" attributes="0"/>
                       <Component id="jLabelTitulo" min="-2" max="-2" attributes="0"/>
                       <Component id="jComboBoxTipo" min="-2" max="-2" attributes="0"/>
                       <Component id="jSpinnerFecha" min="-2" pref="196" max="-2" attributes="0"/>
@@ -98,7 +99,9 @@
                       <Component id="jLabelImporte" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jTextFieldImporte" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="82" max="32767" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="validationPanel1" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace pref="35" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jButtonCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jButtonAceptar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -173,6 +176,8 @@
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
+        </Component>
+        <Component class="org.netbeans.validation.api.ui.swing.ValidationPanel" name="validationPanel1">
         </Component>
       </SubComponents>
     </Container>

@@ -6,6 +6,7 @@
 package jLabelCronometro;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  *
@@ -13,7 +14,7 @@ import java.io.Serializable;
  */
 public class CorredorLlegado implements Serializable{
     private int Dorsal;
-    private String tiempo;
+    private Date tiempo;
     
     public CorredorLlegado() {        
     }
@@ -26,11 +27,12 @@ public class CorredorLlegado implements Serializable{
         this.Dorsal = Dorsal;
     }
 
-    public String getTiempo() {
+    public Date getTiempo() {
         return tiempo;
     }
 
-    public void setTiempo(String tiempo) {
+    public void setTiempo(Date tiempo) {
         this.tiempo = tiempo;
     }
+    
 }

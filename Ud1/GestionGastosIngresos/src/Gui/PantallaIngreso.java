@@ -6,7 +6,10 @@
 package Gui;
 
 import Bean.MovimientoEconomico;
+import Funcionalidad.FormatarFecha;
 import java.util.Date;
+import org.netbeans.validation.api.builtin.stringvalidation.StringValidators;
+import org.netbeans.validation.api.ui.ValidationGroup;
 
 /**
  *
@@ -14,6 +17,7 @@ import java.util.Date;
  */
 public class PantallaIngreso extends javax.swing.JDialog {
     private PantallaPrincipal pp;
+    ValidationGroup group;
     /**
      * Creates new form PantallaGasto
      */
@@ -21,6 +25,11 @@ public class PantallaIngreso extends javax.swing.JDialog {
         super(parent, modal);
         pp = (PantallaPrincipal) parent;
         initComponents();
+        
+        group = validationPanel1.getValidationGroup();
+        group.add(jTextFieldConcepto, StringValidators.REQUIRE_NON_EMPTY_STRING);
+        group.add(jTextFieldImporte, StringValidators.REQUIRE_VALID_NUMBER);
+
     }
 
     /**
@@ -44,6 +53,7 @@ public class PantallaIngreso extends javax.swing.JDialog {
         jSpinnerFecha = new javax.swing.JSpinner();
         jLabelTipo = new javax.swing.JLabel();
         jComboBoxTipo = new javax.swing.JComboBox<>();
+        validationPanel1 = new org.netbeans.validation.api.ui.swing.ValidationPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -97,6 +107,7 @@ public class PantallaIngreso extends javax.swing.JDialog {
                     .addComponent(jLabelConcepto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(validationPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelTitulo)
                     .addComponent(jComboBoxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSpinnerFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -124,7 +135,9 @@ public class PantallaIngreso extends javax.swing.JDialog {
                 .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelImporte)
                     .addComponent(jTextFieldImporte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(validationPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addGroup(jPanelContenedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonCancelar)
                     .addComponent(jButtonAceptar))
@@ -162,9 +175,10 @@ public class PantallaIngreso extends javax.swing.JDialog {
         if (tipo.equalsIgnoreCase("gasto")){importe = importe*-1;}
         
         //Añadimos nuevo movimiento al conjunto
-        MovimientoEconomico me = new MovimientoEconomico(fecha, concepto, importe);       
-        pp.logica.aniadirMovimiento(me);
+        MovimientoEconomico me = new MovimientoEconomico(fecha, concepto, importe); 
         
+        pp.logica.aniadirMovimiento(me);
+        pp.setBalance();
         dispose();
     }//GEN-LAST:event_jButtonAceptarActionPerformed
 
@@ -190,5 +204,6 @@ public class PantallaIngreso extends javax.swing.JDialog {
     private javax.swing.JSpinner jSpinnerFecha;
     private javax.swing.JTextField jTextFieldConcepto;
     private javax.swing.JTextField jTextFieldImporte;
+    private org.netbeans.validation.api.ui.swing.ValidationPanel validationPanel1;
     // End of variables declaration//GEN-END:variables
 }

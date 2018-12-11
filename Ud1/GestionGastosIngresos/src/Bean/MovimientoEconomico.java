@@ -5,6 +5,7 @@
  */
 package Bean;
 
+import Funcionalidad.FormatarFecha;
 import java.io.Serializable;
 import java.util.*;
 
@@ -50,7 +51,7 @@ public class MovimientoEconomico implements Serializable{
     public String[] arrayToStrings(){
         String [] datos = new String [4];
         datos[0] = getConcepto();
-        datos[1] = String.valueOf(getFecha());
+        datos[1] = FormatarFecha.formatFecha(getFecha());
         datos[2] = Double.toString(getImporte());
         
         return datos;

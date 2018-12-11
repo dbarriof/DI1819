@@ -10,5 +10,5 @@ package jLabelCronometro;
  * @author dbarriof
  */
 public interface CronometroListener {
-    public CorredorLlegado llegaCorredor();
+    public void llegaCorredor(CorredorLlegado corredorLlegado);
 }

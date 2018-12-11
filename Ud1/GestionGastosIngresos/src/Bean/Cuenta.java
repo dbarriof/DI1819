@@ -19,7 +19,7 @@ public class Cuenta {
 
     public Cuenta(ArrayList<MovimientoEconomico> movimientos) {
         this.movimientos = movimientos;
-        this.saldo = Logica.calcularSaldo(movimientos);
+        this.saldo = 0;
     }
       
     public double getSaldo() {

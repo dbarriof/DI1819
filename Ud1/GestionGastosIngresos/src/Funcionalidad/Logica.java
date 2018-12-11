@@ -17,24 +17,26 @@ import java.util.logging.Logger;
  * @author dbarriof
  */
 public class Logica {
-    private Cuenta cuenta;
+    public Cuenta cuenta;
        
     public Logica() {       
-        this.cuenta = new Cuenta(cargaDatos());        
+        this.cuenta = new Cuenta(cargaDatos());
+        cuenta.setSaldo(calcularSaldo());
     }
     
     //Metodo que calcula el saldo actual
-    public static double calcularSaldo(ArrayList<MovimientoEconomico> movimientos){
+    public double calcularSaldo(){
         double saldo = 0;
-            for (MovimientoEconomico me : movimientos){
+            for (MovimientoEconomico me : this.cuenta.getMovimientos()){
                 saldo = me.getImporte()+saldo;
-            }   
+            } 
         return saldo;
     }
     
     //Metodo que añade un nuevo movimiento
     public void aniadirMovimiento(MovimientoEconomico me){
         this.cuenta.getMovimientos().add(me);
+        cuenta.setSaldo(me.getImporte()+cuenta.getSaldo());
     }
     
     //Metodo que lista los movimientos almacenados
