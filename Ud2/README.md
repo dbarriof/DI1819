@@ -1,2 +1,0 @@
-PSP
-Unidad 2
