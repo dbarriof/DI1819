@@ -58,7 +58,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     /**
      * Metodo que permite cargar la ayuda de la aplicacion
      */
-    /*
+    
     private void mostrarAyuda(){
         try {
             //try {
@@ -75,7 +75,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
             Exceptions.printStackTrace(ex);
         }
     }
-    */
+    
     
     
     /**
