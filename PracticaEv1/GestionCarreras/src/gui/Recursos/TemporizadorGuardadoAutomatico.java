@@ -43,7 +43,7 @@ public class TemporizadorGuardadoAutomatico implements Serializable{
      * Metodo que permite generar un temporizador para guardar los datos de la aplicacion con un tiempo establecido por defecto
      * @param logicaAplicacion 
      */
-    public TemporizadorGuardadoAutomatico(LogicaAplicacion logicaAplicacion) {        
+    public TemporizadorGuardadoAutomatico(final LogicaAplicacion logicaAplicacion) {        
         temporizador = new Timer();
         tarea = new TimerTask() {
             @Override
@@ -60,7 +60,7 @@ public class TemporizadorGuardadoAutomatico implements Serializable{
      * @param logicaAplicacion
      * @param tiempoProgramado 
      */
-    public TemporizadorGuardadoAutomatico(LogicaAplicacion logicaAplicacion, int tiempoProgramado) {                   
+    public TemporizadorGuardadoAutomatico(final LogicaAplicacion logicaAplicacion, int tiempoProgramado) {                   
         temporizador = new Timer();
         tarea = new TimerTask() {
             @Override

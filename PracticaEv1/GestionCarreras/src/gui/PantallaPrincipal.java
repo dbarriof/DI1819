@@ -35,6 +35,7 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private PantallaDatosCarrera pdca;
     private PantallaListaCarreras plca;
     private PantallaCronometro pic;
+    private PantallaInformes pin;
     private TemporizadorGuardadoAutomatico temporizador = new TemporizadorGuardadoAutomatico();
 
     /**
@@ -105,6 +106,8 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jMenuOpciones = new javax.swing.JMenu();
         jMenuItemGuardado = new javax.swing.JMenuItem();
         jMenuItemCambiarAspecto = new javax.swing.JMenuItem();
+        jMenuInformes = new javax.swing.JMenu();
+        jMenuItemIndormes = new javax.swing.JMenuItem();
         jMenuAyuda = new javax.swing.JMenu();
         jMenuItemAbrirAyuda = new javax.swing.JMenuItem();
 
@@ -251,6 +254,22 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         jMenuOpciones.add(jMenuItemCambiarAspecto);
 
         jMenuAplicacion.add(jMenuOpciones);
+
+        jMenuInformes.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jMenuInformes.setText("Informes");
+        jMenuInformes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jMenuInformes.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jMenuInformes.setPreferredSize(new java.awt.Dimension(75, 19));
+
+        jMenuItemIndormes.setText("Modulo de Informes");
+        jMenuItemIndormes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItemIndormesActionPerformed(evt);
+            }
+        });
+        jMenuInformes.add(jMenuItemIndormes);
+
+        jMenuAplicacion.add(jMenuInformes);
 
         jMenuAyuda.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jMenuAyuda.setText("Ayuda");
@@ -521,6 +540,11 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         SwingUtilities.updateComponentTreeUI(this);
     }//GEN-LAST:event_jMenuItemCambiarAspectoActionPerformed
 
+    private void jMenuItemIndormesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemIndormesActionPerformed
+        pin = new PantallaInformes(this, true, logicaAplicacion);
+            pin.setVisible(true);
+    }//GEN-LAST:event_jMenuItemIndormesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -549,11 +573,11 @@ public class PantallaPrincipal extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> {
+        /*java.awt.EventQueue.invokeLater(() -> {
             //Establecemos ubicacion de la aplicacion
-            Locale.setDefault(new Locale("es", "ES"));
+            Locale.setDefault(new Locale("es", "ES"));*/
             new PantallaPrincipal().setVisible(true);
-        });
+       /* });*/
 
     }
 
@@ -565,12 +589,14 @@ public class PantallaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuAyuda;
     private javax.swing.JMenu jMenuCarreras;
     private javax.swing.JMenu jMenuCorredores;
+    private javax.swing.JMenu jMenuInformes;
     private javax.swing.JMenuItem jMenuItemAbrirAyuda;
     private javax.swing.JMenuItem jMenuItemAltaCorredor;
     private javax.swing.JMenuItem jMenuItemCambiarAspecto;
     private javax.swing.JMenuItem jMenuItemEliminarCorredor;
     private javax.swing.JMenuItem jMenuItemGuardado;
     private javax.swing.JMenuItem jMenuItemImportarCorredores;
+    private javax.swing.JMenuItem jMenuItemIndormes;
     private javax.swing.JMenuItem jMenuItemIniciarCarrera;
     private javax.swing.JMenuItem jMenuItemModificarCorredor;
     private javax.swing.JMenuItem jMenuItemNuevaCarrera;

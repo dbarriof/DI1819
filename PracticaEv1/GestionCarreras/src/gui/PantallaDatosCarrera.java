@@ -54,7 +54,7 @@ public class PantallaDatosCarrera extends javax.swing.JDialog {
     }
 
     //Constructor para modificar una carrera
-    public PantallaDatosCarrera(java.awt.Frame parent, boolean modal, LogicaAplicacion logicaAplicacion, Carrera carrera) {
+    public PantallaDatosCarrera(java.awt.Frame parent, boolean modal, LogicaAplicacion logicaAplicacion, final Carrera carrera) {
         super(parent, modal);
         setTitle("Modificar carrera");
         this.logicaAplicacion = logicaAplicacion;

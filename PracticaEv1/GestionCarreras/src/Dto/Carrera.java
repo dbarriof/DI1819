@@ -6,10 +6,11 @@ import java.util.*;
 
 /**
  * Clase que representa una carrera a disputar
- * 
+ *
  * @author dbarriof
  */
-public class Carrera implements Serializable{
+public class Carrera implements Serializable {
+
     private String nombre;
     private Date fecha;
     private String lugar;
@@ -18,14 +19,13 @@ public class Carrera implements Serializable{
     private List<Participante> participantes;
     private List<Integer> dorsales;
 
-    
     public Carrera(String nombre, Date fecha, String lugar, int numMaxParticipantes, ArrayList<Participante> participantes, ArrayList<Integer> dorsales) {
         this.nombre = nombre;
         this.fecha = fecha;
         this.lugar = lugar;
         this.numMaxParticipantes = numMaxParticipantes;
         this.participantes = participantes;
-        this.dorsales = dorsales; 
+        this.dorsales = dorsales;
         finalizada = false;
     }
 
@@ -82,16 +82,16 @@ public class Carrera implements Serializable{
         this.participantes = participantes;
     }
 
-    public List<Integer> getDorsales() {        
+    public List<Integer> getDorsales() {
         return dorsales;
     }
 
     public void setDorsales(ArrayList<Integer> dorsales) {
         this.dorsales = dorsales;
     }
-    
-   public String[] arrayToStrings(){
-        String [] datos = new String [6];
+
+    public String[] arrayToStrings() {
+        String[] datos = new String[6];
         datos[0] = getNombre();
         datos[1] = getLugar();
         datos[2] = FormatoFecha.formatearFecha(getFecha());
@@ -137,5 +137,5 @@ public class Carrera implements Serializable{
         }
         return true;
     }
-        
+
 }
